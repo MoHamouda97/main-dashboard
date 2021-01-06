@@ -14,6 +14,12 @@ export const Approutes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./dashboards/dashboard.module').then(m => m.DashboardModule)
       },
+
+      {
+        path: 'system/:frmType/:id',
+        loadChildren: () => import('./custom/system/system.module').then(m => m.SystemModule)
+      },      
+
       {
         path: 'starter',
         loadChildren: () => import('./starter/starter.module').then(m => m.StarterModule)

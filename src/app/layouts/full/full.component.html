@@ -17,14 +17,14 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <a class="navbar-brand" href="/">
+                <a matRipple class="navbar-brand" href="/">
                     <!-- Logo icon -->
                     <b class="logo-icon">
                         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                         <!-- Dark Logo icon -->
                         <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
-                        <img src="assets/images/logo-light-icon.png" alt="homepage" class="light-logo" />
+                        <img src="assets/images/logo.png" alt="homepage" class="light-logo" width="30px" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
@@ -32,7 +32,7 @@
                         <!-- dark Logo text -->
                         <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text -->
-                        <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" style="margin: 0 5px;" width="105px" />
                     </span>
                 </a>
                 <!-- ============================================================== -->
@@ -74,7 +74,7 @@
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-top: 0;">
             <!-- ============================================================== -->
             <!-- Start Page Content -->
             <!-- ============================================================== -->
@@ -90,7 +90,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer text-center">
-            All Rights Reserved by AdminBite Angular. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+            {{lang.copyright}} <a href="https://saudisoft.com/">SaudiSoft</a>.
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -99,7 +99,7 @@
     <!-- ============================================================== -->
     <!-- End Page wrapper  -->
     <!-- ============================================================== -->
-    <aside class="customizer" [ngClass]="{'show-service-panel': showSettings}">
+    <aside class="customizer d-none" [ngClass]="{'show-service-panel': showSettings}">
         <a href="javascript:void(0)" class="service-panel-toggle" (click)="showSettings = !showSettings">
             <i class="fa fa-spin fa-cog"></i>
         </a>

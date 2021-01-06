@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   CommonModule,
   LocationStrategy,
-  HashLocationStrategy
+  HashLocationStrategy, registerLocaleData
 } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +30,18 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { MenuService } from 'src/services/menu/menu.service';
+import { DatabindingService } from 'src/services/databinding.service';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import en from '@angular/common/locales/en';
+
+registerLocaleData(en);
+
+// mat design
+import {MatRippleModule} from '@angular/material/core';
+import { FrmService } from 'src/services/frm/frm.service';
+
+// activities
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -37,6 +49,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true,
   minScrollbarLength: 20
 };
+
+// services
 
 @NgModule({
   declarations: [
@@ -46,7 +60,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BlankComponent,
     NavigationComponent,
     BreadcrumbComponent,
-    SidebarComponent
+    SidebarComponent,
+    // activites
+
   ],
   imports: [
     CommonModule,
@@ -59,7 +75,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule.forRoot(Approutes, { useHash: false }),
     PerfectScrollbarModule,
     NgMultiSelectDropDownModule.forRoot(),
-    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBUb3jDWJQ28vDJhuQZxkC0NXr_zycm8D0' })
+    AgmCoreModule.forRoot({ apiKey: 'AIzaSyBUb3jDWJQ28vDJhuQZxkC0NXr_zycm8D0' }),
+    NgZorroAntdModule,
+    MatRippleModule
   ],
   providers: [
     {
@@ -69,7 +87,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }
+    },
+    DatabindingService,
+    MenuService,
+    FrmService,
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent]
 })

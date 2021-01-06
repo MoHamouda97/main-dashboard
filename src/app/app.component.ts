@@ -1,16 +1,17 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { FrmService } from 'src/services/frm/frm.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
     private sub: any;
 
-    constructor(private slimLoader: SlimLoadingBarService, private router: Router) {
+    constructor(private slimLoader: SlimLoadingBarService, private router: Router, private service: FrmService) {
         // Listen the navigation events to start or complete the slim bar loading
         this.sub = this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
@@ -23,6 +24,21 @@ export class AppComponent implements OnDestroy {
         }, (error: any) => {
             this.slimLoader.complete();
         });
+    }
+
+    ngOnInit(): any {
+        // set defualt language
+        // Mohammed Hamouda - 28/12/2020
+        (localStorage.getItem("lang")) ? null : localStorage.setItem("lang", "EN");
+
+        // get dictionary
+        // Mohammed Hamouda - 3/1/2020
+        this.service.GetDichttp().subscribe(
+            res => {
+                let dictionary: any = res;
+                localStorage.setItem("dictionary", dictionary);
+            }
+        )
     }
 
     ngOnDestroy(): any {

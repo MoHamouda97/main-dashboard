@@ -1,0 +1,115 @@
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { FrmService } from 'src/services/frm/frm.service';
+
+@Component({
+  selector: 'app-system',
+  templateUrl: './system.component.html',
+  styleUrls: ['./system.component.css']
+})
+export class SystemComponent implements OnInit {
+  subscription: Subscription
+  frmType;
+  objID;
+
+  // loading var
+  isLoading = true;
+
+  // secutiy variables
+  sql;
+  sqlStm;
+  userRights
+
+  constructor(
+    private router: ActivatedRoute, 
+    private chRef: ChangeDetectorRef,
+    private service: FrmService) { }
+
+  ngOnInit() {
+    //#region 
+      // get frm type from route 
+      // Mohammed Hamouda - 30/12/2020 => v1 
+      // Mohammed Hamouda - 4/1/2021 => v2 get object id from route
+      this.subscription = this.router.paramMap.subscribe(
+        res => {
+          this.frmType = res.get('frmType');
+          this.objID = res.get('id');
+
+          localStorage.setItem('frmName', this.frmType);
+          localStorage.setItem('objID', this.objID);
+
+          switch ()
+        }
+      )
+    //#endregion
+  
+    //#region 
+
+      // user authorization
+      // Mohammed Hamouda - 4/1/2021
+      
+      this.sql = JSON.parse(localStorage.getItem("SQL")).filter(stm => stm.objName == "FrmCostCenters");
+      this.sqlStm = this.sql[0].SQL;      
+      this.getSecurity(this.sqlStm, "CostCenters",);
+
+    //#endregion    
+  
+  }
+
+  //#region 
+
+    // get security
+    // Mohammed Hamouda - 4/1/2021
+
+    getSecurity(sql, dbTableName) {      
+      this.service.getSecurity(
+        localStorage.getItem('objID'),
+        localStorage.getItem('username'),
+        localStorage.getItem('branchCode'),
+        this.sqlStm,
+        "CostCenters",
+        localStorage.getItem('username'),
+        localStorage.getItem('username'),
+        localStorage.getItem('username'),
+        localStorage.getItem('username'),
+        localStorage.getItem("lang"),).subscribe(
+        res => {
+          let data: any = res;
+
+          this.isLoading = false;
+          this.userRights = data.userRights;
+          
+          localStorage.setItem("FormRecordSource", data.FormRecordSource);
+          localStorage.setItem("HotPrintReports", data.HotPrintReports);
+
+          this.sqlStm = data.FormRecordSource;
+          
+          if (this.sqlStm.includes(" PERCENT ")) {
+            this.sqlStm.replace(" PERCENT "," ");
+          } else {
+            this.sqlStm.trim();
+            if (this.sqlStm.indexOf("SELECT ") != 0)
+              this.sqlStm = `SELECT * FROM ${this.sqlStm}`;
+
+            this.sqlStm = this.sqlStm.slice(7)
+            this.sqlStm.replace(/TOP 100/g,"");
+            this.sqlStm = `SELECT TOP 100  ${this.sqlStm}`;
+          }
+
+          localStorage.setItem("sqlStm", this.sqlStm);
+        }
+      )
+    }
+
+  //#endregion  
+
+  ngOnDestroy() {
+    //#region 
+      // cancel subscription
+      // Mohammed Hamouda - 30/12/2020
+      this.subscription.unsubscribe();
+    //#endregion
+  }
+
+}

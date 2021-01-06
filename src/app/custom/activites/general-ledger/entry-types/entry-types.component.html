@@ -1,0 +1,131 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{lang.entryTypesTitle}}</h3>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <!-- search bar here -->
+                        <app-search></app-search>
+
+                        <form class="form" [formGroup]="entryTypesForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+                            <div class="row"> 
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="TransCode">Trans Code</label>
+                                        <div class="input-group-lg">
+                                            <nz-form-item>
+                                                <input  
+                                                    class="form-control" 
+                                                    nz-input 
+                                                    type="text"
+                                                    formControlName="TransCode" 
+                                                    placeholder="Trans Code"
+                                                    id="TransCode" 
+                                                    name="TransCode" 
+                                                    ngModel 
+                                                    required
+                                                    disabled/>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="TransName">Trans Name</label>
+                                        <div class="input-group-lg">
+                                            <nz-form-item>
+                                                <nz-form-control [nzErrorTip]="lang.centerNameError">
+                                                    <input  
+                                                        class="form-control" 
+                                                        nz-input 
+                                                        type="text"
+                                                        formControlName="TransName" 
+                                                        placeholder="Trans Name" 
+                                                        id="TransName" 
+                                                        name="TransName" 
+                                                        ngModel 
+                                                        required/>
+                                                </nz-form-control>                                                
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+                                </div> 
+                                
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="Notes">{{lang.notes}}</label>
+                                        <div class="input-group-lg">
+                                            <nz-form-item>
+                                                <textarea
+                                                    nz-input
+                                                    placeholder="Autosize height with minimum and maximum number of lines"
+                                                    [nzAutosize]="{ minRows: 2, maxRows: 10 }"
+                                                    formControlName="Notes" 
+                                                ></textarea>                                             
+                                            </nz-form-item>
+                                        </div>                                        
+                                    </div>
+                                </div>                                         
+                                       
+                            </div>
+                        </form>  
+                        
+                    </div>
+                    <div class="col-md-2">
+                        <!-- task bar here -->
+                        <app-task-bar></app-task-bar>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="lang.costCenterTitle" 
+    (nzOnCancel)="handleCancel()"
+    nzWidth="1000px"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #rowSelectionTable 
+            nzShowPagination 
+            [nzData]="data"
+            [nzPageSize]="5" 
+            [nzScroll]="{ x: '100px' }"
+            class="table">
+            <thead>
+              <tr>
+                <th nzLeft>TransCode</th>
+                <th>TransName</th>
+                <th>System</th>
+                <th>IssuedBy</th>
+                <th>Notes</th>
+                <th>DateCreated</th>
+                <th nzRight>DateModified</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                *ngFor="let d of rowSelectionTable.data; let i = index" 
+                (click)="onItemClicked(d.TransCode)" 
+                style="cursor: pointer;">             
+                <td nzLeft>{{d.TransCode}}</td>
+                <td>{{d.TransName}}</td>
+                <td>{{d.System}}</td>
+                <td>{{d.IssuedBy}}</td>
+                <td>{{d.Notes}}</td>
+                <td>{{d.DateCreated}}</td>
+                <td nzRight>{{d.DateModified}}</td>                                
+              </tr>
+            </tbody>
+        </nz-table>              
+    </div>
+</nz-modal>

@@ -1,0 +1,287 @@
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        {{titleWord}} /
+                        <span *ngIf="whatMode == 'Add'">{{lang.defaultFormtitle}}</span>
+                        <span *ngIf="whatMode == 'Edit'">{{lang.editFormTitle}}</span>
+                    </h3>
+    
+                    <div class="row">
+                        <div class="col-md-9">
+                            <!-- search bar here -->
+                            <app-search *ngIf="isNewLoad"></app-search>
+    
+                            <form class="form" autocomplete="off" [formGroup]="costCenterForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+                                <fieldset>
+                                    <div class="row"> 
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="centercode" >{{centerCodeWord}}</label>
+                                                </nz-form-label>                                                
+                                                <div class="input-group-lg">
+                                                    <nz-form-item>
+                                                        <nz-form-control [nzErrorTip]="lang.centerCodeError">
+                                                            <input  
+                                                                class="form-control" 
+                                                                nz-input 
+                                                                type="text"
+                                                                formControlName="CenterCode" 
+                                                                id="centercode" 
+                                                                name="centercode" 
+                                                                ngModel                                                                 
+                                                                [disabled]="isCodeDisabled"/>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="centername">{{centerNameWord}}</label>
+                                                </nz-form-label>                                                                                                 
+                                                <div class="input-group-lg">
+                                                    <nz-form-item>
+                                                        <nz-form-control [nzErrorTip]="lang.centerNameError">
+                                                            <input  
+                                                                class="form-control" 
+                                                                nz-input 
+                                                                type="text"
+                                                                formControlName="CenterName" 
+                                                                id="centername" 
+                                                                name="centername" 
+                                                                ngModel />
+                                                        </nz-form-control>                                                
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="parent">{{centerParentWord}}</label>
+                                                </nz-form-label>                                                                                               
+                                                <div class="input-group-lg">
+                                                    <nz-form-item style="position: relative;">
+                                                        <input  
+                                                            class="form-control" 
+                                                            nz-input 
+                                                            type="text"
+                                                            formControlName="CenterParent" 
+                                                            id="parent" 
+                                                            name="parent" 
+                                                            ngModel
+                                                            (keyup)="searchParent()"/> 
+
+                                                            <!-- combo box -->
+                                                            <a nz-dropdown [nzDropdownMenu]="menu" class="combo-dropdown" *ngIf="!isParentDisabled">
+                                                                <i nz-icon nzType="down"></i>
+                                                            </a>
+                                                            <nz-dropdown-menu #menu="nzDropdownMenu">
+                                                                <ul nz-menu nzSelectable>
+                                                                  <li nz-menu-item class="dis-table">
+                                                                    <div class="table-header">
+                                                                        <div class="table-row">
+                                                                            <span class="table-cell">{{centerCodeWord}}</span>
+                                                                            <span class="table-cell">{{centerNameWord}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="table-body">
+                                                                        <div 
+                                                                            class="table-row row-val" 
+                                                                            (click)="getValFromDropDown(i)"
+                                                                            *ngFor="let p of parents; let i = index">
+                                                                            <span class="table-cell">{{p.CenterCode}}</span>
+                                                                            <span class="table-cell">{{p.CenterName}}</span>
+                                                                        </div>
+                                                                    </div>                                                                    
+                                                                  </li>
+                                                                </ul>
+                                                            </nz-dropdown-menu>                                                                                                         
+                                                    </nz-form-item>
+                                                </div>                                        
+                                            </div>
+                                        </div> 
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="parentname">{{centerParentNameWord}}</label>
+                                                </nz-form-label>                                                                                                
+                                                <div class="input-group-lg">
+                                                    <nz-form-item>
+                                                        <input  
+                                                            class="form-control" 
+                                                            nz-input 
+                                                            type="parentname"
+                                                            formControlName="parentname" 
+                                                            id="parentname" 
+                                                            name="parentname" 
+                                                            ngModel 
+                                                            disabled/>                                             
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+                                        </div>                               
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="level">{{centerLevelWord}}</label>
+                                                </nz-form-label>                                                                                                
+                                                <div class="input-group-lg">
+                                                    <nz-form-item>
+                                                        <input  
+                                                            class="form-control" 
+                                                            nz-input 
+                                                            type="level"
+                                                            formControlName="CenterLevel" 
+                                                            id="level" 
+                                                            name="level" 
+                                                            ngModel 
+                                                            disabled/>                                             
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <nz-form-label>
+                                                    <label for="final">{{centerFinalWord}}</label>
+                                                </nz-form-label>                                                                                                
+                                                <div class="input-group-lg">
+                                                    <label 
+                                                        nz-checkbox 
+                                                        formControlName="CenterIsFinal" 
+                                                        id="final" 
+                                                        [nzDisabled]="isDisabled"></label>
+                                                </div>
+                                            </div>
+                                        </div>                                          
+                                               
+                                    </div>
+                                </fieldset>
+                            </form>  
+                            
+                        </div>
+                        <div class="col-md-2">
+                            <!-- task bar here -->
+                            <app-task-bar *ngIf="isNewTLoad" [userRights]="userRights"></app-task-bar>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="titleWord" 
+    (nzOnCancel)="handleCancel()"
+    nzWidth="95%"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #rowSelectionTable 
+            nzShowPagination 
+            [nzData]="data"
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '100px' }"
+            class="table">
+            <thead>
+              <tr>
+                <th nzLeft>{{centerCodeWord}}</th>
+                <th>{{centerNameWord}}</th>
+                <th>{{IssuedByWord}}</th>
+                <th>{{centerParentWord}}</th>
+                <th>{{centerParentNameWord}}</th>
+                <th>NumberOfChildren</th>
+                <th>CenterLevel</th>
+                <th>{{centerFinalWord}}</th> 
+                <th>{{DateCreatedWord}}</th>
+                <th nzRight>{{DateModifiedWord}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                *ngFor="let d of rowSelectionTable.data; let i = index" 
+                (click)="onItemClicked(d.CenterCode)" 
+                style="cursor: pointer;">             
+                <td nzLeft>{{d.CenterCode}}</td>
+                <td>{{d.CenterName}}</td>
+                <td>{{d.IssuedBy}}</td>
+                <td>{{d.CenterParent}}</td>
+                <td>{{d.ParentName}}</td>
+                <td>{{d.NumberOfChildren}}</td>
+                <td>{{d.CenterLevel}}</td>
+                <td>{{d.CenterIsFinal}}</td>
+                <td>{{d.DateCreated}}</td>
+                <td nzRight>{{d.DateModified}}</td>                                
+              </tr>
+            </tbody>
+        </nz-table>              
+    </div>
+
+    <div *nzModalFooter></div>
+</nz-modal>
+
+<!-- report modal -->
+
+<nz-modal 
+    [(nzVisible)]="isRepVisible" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    [nzTitle]="lang.chooseRep" 
+    nzWidth="900px"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #repSelectionTable 
+            nzShowPagination 
+            [nzData]="repObj"
+            [nzPageSize]="5" 
+            [nzScroll]="{ x: '100px' }"
+            class="table">
+            <thead>
+              <tr>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                *ngFor="let r of repObj; let i = index" 
+                style="cursor: pointer;"
+                [class.text-right]="(getLang() == 'AR')"
+                [class.text-left]="(getLang() == 'EN')"
+                class="rep-name" [class.highlight]="i == 0" (click)="addHighLight(i)">             
+                <td>{{r.RepTitle}}</td>                             
+              </tr>
+            </tbody>
+        </nz-table>              
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="printRep(11)">
+            <span>
+                {{lang.repPrint}}
+                <i nz-icon nzType="loading" *ngIf="isPrintRip" nzTheme="outline"></i>
+            </span>            
+        </button>
+        <button class="btn btn-outline-info" matRipple (click)="runRep(0)">
+            <span>
+                {{lang.repDisplay}}
+                <i nz-icon nzType="loading" *ngIf="isDisplayRep" nzTheme="outline"></i>
+            </span>
+        </button>
+    </div>
+</nz-modal>

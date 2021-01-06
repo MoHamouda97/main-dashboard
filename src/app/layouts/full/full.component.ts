@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 declare var $: any;
 
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { DatabindingService } from 'src/services/databinding.service';
+import { MenuService } from 'src/services/menu/menu.service';
+import * as lang from './../../../settings/lang';
 
 @Component({
   selector: 'app-full-layout',
@@ -12,7 +15,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 export class FullComponent implements OnInit {
   public config: PerfectScrollbarConfigInterface = {};
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private binding: DatabindingService) { }
 
   tabStatus = 'justified';
 
@@ -23,16 +26,18 @@ export class FullComponent implements OnInit {
   public showSettings = false;
   public showMobileMenu = false;
   public expandLogo = false;
+  private langVal = 'rtl';
+  lang;
 
   options = {
     theme: 'light', // two possible values: light, dark
-    dir: 'ltr', // two possible values: ltr, rtl
+    dir: '', // two possible values: ltr, rtl
     layout: 'vertical', // fixed value. shouldn't be changed.
     sidebartype: 'full', // four possible values: full, iconbar, overlay, mini-sidebar
     sidebarpos: 'fixed', // two possible values: fixed, absolute
     headerpos: 'fixed', // two possible values: fixed, absolute
     boxed: 'full', // two possible values: full, boxed
-    navbarbg: 'skin6', // six possible values: skin(1/2/3/4/5/6)
+    navbarbg: 'skin5', // six possible values: skin(1/2/3/4/5/6)
     sidebarbg: 'skin5', // six possible values: skin(1/2/3/4/5/6)
     logobg: 'skin5' // six possible values: skin(1/2/3/4/5/6)
   };
@@ -45,8 +50,26 @@ export class FullComponent implements OnInit {
     if (this.router.url === '/') {
       this.router.navigate(['/dashboard/dashboard1']);
     }
+
     this.defaultSidebar = this.options.sidebartype;
     this.handleSidebar();
+    
+//#region 
+
+    // dealing with page direction
+    // Mohammed Hamouda - 29/12/2020 => v1 (detect language changing)
+
+    this.binding.checkIsLangChanged.subscribe(
+      res => {
+        (res == 'AR') ? this.options.dir = 'rtl' : this.options.dir = 'ltr';
+        this.lang = (res == 'EN') ? lang.en : lang.ar;
+      }
+    );
+
+    (localStorage.getItem('lang') == 'AR') ? this.options.dir = 'rtl' : this.options.dir = 'ltr';
+    this.lang = (localStorage.getItem('lang') == 'EN') ? lang.en : lang.ar;
+
+//#endregion    
   }
 
   @HostListener('window:resize', ['$event'])

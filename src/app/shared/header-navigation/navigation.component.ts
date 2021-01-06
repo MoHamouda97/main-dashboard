@@ -6,7 +6,9 @@ import {
   NgbCarouselConfig
 } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-declare var $: any;
+import { DatabindingService } from 'src/services/databinding.service';
+import * as $ from 'jquery';
+//declare var $: any;
 
 @Component({
   selector: 'app-navigation',
@@ -19,8 +21,7 @@ export class NavigationComponent implements AfterViewInit {
 
   public showSearch = false;
 
-  constructor(private modalService: NgbModal) {}
-
+  constructor(private modalService: NgbModal, private binding: DatabindingService) {}
   // This is for Notifications
   notifications: Object[] = [
     {
@@ -86,4 +87,20 @@ export class NavigationComponent implements AfterViewInit {
   ];
 
   ngAfterViewInit() {}
+
+//#region 
+
+  // handle language
+  // Mohammed Hamouda - 29/12/2020 => v1 (change direction and translate content)
+  
+  changeLang(option) {
+    this.binding.changeLang(option); 
+    localStorage.setItem('lang', option); 
+  }
+
+  getLang() {
+    return localStorage.getItem('lang');
+  }
+
+//#endregion
 }

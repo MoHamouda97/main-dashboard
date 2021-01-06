@@ -1,0 +1,66 @@
+<div class="task-bar-wrapper">
+    <ul class="list-unstyled">
+        <li              
+            [nzTooltipTitle]="lang.taskBarNew" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip
+            (click)="resetData()"
+            *ngIf="canAdd">
+            <button matRipple class="btn">
+                <i *ngIf="!isAdd" class="fas fa-file-alt"></i>
+                <i *ngIf="isAdd" nz-icon nzType="loading" nzTheme="outline"></i>
+            </button>
+        </li>
+        <li              
+            [nzTooltipTitle]="lang.taskBarSave" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip            
+            *ngIf="canEdit ||canAdd">
+            <button matRipple class="btn" (click)="saveOrUpdateMode()">
+                <i *ngIf="!isEditOrAdd" class="fas fa-save"></i>
+                <i *ngIf="isEditOrAdd" nz-icon nzType="loading" nzTheme="outline"></i>
+            </button>
+        </li>
+        <li                  
+            [nzTooltipTitle]="lang.taskBarPrint" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip
+            *ngIf="canPrint">
+            <button matRipple [disabled]="isDisabled" class="btn" (click)="getReport()">
+                <i *ngIf="!isReport" class="fas fa-print"></i>
+                <i *ngIf="isReport" nz-icon nzType="loading" nzTheme="outline"></i>
+            </button>
+        </li>        
+        <li              
+            [nzTooltipTitle]="lang.taskBarDelete" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip
+            *ngIf="canDelete">
+            <button 
+                matRipple 
+                [disabled]="isDisabled" 
+                class="btn" 
+                (click)="checkDelete()">
+                <i *ngIf="!isDelete" class="fas fa-times"></i>
+                <i *ngIf="isDelete" nz-icon nzType="loading" nzTheme="outline"></i>
+            </button>
+        </li>
+        <li              
+            [nzTooltipTitle]="lang.taskBarView" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip
+            *ngIf="canBrowes">
+            <button matRipple class="btn" (click)="getData()">
+                <i class=" fas fa-table"></i>
+            </button>
+        </li>
+        <li                  
+            [nzTooltipTitle]="lang.taskBarRefresh" 
+            [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
+            nz-tooltip>
+            <button matRipple class="btn">
+                <i class="fas fa-sync"></i>
+            </button>
+        </li>
+    </ul>
+</div>

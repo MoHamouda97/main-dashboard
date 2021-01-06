@@ -1,0 +1,45 @@
+<div class="search-wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <nz-select
+                [(ngModel)]="searchOption" 
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'">
+                <!--<nz-option nzValue="0" [nzLabel]="lang.loadingSerachOptions" *ngIf="isDbLoading"></nz-option>
+                <nz-option nzValue="0" [nzLabel]="lang.SerachByOptions" *ngIf="!isDbLoading"></nz-option>-->
+                <nz-option 
+                    *ngFor="let field of fields; let i = index" 
+                    [nzValue]="field" 
+                    [nzLabel]="field"></nz-option>
+            </nz-select>
+        </div>
+        <div class="col-md-3">
+            <nz-select searchOperator
+                [(ngModel)]="searchOperator"
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'">
+                <!--<nz-option nzValue="0" [nzLabel]="lang.SearchOperator"></nz-option>-->
+                <nz-option 
+                    *ngFor="let operator of operators" 
+                    [nzValue]="operator" 
+                    [nzLabel]="operator"></nz-option>
+            </nz-select>            
+        </div>
+        <div class="col-md-3">
+            <input 
+                nz-input 
+                [placeholder]="lang.searchValue" 
+                [(ngModel)]="searchValue" 
+                (keyup.enter)="searchByEnter()"/>
+        </div>
+        <div class="col-md-3">
+            <button 
+                class="btn btn-info d-block w-100" 
+                matRipple 
+                (click)="searchByClick()">
+                <span *ngIf="!isSearching">{{lang.searchButton}}</span>
+                <span *ngIf="isSearching">
+                    <i nz-icon nzType="loading" nzTheme="outline"></i>
+                </span>                
+            </button>
+        </div>                        
+    </div>
+</div>
