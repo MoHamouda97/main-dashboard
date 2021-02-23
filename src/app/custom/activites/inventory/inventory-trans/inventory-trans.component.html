@@ -1,0 +1,91 @@
+<form class="form" [formGroup]="invTransForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="TransCode">
+                        {{(getLang() == 'EN' ? ('TransCode' | translateEn) : ('TransCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="TransCode" 
+                            id="TransCode" 
+                            name="TransCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="TransName">
+                        {{(getLang() == 'EN' ? ('TransName' | translateEn) : ('TransTransNameName' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="TransName" 
+                                id="TransName" 
+                                name="TransName" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="TransType">
+                            {{(getLang() == 'EN' ? ('TransType' | translateEn) : ('TransType' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-radio-group 
+                            [ngModel]="TransTypeValue"
+                            formControlName="TransType">
+                            <label nz-radio nzValue="1">IN</label>
+                            <label nz-radio nzValue="-1">OUT</label>
+                          </nz-radio-group>                                            
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>          
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="Notes">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea
+                            nz-input
+                            [nzAutosize]="{ minRows: 2, maxRows: 20 }"
+                            formControlName="Notes" 
+                            id="Notes" 
+                            name="Notes" 
+                        ></textarea>                                             
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>                                         
+               
+    </div>
+</form>  

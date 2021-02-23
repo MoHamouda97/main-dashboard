@@ -1,0 +1,93 @@
+<form class="form" [formGroup]="costItemsForm" autocomplete="off" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CostCode">
+                        {{(getLang() == 'EN' ? ('CostCode' | translateEn) : ('CostCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="CostCode" 
+                            id="CostCode" 
+                            name="CostCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CostName">
+                        {{(getLang() == 'EN' ? ('CostName' | translateEn) : ('CostName' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CostName" 
+                                id="CostName" 
+                                name="CostName" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CostType">
+                        {{(getLang() == 'EN' ? ('CostType' | translateEn) : ('CostType' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-select 
+                            [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                            [nzLoading]="isDbLoading"
+                            formControlName="CostType">
+                            <nz-option 
+                                *ngFor="let item of costItems; let i = index" 
+                                [nzValue]="item.CostType" 
+                                [nzLabel]="(getLang() == 'EN' ? (item.CostType | translateEn) : (item.CostType | translateAr))"></nz-option>
+                        </nz-select>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="AffectPrice">
+                        {{(getLang() == 'EN' ? ('AffectPrice' | translateEn) : ('AffectPrice' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <label 
+                                nz-checkbox 
+                                formControlName="AffectPrice" 
+                                id="AffectPrice"></label>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>                
+    </div>
+</form>  

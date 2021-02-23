@@ -1,9 +1,408 @@
 <section class="frm-wrapper" [ngSwitch]="frmType">
-    <div *ngSwitchCase="'FrmCostCenters'">
-        <app-cost-centers></app-cost-centers>
-    </div>    
-    <app-entry-types *ngSwitchCase="'FrmEntryType'"></app-entry-types>
-    <div *ngSwitchDefault style="color: red;" class="text-center">
-        {{frmType}} Under Development
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <!-- When not show report -->
+                        <span *ngIf="!isShowReport">
+                            <span *ngIf="!isDbLoading">
+                                {{(getLang() == 'EN' ? (wordToBeTranslated | translateEn) : (wordToBeTranslated | translateAr))}}
+                            </span>
+                            <span *ngIf="isDbLoading">
+                                <i nz-icon nzType="loading" nzTheme="outline"></i>
+                            </span>   
+                            <small *ngIf="whatMode == 'Add'">/ {{lang.defaultFormtitle}}</small>
+                            <small *ngIf="whatMode == 'Edit'">/ {{lang.editFormTitle}}</small>
+                        </span>  
+                        
+                        <!-- When show report -->
+                        <span *ngIf="isShowReport">
+                            {{lang.reportName}}
+                            <small>
+                                / {{(getLang() == 'EN' ? (wordToBeTranslated | translateEn) : (wordToBeTranslated | translateAr))}}
+                            </small>
+                        </span> 
+                    </h3>
+
+                    <!-- Simple transactions -->
+                    <div class="row" *ngIf="isSimpleTransaction">
+                        <div class="col-md-10">
+                            <!-- search bar here -->
+                            <app-search *ngIf="isNewLoad" [fields]="fields" [isDbLoading]="isDbLoading"></app-search>
+                            
+                            <!-- forms -->
+                            <section>
+                                <!-- GL components -->
+                                <app-cost-centers 
+                                    *ngSwitchCase="'FrmCostCenters'"
+                                    [data]="data" 
+                                    [isReset]="isReset" 
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-cost-centers>  
+                                <app-entry-types 
+                                    *ngSwitchCase="'FrmEntryType'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-entry-types>
+                                <!-- Safes & Banks components-->
+                                <app-banks
+                                    *ngSwitchCase="'FrmBanks'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-banks>
+                                <!-- Inventory components -->
+                                <app-manufacturers
+                                    *ngSwitchCase="'FrmManufacturers'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-manufacturers>
+                                <app-items-group
+                                    *ngSwitchCase="'FrmItemsGroups'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-items-group>
+                                <app-items-classes
+                                    *ngSwitchCase="'FrmItemsClasses'"
+                                    [data]="data" 
+                                    [vendors]="vendors"
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-items-classes>  
+                                <app-costing-items
+                                    *ngSwitchCase="'FrmCostItems'"
+                                    [data]="data" 
+                                    [costItems]="costItems"
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-costing-items>
+                                <app-inventory-trans
+                                    *ngSwitchCase="'FrmInvTransTypes'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-inventory-trans>
+                                <!-- Sales components -->                                    
+                                <app-customer-categories
+                                    *ngSwitchCase="'FrmCustomerCategory'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-customer-categories>
+                                <app-delivery-methods
+                                    *ngSwitchCase="'FrmDeliveryMethods'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-delivery-methods>
+                                <app-commission-pariod
+                                    *ngSwitchCase="'FrmComPeriods'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-commission-pariod>
+                                    <app-customer-requests 
+                                        *ngSwitchCase="'FrmCustomersRequests'"
+                                        [data]="data" 
+                                        [isReset]="isReset"
+                                        [isDelete]="isDelete"
+                                        [isSaveOrUpdate]="isSaveOrUpdate"
+                                        [isReporting]="isReporting"
+                                        [objID]="objID"
+                                        (returnData)="reciveDataHandler($event)"
+                                        (returnID)="reciveIdHandler($event)"
+                                        (returnEmail)="reciveEmailHandler($event)"></app-customer-requests>
+                                    <app-sales-order 
+                                        *ngSwitchCase="'FrmSalesOrders'"
+                                        [data]="data" 
+                                        [isReset]="isReset"
+                                        [isDelete]="isDelete"
+                                        [isSaveOrUpdate]="isSaveOrUpdate"
+                                        [isReporting]="isReporting"
+                                        (returnData)="reciveDataHandler($event)"
+                                        (returnID)="reciveIdHandler($event)"></app-sales-order>
+                                <!-- Service components -->
+                                <app-service-types
+                                    *ngSwitchCase="'FrmServiceTypes'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-service-types>
+                                <!-- Basic Data components -->
+                                <app-payment-terms
+                                    *ngSwitchCase="'FrmTerms'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-payment-terms>
+                                <app-payment-method
+                                    *ngSwitchCase="'FrmPayMethod'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-payment-method>
+                                <app-emp-category
+                                    *ngSwitchCase="'FrmEmpCategory'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-emp-category>  
+                                <app-other-categories
+                                    *ngSwitchCase="'FrmOtherCategory'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-other-categories>
+                                <app-countries
+                                    *ngSwitchCase="'FrmCountries'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-countries> 
+                                <app-currencies
+                                    *ngSwitchCase="'FrmCurrencies'"
+                                    [data]="data" 
+                                    [isReset]="isReset"
+                                    [isDelete]="isDelete"
+                                    [isSaveOrUpdate]="isSaveOrUpdate"
+                                    [isReporting]="isReporting"
+                                    (returnData)="reciveDataHandler($event)"
+                                    (returnID)="reciveIdHandler($event)"></app-currencies>                                 
+                                
+                                <div *ngSwitchDefault style="color: red;" class="text-center">
+                                    {{frmType}} Under Development
+                                </div>
+
+                                <nz-alert 
+                                    class="text-center"
+                                    *ngIf="!isAvailableReport" 
+                                    nzType="warning" 
+                                    [nzMessage]="lang.noReports"
+                                    nzCloseText="X"></nz-alert>                                
+                            </section>
+                        </div>
+    
+                        <div class="col-md-2" style="position: fixed; right: 0;">
+                            <!-- task bar here -->
+                            <app-task-bar [userRights]="userRights" [isAvailableReport]="isAvailableReport"></app-task-bar>
+                        </div>  
+                        
+                        <app-loader [loader]="isLoading"></app-loader>
+                    </div>
+
+                    <!-- Approvale -->
+                    <div class="row" *ngIf="isApproval">
+                        <div class="col-12">
+                            <app-search-for-approve [objID]="objID"></app-search-for-approve>
+                        </div>
+                    </div>
+                    
+                    <!-- Cancel Open -->
+                    <div class="row" *ngIf="isCancle">
+                        <div class="col-12">
+                            <app-cancel-open [objID]="objID"></app-cancel-open>
+                        </div>
+                    </div>
+
+                    <!-- Reports -->
+                    <div class="row" *ngIf="isShowReport">
+                        <div class="col-12">
+                            <app-reports [repID]="objID" [repName]="wordToBeTranslated"></app-reports>
+                        </div>
+                    </div> 
+                    
+                    <!-- Full View Screens -->
+                    <div class="row" *ngIf="isFullView">
+                        <div class="col-12">
+                            <!-- Inventory -->
+                            <app-items-in-branches *ngSwitchCase="'FrmBrnItemsQty'"></app-items-in-branches>
+                            <!-- System security -->
+                            <app-change-password *ngSwitchCase="'FrmChangePwd'"></app-change-password>
+                            <app-preferences *ngSwitchCase="'FrmSystem'"></app-preferences>
+                            <app-posting *ngSwitchCase="'FrmPosting'" [isPosting]="isPosting"></app-posting>
+                            <app-notifications *ngSwitchCase="'FrmNotify'"></app-notifications>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (wordToBeTranslated | translateEn) : (wordToBeTranslated | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    nzWidth="97%"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            nzShowPagination
+            [nzData]="data" 
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '240px' }"
+            class="table forms-table table-striped"
+            [ngClass]="{
+                'super-ultra-wide-customer': frmType === 'FrmCustomersRequests',
+                'super-ultra-wide': frmType === 'FrmSalesOrders',
+                'w-200' : frmType === 'FrmItemsClasses'
+            }"
+            (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <th 
+                    *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                    <span class="title">{{head}}</span>
+                    <span class="float-right">
+                        <button class="btn btn-info sort-btn" matRipple (click)="sortBy(i, 'asc')" style="margin-top: 0 !important;">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>  
+                        <button class="btn btn-info sort-btn" matRipple (click)="sortBy(i, 'desc')" style="margin-top: 5px !important;">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>                                                                       
+                    </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let allData of headerTable.data; let i = index" 
+                    (click)="onItemClicked(i)" 
+                    style="cursor: pointer;">
+                    <td *ngFor="let d of allData | render" [class.hide-long-text]="d == 'PersonName'">{{allData[d]}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                        <input 
+                            nz-input
+                            class="form-control" 
+                            type="text" 
+                            #value 
+                            (keyup.enter)="filterData(key, value.value)" />
+                    </th>
+                </tr>
+            </tfoot>
+        </nz-table>
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>              
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+            {{lang.taskBarRefresh}}
+        </button>
+    </div>
+</nz-modal>
+
+<!-- report modal -->
+
+<nz-modal 
+    [(nzVisible)]="isRepVisible" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    [nzTitle]="lang.chooseRep" 
+    nzWidth="900px"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #repSelectionTable 
+            nzShowPagination 
+            [nzData]="repObj"
+            [nzPageSize]="5" 
+            [nzScroll]="{ x: '100px' }"
+            class="table">
+            <thead>
+              <tr>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr 
+                *ngFor="let r of repObj; let i = index" 
+                style="cursor: pointer;"
+                [class.text-right]="(getLang() == 'AR')"
+                [class.text-left]="(getLang() == 'EN')"
+                class="rep-name" [class.highlight]="i == 0" (click)="addHighLight(i)">             
+                <td>{{r.RepTitle}}</td>                             
+              </tr>
+            </tbody>
+        </nz-table>              
+    </div>
+    
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="printRep(11)">
+            <span>
+                {{lang.repPrint}}
+                <i nz-icon nzType="loading" *ngIf="isPrintRip" nzTheme="outline"></i>
+            </span>            
+        </button>
+        <button class="btn btn-outline-info" matRipple (click)="runRep(0)">
+            <span>
+                {{lang.repDisplay}}
+                <i nz-icon nzType="loading" *ngIf="isDisplayRep" nzTheme="outline"></i>
+            </span>
+        </button>
+    </div>
+</nz-modal>

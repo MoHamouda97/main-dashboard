@@ -1,0 +1,12 @@
+.remove-control{
+    font-size: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #ea4040;
+}
+
+.search-btn{
+    padding: 3.5px 10px;
+    outline: none;
+    cursor: pointer;
+}

@@ -1,160 +1,33 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
-import { DatabindingService } from 'src/services/databinding.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as lang from './../../../../../settings/lang';
-import { FrmService } from 'src/services/frm/frm.service';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import * as $ from 'jquery';
-import { Subscription } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-entry-types',
   templateUrl: './entry-types.component.html',
   styleUrls: ['./entry-types.component.css']
 })
-export class EntryTypesComponent implements OnInit, OnDestroy {
+export class EntryTypesComponent implements OnInit, OnDestroy, OnChanges {
+  // form var
   entryTypesForm: FormGroup;
-  lang;
-  data;
-  searchSubscription: Subscription;
-  dataResetSubscription: Subscription;
 
-  isVisible = false;
+  // extchange data between parent and child
+  @Input('data') data = [];
+  @Input('isReset') isReset = false;
+  @Input('isDelete') isDelete = false;
+  @Input('isSaveOrUpdate') isSaveOrUpdate = false;
+  @Input('isReporting') isReporting = false;
+  @Output('returnData') returnData : EventEmitter<any> = new EventEmitter();
+  @Output('returnID') returnID : EventEmitter<any> = new EventEmitter();  
 
-  private unsubscribe$: Subject<any> = new Subject<any>();
-
-  constructor(    
-    private binding: DatabindingService, 
-    private service: FrmService, 
-    private fb: FormBuilder,
-    private notification: NzNotificationService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.entryTypesForm = this.fb.group({
-      TransCode: [null, [Validators.required]],
-      TransName: [null, [Validators.required]],
-      Notes: [null],
+      TransCode: [""],
+      TransName: [""],
+      Notes: [""],
     });  
-    
-    //#region 
-
-        // dealing with page direction
-        // Mohammed Hamouda - 29/12/2020 => v1 (detect language changing)
-
-        this.binding.checkIsLangChanged.subscribe(
-          res => {
-            if (res != null)
-              this.lang = (res == 'EN') ? lang.en : lang.ar;
-          }
-        );
-
-        this.lang = (localStorage.getItem('lang') == 'EN') ? lang.en : lang.ar;
-
-    //#endregion
-    
-    //#region 
-
-        // recive data from search component
-        // Mohammed Hamouda - 30/12/2020 => v1 (detect when search data send data)
-
-        this.binding.checkSendingDataFromSearch.pipe(
-          takeUntil(this.unsubscribe$)
-        ).subscribe(
-          res => {
-            if (res != null) {
-              if (res.length > 0) {
-                this.binding.enableFunctions(true);
-                (res.length == 1) ? this.ifLenghtIsOne(res) : this.ifLengthIsMore(res);
-              }                
-              else 
-                this.arabicOrEnglishMessage(localStorage.getItem('lang'));  
-            }
-              
-          }
-        );
-
-
-    //#endregion 
-    
-    //#region 
-
-        // responding to task bar
-        // Mohammed Hamouda - 31/12/2020 => v1 (detect when task bar did an action)
-
-        this.binding.checkDataReset.pipe(
-          takeUntil(this.unsubscribe$)
-        ).subscribe(
-          res => {
-            if (res != null) {
-              this.entryTypesForm.reset();  
-            }               
-          }
-        );
-
-    //#endregion       
   }
-
-  //#region 
-
-    // deal with length of data recived from search component
-    // Mohammed Hamouda - 30/12/2020
-
-    ifLenghtIsOne(data: any) {
-      this.entryTypesForm.get('TransCode').setValue(data[0].TransCode);
-      this.entryTypesForm.get('TransName').setValue(data[0].TransName);
-      this.entryTypesForm.get('Notes').setValue(data[0].Notes);
-    }
-
-    ifLengthIsMore(data) {
-      this.data = data.map((val) => {
-        return {
-          TransCode: val.TransCode,
-          TransName: val.TransName,
-          System: val.System,
-          IssuedBy: val.IssuedBy,
-          Notes: val.Notes,
-          DateCreated: `${new Date(val.DateCreated).toLocaleString("en-US", {timeZone: "America/New_York"})}`,
-          DateModified: `${new Date(val.DateModified).toLocaleString("en-US", {timeZone: "America/New_York"})}`,
-        }
-      });
-
-      this.isVisible = true;    
-    }
-
-    // check when user click a row  
-
-    onItemClicked(id) {
-      let filtredData = this.data.filter(d => d.TransCode == id)
-      this.ifLenghtIsOne(filtredData);
-      this.isVisible = false;
-    }
-
-    arabicOrEnglishMessage(lang) {
-      let title = 'Search Result';
-      let message = 'No Data for your Search';
-      let options = {nzClass: 'lang-en'}
-
-      if (lang == 'AR') {
-        title = 'نتائج البحث';
-        message = 'لا توجد بيانات لعملية البحث';
-        options = {nzClass: 'lang-ar'}
-      }
-
-      this.notification.warning(title, message, options);
-    }
-
-  //#endregion 
-  
-  //#region 
-
-    // close modal
-
-    handleCancel(){this.isVisible = false}
-
-  //#endregion
 
   //#region 
 
@@ -162,12 +35,102 @@ export class EntryTypesComponent implements OnInit, OnDestroy {
 
     getLang() {
       return localStorage.getItem('lang');
+    }  
+
+  //#endregion
+
+  //#region 
+
+    // deal with length of data recived from search component
+    // Mohammed Hamouda - 30/12/2020
+
+    displayData(data: any) {
+      this.entryTypesForm.get('TransCode').setValue(data[0].TransCode);
+      this.entryTypesForm.get('TransName').setValue(data[0].TransName);
+      this.entryTypesForm.get('Notes').setValue(data[0].Notes);
+
+      document.getElementById('TransCode').setAttribute('disabled', 'true');
     }
 
   //#endregion  
 
+  ngOnChanges(changes: SimpleChanges) {
+    // check new data
+    const isChanged = setInterval(() => {
+      if (typeof (changes.data) == 'undefined') {
+        null;
+      } else {
+        this.data = changes.data.currentValue;
+        (this.data.length == 1) ? this.displayData(this.data) : null;
+        clearInterval(isChanged);
+      }
+    }, 100);
+    
+    // check new record
+   const isReset = setInterval(() => {
+      if (typeof (changes.isReset) == 'undefined') {
+        null;
+      } else {
+        this.isReset = changes.isReset.currentValue;
+
+        if (this.isReset) {
+          this.entryTypesForm.reset();
+          document.getElementById('TransCode').removeAttribute('disabled');        
+        }
+
+        clearInterval(isReset);
+      }
+    }, 100);
+
+    // check delete record
+    const isDelete = setInterval(() => {
+      if (typeof (changes.isDelete) == 'undefined') {
+        null;
+      } else {
+        this.isDelete = changes.isDelete.currentValue;
+
+        if (this.isDelete) {
+          this.returnData.emit(this.entryTypesForm.value);
+
+          document.getElementById('TransCode').removeAttribute('disabled');
+        }
+
+        clearInterval(isDelete);
+      }
+    }, 100);
+    
+    // check save or update record
+    const isSaveOrUpdate = setInterval(() => {
+      if (typeof (changes.isSaveOrUpdate) == 'undefined') {
+        null;
+      } else {
+        this.isSaveOrUpdate = changes.isSaveOrUpdate.currentValue;
+
+        if (this.isSaveOrUpdate) {
+          this.returnData.emit(this.entryTypesForm.value);
+        }
+
+        clearInterval(isSaveOrUpdate);
+      }
+    }, 100); 
+    
+    // check save or update record
+    const isReporting = setInterval(() => {
+      if (typeof (changes.isReporting) == 'undefined') {
+        null;
+      } else {
+        this.isReporting = changes.isReporting.currentValue;
+
+        if (this.isReporting) {
+          this.returnID.emit(this.entryTypesForm.get('TransCode').value);
+        }
+
+        clearInterval(isReporting);
+      }
+    }, 100);
+  }
+
   ngOnDestroy() {
-    this.binding.enableFunctions(false);
   }
 
 }

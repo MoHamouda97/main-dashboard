@@ -1,0 +1,165 @@
+<form class="form" autocomplete="off" [formGroup]="costCenterForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <fieldset>
+        <div class="row"> 
+            <div class="col-md-3">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="centercode" >
+                            {{(getLang() == 'EN' ? ('CenterCode' | translateEn) : ('CenterCode' | translateAr))}}
+                        </label>                                                    
+                    </nz-form-label>                                                
+                    <div class="input-group-lg">
+                        <nz-form-item>
+                            <nz-form-control [nzErrorTip]="lang.centerCodeError">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="CenterCode" 
+                                    id="centercode" 
+                                    name="centercode" 
+                                    ngModel                                                                 
+                                    [disabled]="isCodeDisabled"/>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-9">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="centername">
+                            {{(getLang() == 'EN' ? ('CenterName' | translateEn) : ('CenterName' | translateAr))}}
+                        </label>
+                    </nz-form-label>                                                                                                 
+                    <div class="input-group-lg">
+                        <nz-form-item>
+                            <nz-form-control [nzErrorTip]="lang.centerNameError">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="CenterName" 
+                                    id="centername" 
+                                    name="centername" 
+                                    ngModel />
+                            </nz-form-control>                                                
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="col-md-3">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="parent">
+                            {{(getLang() == 'EN' ? ('CenterParent' | translateEn) : ('CenterParent' | translateAr))}}
+                        </label>
+                    </nz-form-label>                                                                                               
+                    <div class="input-group-lg">
+                        <nz-form-item style="position: relative;">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CenterParent" 
+                                id="parent" 
+                                name="parent" 
+                                ngModel
+                                #value
+                                (keyup)="searchParent(value.value)"/> 
+
+                                <!-- combo box -->
+                                <a nz-dropdown [nzDropdownMenu]="menu" class="combo-dropdown" *ngIf="!isParentDisabled">
+                                    <i nz-icon nzType="down"></i>
+                                </a>
+                                <nz-dropdown-menu #menu="nzDropdownMenu">
+                                    <ul nz-menu nzSelectable>
+                                      <li nz-menu-item class="dis-table">
+                                        <div class="table-header">
+                                            <div class="table-row">
+                                                <span class="table-cell">{{(getLang() == 'EN' ? ('CenterCode' | translateEn) : ('CenterCode' | translateAr))}}</span>
+                                                <span class="table-cell">{{(getLang() == 'EN' ? ('CenterName' | translateEn) : ('CenterName' | translateAr))}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="table-body">
+                                            <div 
+                                                class="table-row row-val" 
+                                                (click)="getValFromDropDown(i)"
+                                                *ngFor="let p of parents; let i = index">
+                                                <span class="table-cell">{{p.CenterCode}}</span>
+                                                <span class="table-cell">{{p.CenterName}}</span>
+                                            </div>
+                                        </div>                                                                    
+                                      </li>
+                                    </ul>
+                                </nz-dropdown-menu>                                                                                                         
+                        </nz-form-item>
+                    </div>                                        
+                </div>
+            </div> 
+            <div class="col-md-9">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="parentname">
+                            {{(getLang() == 'EN' ? ('CenterParentName' | translateEn) : ('CenterParentName' | translateAr))}}
+                        </label>
+                    </nz-form-label>                                                                                                
+                    <div class="input-group-lg">
+                        <nz-form-item>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="parentname"
+                                formControlName="parentname" 
+                                id="parentname" 
+                                name="parentname" 
+                                ngModel 
+                                disabled/>                                             
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>                               
+            <div class="col-md-6">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="level">
+                            {{(getLang() == 'EN' ? ('CenterLevel' | translateEn) : ('CenterLevel' | translateAr))}}
+                        </label>
+                    </nz-form-label>                                                                                                
+                    <div class="input-group-lg">
+                        <nz-form-item>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="level"
+                                formControlName="CenterLevel" 
+                                id="level" 
+                                name="level" 
+                                ngModel 
+                                disabled/>                                             
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <nz-form-label>
+                        <label for="final">
+                            {{(getLang() == 'EN' ? ('CenterIsFinal' | translateEn) : ('CenterIsFinal' | translateAr))}}
+                        </label>
+                    </nz-form-label>                                                                                                
+                    <div class="input-group-lg">
+                        <label 
+                            nz-checkbox 
+                            formControlName="CenterIsFinal" 
+                            id="final" 
+                            [nzDisabled]="isDisabled"></label>
+                    </div>
+                </div>
+            </div>                                          
+                   
+        </div>
+    </fieldset>
+</form> 

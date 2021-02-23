@@ -1,0 +1,71 @@
+<form class="form" [formGroup]="serviceTypesForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="ServiceTypeCode">
+                        {{(getLang() == 'EN' ? ('ServiceTypeCode' | translateEn) : ('ServiceTypeCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="ServiceTypeCode" 
+                            id="ServiceTypeCode" 
+                            name="ServiceTypeCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="ServiceType">
+                        {{(getLang() == 'EN' ? ('ServiceType' | translateEn) : ('ServiceType' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="ServiceType" 
+                                id="ServiceType" 
+                                name="ServiceType" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="Notes">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea
+                            nz-input
+                            [nzAutosize]="{ minRows: 2, maxRows: 20 }"
+                            formControlName="Notes" 
+                            id="Notes" 
+                            name="Notes" 
+                        ></textarea>                                             
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>                                         
+               
+    </div>
+</form>  

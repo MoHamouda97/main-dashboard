@@ -1,0 +1,65 @@
+<section class="notifi">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <nz-table 
+                    #headerTable  
+                    nzShowPagination
+                    [nzData]="data" 
+                    [nzPageSize]="3" 
+                    [nzScroll]="{ x: '240px' }"
+                    class="table table-striped"
+                    [class.w-200]="frmType == 'FrmItemsClasses'"
+                    (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+                    [nzLoading]="isTableSearch"
+                    *ngIf="data.length >= 1">
+                    <thead>
+                      <tr> 
+                        <th *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))">{{head}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index" 
+                            (click)="onItemClicked(i)"
+                            class="event" 
+                            style="cursor: pointer;">
+                            <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                                <input 
+                                    nz-input
+                                    class="form-control" 
+                                    type="text" 
+                                    #value 
+                                    (keyup)="filterData(key, value.value)" />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </nz-table>
+                <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>              
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-block btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+                {{lang.taskBarRefresh}}
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" [class.rtl-list]="getLang() == 'AR'">
+            <nz-transfer
+                [nzDataSource]="list"
+                [nzTitles]="listTitles()"
+                [nzShowSearch]="true"
+                (nzChange)="change($event)"
+                *ngIf="isNewData">
+            </nz-transfer>
+        </div>
+    </div>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>

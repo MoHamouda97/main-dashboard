@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FullComponent } from './layouts/full/full.component';
 import { BlankComponent } from './layouts/blank/blank.component';
+import { AuthGuard } from 'src/services/guard/auth-guard.service';
 
 export const Approutes: Routes = [
   {
@@ -12,11 +13,12 @@ export const Approutes: Routes = [
       { path: '', redirectTo: '/dashboard/dashboard1', pathMatch: 'full' },
       {
         path: 'dashboard',
+        canActivate: [AuthGuard],
         loadChildren: () => import('./dashboards/dashboard.module').then(m => m.DashboardModule)
       },
 
       {
-        path: 'system/:frmType/:id',
+        path: 'system/:frmType/:frmName/:id',
         loadChildren: () => import('./custom/system/system.module').then(m => m.SystemModule)
       },      
 

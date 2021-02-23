@@ -1,0 +1,42 @@
+.task-bar-wrapper{
+    padding: 5px 5px;
+    margin: 0;
+}
+
+.task-bar-wrapper ul {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+    width: 50px;
+    padding: 5px 0;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.task-bar-wrapper ul li{
+    text-align: center;
+    padding-bottom: 10px;
+    width: 50px;
+    margin: auto;        
+}
+
+.task-bar-wrapper ul li button{
+    background-color: transparent;
+    border: none;
+    font-size: 20px; 
+    border-radius: 7px; 
+    color: #333d54;  
+}
+
+.task-bar-wrapper ul li .lock-btn{
+    background: #333d54;
+    color: #fff;
+}
+
+@media only screen and (max-width: 767px) {
+    .task-bar-wrapper ul{width: 100%;}
+
+    .task-bar-wrapper ul li{
+        display: inline-block;
+        width: 45px;
+        padding-bottom: 0;
+    }
+}

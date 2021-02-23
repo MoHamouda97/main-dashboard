@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FrmService } from 'src/services/frm/frm.service';
 import { DatabindingService } from 'src/services/databinding.service';
 import {operators} from './../../../../settings/operators';
@@ -12,22 +12,22 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
+  @Input('isDbLoading') isDbLoading = true;
+  @Input('fields') fields = [];
   tableTitle;
-  fields;
   lang;
   searchValue;
   operatorValue;
   searchBy;
   SQLstm;
-  searchOption = "CenterCode";
+  searchOption;
   searchOperator = "=";
 
   openOperator = false;
   openValue = false
   openBtn = false;
 
-  operators = operators;
-  isDbLoading = true;  
+  operators = operators; 
   isSearching = false;
 
   private unsubscribe$: Subject<any> = new Subject<any>();
@@ -43,10 +43,13 @@ export class SearchComponent implements OnInit, OnDestroy {
       case  'FrmEntryType':
         this.tableTitle = 'AccTransTypes';
         break;
+      case  'FrmCustomersRequests':
+        this.tableTitle = 'PersonsRequests';
+        break; 
+      case  'FrmSalesOrders':
+        this.tableTitle = 'SalesOrderHdr';
+        break;                
     }
-
-
-    this.loadTableFieldsName(`SELECT * FROM ${this.tableTitle}`);
 
     // extract SQL statement
     this.SQLstm = localStorage.getItem("sqlStm");   
@@ -96,24 +99,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   //#region 
-    // load table fields name
-    // Mohammed Hamouda - 30/12/2020  
-
-    loadTableFieldsName(SQLStm) {
-    this.service.loadTableFieldsName(SQLStm).subscribe(
-      res => {
-        this.fields = res;
-        this.isDbLoading = false;
-      },
-      err => {
-        console.log(err)
-      }
-    )
-  }
-
-  //#endregion
-
-  //#region 
 
     // handle search functionality 
     // Mohammed Hamouda - 31/12/2020 => v2 (just update getData() to do async work with task bar)
@@ -123,11 +108,17 @@ export class SearchComponent implements OnInit, OnDestroy {
 
       let cri;
 
-      (isFromTaskBar == false) 
-        ? cri = `${this.tableTitle}.${this.searchOption} ${this.searchOperator} '${this.searchValue}'`.replace('%', '**')
-        : cri = '';
+      if (this.searchOperator == 'Like') {
+          (isFromTaskBar == false) 
+            ? cri = `${this.tableTitle}.${this.searchOption} like '**${this.searchValue}**'`
+            : cri = '';
+      } else {
+        (isFromTaskBar == false) 
+          ? cri = `${this.tableTitle}.${this.searchOption} ${this.searchOperator} '${this.searchValue}'`
+          : cri = '';
+      }
 
-      this.service.loadData(this.SQLstm, cri).subscribe(
+      this.service.loadData(localStorage.getItem('sqlStm'), cri).subscribe(
         res => {
           this.isSearching = false;
           this.binding.sendingSearchData(res);          
@@ -157,4 +148,28 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   //#endregion
 
+
+  ngOnChanges(changes: SimpleChanges) {
+    // check new table fields
+    const isNewFields = setInterval(() => {
+      if (typeof (changes.fields) == 'undefined') {
+        null;
+      } else {
+        this.fields = changes.fields.currentValue;
+        this.searchOption = this.fields[0];
+        clearInterval(isNewFields);
+      }
+    }, 1000);
+
+    // check new table fields
+    const isNewDbLoad = setInterval(() => {
+      if (typeof (changes.isDbLoading) == 'undefined') {
+        null;
+      } else {
+        this.isDbLoading = changes.isDbLoading.currentValue;
+        clearInterval(isNewDbLoad);
+      }
+    }, 1000);    
+
+  }
 }

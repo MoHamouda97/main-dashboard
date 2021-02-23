@@ -3,10 +3,9 @@
         <li              
             [nzTooltipTitle]="lang.taskBarNew" 
             [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
-            nz-tooltip
-            (click)="resetData()"
+            nz-tooltip            
             *ngIf="canAdd">
-            <button matRipple class="btn">
+            <button matRipple class="btn btn-secondary" [disabled]="isDisabled" (click)="resetData()">
                 <i *ngIf="!isAdd" class="fas fa-file-alt"></i>
                 <i *ngIf="isAdd" nz-icon nzType="loading" nzTheme="outline"></i>
             </button>
@@ -16,7 +15,7 @@
             [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
             nz-tooltip            
             *ngIf="canEdit ||canAdd">
-            <button matRipple class="btn" (click)="saveOrUpdateMode()">
+            <button matRipple class="btn btn-secondary" (click)="saveOrUpdateMode()" id="js_save_update">
                 <i *ngIf="!isEditOrAdd" class="fas fa-save"></i>
                 <i *ngIf="isEditOrAdd" nz-icon nzType="loading" nzTheme="outline"></i>
             </button>
@@ -26,7 +25,7 @@
             [nzTooltipPlacement]="(getLang() == 'AR') ? 'top' : 'left'" 
             nz-tooltip
             *ngIf="canPrint">
-            <button matRipple [disabled]="isDisabled" class="btn" (click)="getReport()">
+            <button matRipple [disabled]="isDisabled || !isAvailableReport" class="btn" (click)="getReport()">
                 <i *ngIf="!isReport" class="fas fa-print"></i>
                 <i *ngIf="isReport" nz-icon nzType="loading" nzTheme="outline"></i>
             </button>

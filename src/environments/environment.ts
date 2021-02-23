@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  endPoint: 'http://localhost:62217/api/'
+  endPoint: 'http://localhost:62217/api/',
+  downloadRepPath: 'http://localhost:62217/api/'
 };
 
 /*

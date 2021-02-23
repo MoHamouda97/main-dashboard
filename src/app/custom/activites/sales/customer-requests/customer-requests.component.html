@@ -1,0 +1,745 @@
+<form class="form" [formGroup]="customerRequestForm" autocomplete="off" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        
+        <div class="col-md-12">
+            <div class="table-responsive" style="padding-bottom: 1rem;">
+                <table class="w-100 table table-striped sm-table adjust-padding">
+                    <thead>
+                        <tr>
+                            <th 
+                                colspan="4"
+                                style="width: 40%;">{{(getLang() == 'EN' ? ('Request no.' | translateEn) : ('Request no.' | translateAr))}}</th>
+                            <th>{{(getLang() == 'EN' ? ('Date' | translateEn) : ('Date' | translateAr))}}</th>
+                            <th>{{(getLang() == 'EN' ? ('Request By' | translateEn) : ('Request By' | translateAr))}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- start code-->
+                            <td>
+                                <input  
+                                    class="form-control" 
+                                    nz-input                                
+                                    formControlName="BranchCode"
+                                    disabled/>
+                            </td>
+                            <td>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="ServerCode"                                  
+                                    disabled/>                            
+                            </td>
+                            <td>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    [value]="isNew"                                 
+                                    disabled/>  
+                            </td>
+                            <td>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="BrnSerial"  
+                                    ngModel
+                                    disabled/>                             
+                            </td>
+                            <!-- end code -->
+                            <!-- start date -->
+                            <td>
+                                <nz-date-picker  
+                                    [nzPlaceHolder]="''"
+                                    ngMode
+                                    formControlName="RequestDate"
+                                    [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>  
+                            </td>
+                            <!-- end date-->
+                            <!-- start requested by -->
+                            <td>
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconRequestedBy">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="RequestedBy"
+                                        #requestedBy
+                                        (blur)="checkIsHaveVal('RequestedBy')"/>
+                                </nz-input-group>                            
+                                <ng-template #suffixIconRequestedBy>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="fillPopUp(5, 'RequestedBy')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                     
+                            <!-- end requested by -->  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12" *ngIf="objID == 340">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PersonCode">
+                        {{(getLang() == 'EN' ? ('Customer' | translateEn) : ('Customer' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconCustomer">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PersonCode" 
+                            id="PersonCode" 
+                            name="PersonCode" 
+                            ngModel
+                            #customer
+                            (blur)="checkIsHaveVal('customer')"/>                            
+                    </nz-input-group>                            
+                    <ng-template #suffixIconCustomer>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            (click)="fillPopUp(6, 'Customer')"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                     
+                </div>                                    
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PersonName">
+                        {{(getLang() == 'EN' ? ('Name' | translateEn) : ('Name' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PersonName" 
+                            id="PersonName" 
+                            name="PersonName" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PersonAltrName">
+                        {{(getLang() == 'EN' ? ('Arabic Name' | translateEn) : ('Arabic Name' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="PersonAltrName" 
+                                id="PersonAltrName" 
+                                name="PersonAltrName" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>  
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CategoryCode">
+                        {{(getLang() == 'EN' ? ('Category Code' | translateEn) : ('Category Code' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="CategoryCode" 
+                                        id="CategoryCode" 
+                                        name="CategoryCode" 
+                                        ngModel
+                                        #category
+                                        (blur)="checkIsHaveVal('CategoryCode')"
+                                        (keyup)="findhData(category.value, 'CategoryCode')"/>
+                                </nz-input-group> 
+                                <ng-template #suffixIconButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="fillPopUp(0, 'CategoryCode')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="Description" 
+                                    id="Description" 
+                                    name="Description" 
+                                    ngModel
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CenterCode">
+                        {{(getLang() == 'EN' ? ('Cost Center' | translateEn) : ('Cost Center' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconCostCenters">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="CenterCode" 
+                                        id="CenterCode" 
+                                        name="CenterCode" 
+                                        ngModel
+                                        #centerCode
+                                        (blur)="checkIsHaveVal('CenterCode')"
+                                        (keyup)="findhData(centerCode.value, 'CenterCode')"/>
+                                </nz-input-group>
+                                <ng-template #suffixIconCostCenters>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="fillPopUp(4, 'CenterCode')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                                  
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    formControlName="CenterName" 
+                                    id="CenterName" 
+                                    name="CenterName" 
+                                    ngModel
+                                    disabled/>
+                            </nz-input-group>                                                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PersonGroupID">
+                        {{(getLang() == 'EN' ? ('Group' | translateEn) : ('Group' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconGroup">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PersonGroupID" 
+                            id="PersonGroupID" 
+                            name="PersonGroupID" 
+                            ngModel
+                            #groupID
+                            (blur)="checkIsHaveVal('PersonGroupID')" />
+                    </nz-input-group>                            
+                    <ng-template #suffixIconGroup>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            (click)="fillPopUp(1, 'PersonGroupID')"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                     
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PersonSubGroupID">
+                        {{(getLang() == 'EN' ? ('SubGroup' | translateEn) : ('SubGroup' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconSubGroup">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PersonSubGroupID" 
+                            id="PersonSubGroupID" 
+                            name="PersonSubGroupID" 
+                            ngModel
+                            #subGroupID
+                            (blur)="checkIsHaveVal('PersonSubGroupID')"/>
+                    </nz-input-group>                            
+                    <ng-template #suffixIconSubGroup>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            (click)="fillPopUp(2, 'PersonSubGroupID')"
+                            matRipple>
+                            <i nz-icon nzType="search" *ngIf="!isSubGroup"></i>
+                            <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isSubGroup"></i>
+                        </button>
+                    </ng-template>                    
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PmtTerms">
+                        {{(getLang() == 'EN' ? ('Pmt Terms' | translateEn) : ('Pmt Terms' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconTerms">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PmtTerms" 
+                            id="PmtTerms" 
+                            name="PmtTerms" 
+                            ngModel
+                            #terms
+                            (blur)="checkIsHaveVal('PmtTerms')"/>
+                    </nz-input-group>                            
+                    <ng-template #suffixIconTerms>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            (click)="fillPopUp(3, 'PmtTerms')"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                     
+                </div>
+            </div>
+        </div>         
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Contact">
+                        {{(getLang() == 'EN' ? ('Contact Name' | translateEn) : ('Contact Name' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Contact" 
+                                id="Contact" 
+                                name="Contact" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="ContactTitle">
+                        {{(getLang() == 'EN' ? ('ContactTitle' | translateEn) : ('ContactTitle' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="ContactTitle" 
+                                id="ContactTitle" 
+                                name="ContactTitle" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PoBox">
+                        {{(getLang() == 'EN' ? ('PoBox' | translateEn) : ('PoBox' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="PoBox" 
+                                id="PoBox" 
+                                name="PoBox" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Phone">
+                        {{(getLang() == 'EN' ? ('Phone' | translateEn) : ('Phone' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Phone" 
+                                id="Phone" 
+                                name="Phone" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CreditLimit">
+                        {{(getLang() == 'EN' ? ('Credit Limit' | translateEn) : ('Credit Limit' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CreditLimit" 
+                                id="CreditLimit" 
+                                name="CreditLimit"/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="AltrPhone">
+                        {{(getLang() == 'EN' ? ('Mobile' | translateEn) : ('Mobile' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="AltrPhone" 
+                                id="AltrPhone" 
+                                name="AltrPhone" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="TradeLicenseNo">
+                        {{(getLang() == 'EN' ? ('Trade License #' | translateEn) : ('Trade License #' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg custom-validator" [class.lang-en]="getLang() == 'EN'" [class.lang-ar]="getLang() == 'AR'">
+                    <nz-form-item>
+                        <nz-form-control [nzValidateStatus]="validationType" nzHasFeedback>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="TradeLicenseNo" 
+                                id="TradeLicenseNo" 
+                                name="TradeLicenseNo" 
+                                ngModel
+                                #trade
+                                (blur)="checkTrade(trade.value)"/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Fax">
+                        {{(getLang() == 'EN' ? ('Fax' | translateEn) : ('Fax' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Fax" 
+                                id="Fax" 
+                                name="Fax" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>           
+        
+
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="E_Mail">
+                        {{(getLang() == 'EN' ? ('E-mail' | translateEn) : ('E-mail' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="E_Mail" 
+                                id="E_Mail" 
+                                name="E_Mail" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Address">
+                        {{(getLang() == 'EN' ? ('Address' | translateEn) : ('Address' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Address" 
+                                id="Address" 
+                                name="Address" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>    
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="VATno">
+                        {{(getLang() == 'EN' ? ('VAT No.' | translateEn) : ('VAT No.' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="VATno" 
+                                id="VATno" 
+                                name="VATno" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Notes">
+                        {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Notes" 
+                                id="Notes" 
+                                name="Notes" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+</form>  
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (pouppTitle | translateEn) : (pouppTitle | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    [nzWidth]="(pouppTitle == 'Customers' ? '97%' : '520px')"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            nzShowPagination
+            [nzData]="data" 
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '240px' }"
+            class="table table-striped"
+            [class.super-ultra-wide]="pouppTitle == 'Customers'"
+            (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <th 
+                    *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))"
+                    matSort 
+                    (matSortChange)="sortData($event, head)"
+                    mat-sort-header="{{head}}">{{head}}</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let allData of headerTable.data; let i = index" 
+                    (click)="onItemClicked(i)" 
+                    style="cursor: pointer;">
+                    <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                        <input 
+                            nz-input
+                            class="form-control" 
+                            type="text" 
+                            #value 
+                            (keyup)="filterData(key, value.value)" />
+                    </th>
+                </tr>
+            </tfoot>
+        </nz-table>
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>              
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+            {{lang.taskBarRefresh}}
+        </button>
+    </div>
+</nz-modal>

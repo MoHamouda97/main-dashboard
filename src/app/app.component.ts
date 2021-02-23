@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { FrmService } from 'src/services/frm/frm.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-root',
@@ -32,11 +33,13 @@ export class AppComponent implements OnInit, OnDestroy {
         (localStorage.getItem("lang")) ? null : localStorage.setItem("lang", "EN");
 
         // get dictionary
-        // Mohammed Hamouda - 3/1/2020
+        // Mohammed Hamouda - 3/1/2020        
         this.service.GetDichttp().subscribe(
             res => {
                 let dictionary: any = res;
+                localStorage.removeItem('dictionary');
                 localStorage.setItem("dictionary", dictionary);
+                console.log(localStorage.getItem('dictionary'))
             }
         )
     }

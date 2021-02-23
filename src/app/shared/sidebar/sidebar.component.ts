@@ -22,6 +22,7 @@ export class SidebarComponent implements OnInit {
   icons = ['mdi mdi-dots-horizontal', 'mdi mdi-book-open-variant', 'mdi mdi-bank', 'fas fa-dollar-sign', 'mdi mdi-store', 'fab fa-cc-visa', 'mdi mdi-trending-up', 'mdi mdi-security', 'fas fa-cog', ' fas fa-database'];
   lang;
   arrForSQL = [];
+  menuForSearch = [];
   
   // this is for the open close
   addExpandClass(element: any) {
@@ -97,6 +98,7 @@ export class SidebarComponent implements OnInit {
         this.renderMenuItems(this.menuItems);
         this.adjustIcons(); 
         this.renderReportItems(this.reportItems);
+        this.extractSQL(this.reportItems);
       }
     ) 
   }
@@ -110,6 +112,7 @@ export class SidebarComponent implements OnInit {
   // render menu items
 
   renderMenuItems(items: any[]) {
+
     this.dbRoutes = items.map((val, index) => {
       return {
         path: '',
@@ -119,12 +122,21 @@ export class SidebarComponent implements OnInit {
         extralink: false,
         submenu: items[index].subrootlist.map((val, index2) => {
           return {
-            path: `/system/${items[index].subrootlist[index2].ObjectName}/${items[index].subrootlist[index2].ID}`,
-            title: items[index].subrootlist[index2].ObjectTitle,
+            path: `/system/${items[index].subrootlist[index2].ObjectName}/${items[index].subrootlist[index2].ObjectTitle}/${items[index].subrootlist[index2].ID}`,
+            title: items[index].subrootlist[index2].subrootlistname,
             icon: '',
-            class: '',
+            class: (items[index].subrootlist[index2].subofsubrootlist.length > 0) ? 'has-arrow' : '',
             extralink: false,
-            submenu: []                 
+            submenu: items[index].subrootlist[index2].subofsubrootlist.map((val, index3) => {
+              return {
+                path: `/system/${items[index].subrootlist[index2].subofsubrootlist[index3].ObjectName}/${items[index].subrootlist[index2].subofsubrootlist[index3].ObjectTitle}/${items[index].subrootlist[index2].subofsubrootlist[index3].ID}`,
+                title: items[index].subrootlist[index2].subofsubrootlist[index3].ObjectTitle,
+                icon: '',
+                class: '',
+                extralink: false,
+                submenu: []
+              }
+            })                
           }
         })          
       }
@@ -142,36 +154,72 @@ export class SidebarComponent implements OnInit {
     );
 
     this.extractSQL(items);
+
+    this.extractSystemMenuItems(items, 'entry');
   }
 
   // extract SQL statement from the bd
 
   extractSQL(items) {
-    for (let i = 0; i < items.length; i++) {
-      for (let j = 0; j < items[i].subrootlist.length; j++) {
+    for (let i = 0; i <= items.length -1; i++) {
+      for (let j = 0; j <= items[i].subrootlist.length -1; j++) {
         this.arrForSQL.push({
-          objName: items[i].subrootlist[j].ObjectName,
+          objName: items[i].subrootlist[j].ObjectTitle,
           SQL: items[i].subrootlist[j].SqlStatment
-        })
+        });
+
+        for (let k = 0; k <= items[i].subrootlist[j].subofsubrootlist.length -1; k++) {
+          this.arrForSQL.push({
+            objName: items[i].subrootlist[j].subofsubrootlist[k].ObjectTitle,
+            SQL: items[i].subrootlist[j].subofsubrootlist[k].SqlStatment.replace(/\n/g, " ")
+          });
+        }
       }
     }
 
     localStorage.setItem('SQL', JSON.stringify(this.arrForSQL));
   }
 
+  // extract menu avilable
+
+  extractSystemMenuItems(items, type) {
+  
+    for (let i = 0; i <= items.length - 1; i++) {
+      for (let j = 0; j <= items[i].subrootlist.length - 1; j++) {
+        this.menuForSearch.push({
+          name: `${items[i].subrootlist[j].subrootlistname}`, 
+          path: `/system/${items[i].subrootlist[j].ObjectName}/${items[i].subrootlist[j].ObjectTitle}/${items[i].subrootlist[j].ID}`,
+          icon: (type == 'report') ? 'fas fa-chart-bar' : 'fas fa-edit'
+        });
+        
+        if (items[i].subrootlist[j].subofsubrootlist.length > 0) {
+          for (let k = 0; k < items[i].subrootlist[j].subofsubrootlist.length -1; k++) {
+            this.menuForSearch.push({
+              name: `${items[i].subrootlist[j].subofsubrootlist[k].Subofsub}`, 
+              path: `/system/${items[i].subrootlist[j].subofsubrootlist[k].ObjectName}/${items[i].subrootlist[j].subofsubrootlist[k].ObjectTitle}/${items[i].subrootlist[j].subofsubrootlist[k].ID}`,
+              icon: (type == 'report') ? 'fas fa-chart-bar' : 'fas fa-edit'
+            })
+          }
+        }
+      }      
+    }
+    
+    localStorage.setItem('menuForSearch', JSON.stringify(this.menuForSearch));
+  }
+
   // render menu items
 
-  renderReportItems(items: any[]) {
+  renderReportItems(items: any[]) {   
     let rptItems = items.map((val, index) => {
       return {
         path: '',
-        title: items[index].root,
+        title: `${items[index].root}_`,
         icon: 'fas fa-file-alt',
         class: 'has-arrow', 
         extralink: false,
         submenu: items[index].subrootlist.map((val, index2) => {
           return {
-            path: `/system/${items[index].subrootlist[index2].ObjectName}`,
+            path: `/system/${items[index].subrootlist[index2].ObjectName}/${items[index].subrootlist[index2].ObjectTitle}/${items[index].subrootlist[index2].ID}`,
             title: items[index].subrootlist[index2].ObjectTitle,
             icon: '',
             class: '',
@@ -196,7 +244,9 @@ export class SidebarComponent implements OnInit {
     for (let i = 0; i < rptItems.length; i++) 
       this.dbRoutes.push(rptItems[i])
     
-    this.sidebarnavItems = this.dbRoutes.filter(sidebarnavItem => sidebarnavItem);  
+    this.sidebarnavItems = this.dbRoutes.filter(sidebarnavItem => sidebarnavItem);
+    
+    this.extractSystemMenuItems(items, 'report')
   }  
 
 //#endregion

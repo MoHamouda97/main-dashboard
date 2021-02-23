@@ -1,0 +1,60 @@
+.table th{padding: 5px !important;}
+.table td {padding: 0 !important;}
+
+.dir-rtl{direction: rtl;}
+.dir-rtl .ant-checkbox + span{padding-left: 0;}
+
+.dir-ltr{direction: ltr};
+.dir-rtl .ant-checkbox + span{padding-right: 0;}
+
+.move-up{
+    position: relative;
+    top: -27px;
+}
+
+.extra-move{top: -40px;}
+
+.status{
+    position: absolute;
+    top: 50px;
+    right: 50%;
+    margin-bottom: 0;
+    display: inline-block;
+    padding: 15px;    
+    border-radius: 10px;
+}
+
+.status::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./../../../../../assets/images/texture.jpg');
+    mix-blend-mode: lighten;
+}
+
+.compleated{
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+    display: block;
+    box-shadow: inset 0px 0px 0px 10px blue;
+}
+
+.reset-btn{
+    margin-top: 5px;
+    box-shadow: none !important;
+}
+
+#js_sales_grid_form{display: none;}
+
+@media only screen and (max-width: 1024px) {
+    .sales-order-sm{
+        max-width: 100%;
+        flex: 100%;
+    }
+
+    .move-up{position: static;}
+}

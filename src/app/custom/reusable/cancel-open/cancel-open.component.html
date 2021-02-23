@@ -1,0 +1,90 @@
+<div class="search-wrapper">
+    <div class="row">
+        <div class="col-md-3">
+            <nz-select
+                [(ngModel)]="selectedBranch" 
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                [nzLoading]="isDbLoading">
+                <nz-option 
+                    *ngFor="let branch of branches; let i = index" 
+                    [nzValue]="branch.code" 
+                    [nzLabel]="(getLang() == 'EN' ? (branch.name | translateEn) : (branch.name | translateAr))"></nz-option>
+            </nz-select>            
+        </div>
+        <div class="col-md-3">
+            <nz-date-picker  
+                [nzPlaceHolder]="''"
+                ngMode
+                [(ngModel)]="date"
+                [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>           
+        </div>      
+        <div class="col-md-3">
+            <button class="btn btn-block btn-info" matRipple (click)="getData()" [disabled]="isSearching">
+                <span *ngIf="!isSearching">{{lang.searchButton}}</span>
+                <span *ngIf="isSearching">
+                    <i nz-icon nzType="loading" nzTheme="outline"></i>
+                </span>
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button 
+                class="btn btn-block btn-outline-info"
+                matRipple 
+                (click)="cancelOpen()" 
+                [disabled]="isDisabled"
+                *ngIf="isVisible">
+                {{(getLang() == 'EN' ? (btnText | translateEn) : (btnText | translateAr))}}
+            </button>
+        </div>                        
+    </div>
+</div>
+
+<section *ngIf="data.length > 0">
+    <div class="row" style="padding-top: 1.25rem;">
+        <div class="col-md-3" *ngIf="isCloseDate" style="margin-bottom: 20px;">
+            <nz-date-picker  
+                [nzPlaceHolder]="lang.closeDatePlaceHolder"
+                ngMode
+                [(ngModel)]="closeDate"
+                [nzFormat]="'yyyy-MM-dd HH:mm:ss'"></nz-date-picker>           
+        </div>  
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <nz-table 
+                    #headerTable  
+                    nzShowPagination
+                    [nzData]="data" 
+                    [nzPageSize]="10" 
+                    [nzScroll]="{ x: '240px' }"
+                    class="table forms-table table-striped wide-table"                    
+                    [class.mega-wide]="objID == 206"
+                    [class.mega-wide]="objID == 89"
+                    [class.ultra-wide]="objID == 342"
+                    [class.ultra-wide]="objID == 293"
+                    [class.ultra-wide]="objID == 208"
+                    [class.ultra-wide]="objID == 210"
+                    (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+                    [nzLoading]="isNewData">
+                    <thead>
+                    <tr> 
+                        <th 
+                            *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))"
+                            matSort 
+                            (matSortChange)="sortData($event, head)"
+                            mat-sort-header="{{head}}">{{head}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index" 
+                            (click)="onItemClicked(i)" 
+                            style="cursor: pointer;"
+                            class="record">
+                            <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                        </tr>
+                    </tbody>
+            </nz-table>
+            </div>
+        </div>
+    </div>
+</section>

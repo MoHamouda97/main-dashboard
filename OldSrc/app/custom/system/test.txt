@@ -1,0 +1,32 @@
+<section class="frm-wrapper" [ngSwitch]="frmType">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        test /
+                    </h3>
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <!-- search bar here -->
+                            <app-search></app-search>
+                            
+                            <!-- forms -->
+                            <app-cost-centers *ngSwitchCase="'FrmCostCenters'"></app-cost-centers>  
+                            <app-entry-types *ngSwitchCase="'FrmEntryType'"></app-entry-types>
+                            <div *ngSwitchDefault style="color: red;" class="text-center">
+                                {{frmType}} Under Development
+                            </div>
+                        </div>
+    
+                        <div class="col-md-2">
+                            <!-- task bar here -->
+                            <app-task-bar [userRights]="userRights"></app-task-bar>
+                        </div>                      
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

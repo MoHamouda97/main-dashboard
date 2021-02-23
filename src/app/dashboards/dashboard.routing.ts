@@ -12,7 +12,7 @@ export const DashboardRoutes: Routes = [
         path: 'dashboard1',
         component: Dashboard1Component,
         data: {
-          title: 'Dashboard 1',
+          title: 'Dashboard',
           urls: [
             { title: 'Dashboard', url: '/dashboard' },
             { title: 'Dashboard 1' }

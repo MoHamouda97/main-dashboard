@@ -1,0 +1,73 @@
+<form class="form" [formGroup]="currenciesForm" autocomplete="off" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CurrencyCode">
+                        {{(getLang() == 'EN' ? ('CurrencyCode' | translateEn) : ('CurrencyCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="CurrencyCode" 
+                            id="CurrencyCode" 
+                            name="CurrencyCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CurrencyName">
+                        {{(getLang() == 'EN' ? ('CurrencyName' | translateEn) : ('CurrencyName' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CurrencyName" 
+                                id="CurrencyName" 
+                                name="CurrencyName" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="ChangeRate">
+                        {{(getLang() == 'EN' ? ('ChangeRate' | translateEn) : ('ChangeRate' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="ChangeRate" 
+                                id="ChangeRate" 
+                                name="ChangeRate" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>        
+    </div>
+</form>  

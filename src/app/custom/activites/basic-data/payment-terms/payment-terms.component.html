@@ -1,0 +1,149 @@
+<form class="form" [formGroup]="paymentTermsForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-4">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Terms">
+                        {{(getLang() == 'EN' ? ('Terms' | translateEn) : ('Terms' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="Terms" 
+                            id="Terms" 
+                            name="Terms" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CreditFor">
+                        {{(getLang() == 'EN' ? ('CreditFor' | translateEn) : ('CreditFor' | translateAr))}}
+                        <small>
+                           {{lang.creditForCustomer}}
+                        </small>
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CreditFor" 
+                                id="CreditFor" 
+                                name="CreditFor" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>  
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CreditFor">
+                        {{(getLang() == 'EN' ? ('CreditFor' | translateEn) : ('CreditFor' | translateAr))}}
+                        <small>
+                            {{lang.creditForSalesmen}}
+                        </small>                        
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CreditForComm" 
+                                id="CreditForComm" 
+                                name="CreditForComm" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>  
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Prepayment">
+                        {{(getLang() == 'EN' ? ('Prepayment' | translateEn) : ('Prepayment' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Prepayment" 
+                                id="Prepayment" 
+                                name="Prepayment" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CashOnDelivery">
+                        {{(getLang() == 'EN' ? ('CashOnDelivery' | translateEn) : ('CashOnDelivery' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="CashOnDelivery" 
+                                id="CashOnDelivery" 
+                                name="CashOnDelivery" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="Notes">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea
+                            nz-input
+                            [nzAutosize]="{ minRows: 2, maxRows: 20 }"
+                            formControlName="Notes" 
+                            id="Notes" 
+                            name="Notes" 
+                        ></textarea>                                             
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>         
+               
+    </div>
+</form>  

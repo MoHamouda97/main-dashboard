@@ -1,3 +1,6 @@
+<div class="container-fluid">
+    <div class="row" style="align-items: center;">
+        <div class="col-md-2">
 <!-- ============================================================== -->
 <!-- toggle and nav items -->
 <!-- ============================================================== -->
@@ -32,59 +35,104 @@
 
 
 </ul>
-<!-- ============================================================== -->
-<!-- Right side toggle and nav items -->
-<!-- ============================================================== -->
-<ul class="navbar-nav float-right">
-    <!-- ============================================================== -->
-    <!-- Search -->
-    <!-- ============================================================== -->
-    <li class="nav-item search-box">
-        <a matRipple (click)="showSearch = !showSearch" class="nav-link waves-effect waves-dark" href="javascript:void(0)">
-            <i class="ti-search"></i>
-        </a>
-        <form class="app-search position-absolute" [ngClass]="{'show-search': showSearch}">
-            <input type="text" class="form-control" placeholder="Search &amp; enter">
-            <a class="srh-btn" (click)="showSearch = !showSearch">
-                <i class="ti-close font-16"></i>
-            </a>
-        </form>
-    </li>
-    <!-- ============================================================== -->
-    <!-- Logout => Mohammed Hamouda - 29/12/2020 -->
-    <!-- ============================================================== -->    
-    <li class="nav-item">
-        <a matRipple href="javascript:void(0)" title="Logout" class="nav-link waves-effect waves-dark">
-            <i class="ti-power-off"></i>
-        </a>
-    </li>
-    <!-- ============================================================== -->
-    <!-- create new -->
-    <!-- ============================================================== -->
-    <li class="nav-item" ngbDropdown placement="bottom-right">
-        <a matRipple ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
-            <i 
-                id="js_lang_flag" 
-                class="flag-icon font-18"
-                [class.flag-icon-us]="getLang() == 'EN'"
-                [class.flag-icon-sa]="getLang() == 'AR'"></i>
-        </a>
-        <div class="dropdown-menu-right" aria-labelledby="navbarDropdown2" ngbDropdownMenu>
-            <button matRipple class="dropdown-item" (click)="changeLang('EN')" style="cursor: pointer;">
-                <i class="flag-icon flag-icon-us"></i> English
-            </button>
-            <button matRipple class="dropdown-item special-font" (click)="changeLang('AR')" style="cursor: pointer;">
-                <i class="flag-icon flag-icon-sa"></i> العربية
-            </button>
         </div>
-    </li>
+        <div class="col-md-7">
+            <ul class="list-unstyled" style="margin: 0;">
+                <li class="nav-link">
+                    <form class="app-search" style="direction: ltr;">
+                        <input 
+                            type="text" 
+                            id="js_search"
+                            nz-input 
+                            class="form-control" 
+                            placeholder="Search here"
+                            [nzAutocomplete]="auto"
+                            #value
+                            (input)="searchMenu(value.value)"
+                            (keyup.enter)="navigateByEnter(value.value)"
+                            style="border-radius: 60px;"
+                            [nzAutocomplete]="auto">
+                            <nz-autocomplete #auto>
+                                <nz-auto-option 
+                                    *ngFor="let item of items" 
+                                    [nzLabel]="item.name" 
+                                    [nzValue]="item.name">
+                                    <a 
+                                        [routerLink]="item.path" 
+                                        class="d-block" 
+                                        matRipple
+                                        (click)="clearSearch(item.name)">
+                                        {{item.name}}
+                                        <i class="{{item.icon}} float-right"></i>
+                                    </a>
+                                </nz-auto-option>
+                            </nz-autocomplete>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav float-right">
+                <!-- ============================================================== -->
+                <!-- Search -->
+                <!-- ============================================================== -->
+                <!--<li class="nav-item search-box">
+                    <a matRipple (click)="showSearch = !showSearch" class="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="ti-search"></i>
+                    </a>
+                    <form class="app-search position-absolute" [ngClass]="{'show-search': showSearch}">
+                        <input type="text" class="form-control" placeholder="Search &amp; enter">
+                        <a class="srh-btn" (click)="showSearch = !showSearch">
+                            <i class="ti-close font-16"></i>
+                        </a>
+                    </form>
+                </li>-->
+                <!-- ============================================================== -->
+                <!-- Logout => Mohammed Hamouda - 29/12/2020 -->
+                <!-- ============================================================== -->    
+                <li class="nav-item">
+                    <a 
+                        matRipple 
+                        href="javascript:void(0)" 
+                        (click)="logout()" 
+                        title="Logout" 
+                        class="nav-link waves-effect waves-dark">
+                        <i class="ti-power-off"></i>
+                    </a>
+                </li>
+                <!-- ============================================================== -->
+                <!-- create new -->
+                <!-- ============================================================== -->
+                <li class="nav-item" ngbDropdown placement="bottom-right">
+                    <a matRipple ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i 
+                            id="js_lang_flag" 
+                            class="flag-icon font-18"
+                            [class.flag-icon-us]="getLang() == 'EN'"
+                            [class.flag-icon-sa]="getLang() == 'AR'"></i>
+                    </a>
+                    <div class="dropdown-menu-right" aria-labelledby="navbarDropdown2" ngbDropdownMenu>
+                        <button matRipple class="dropdown-item" (click)="changeLang('EN')" style="cursor: pointer;">
+                            <i class="flag-icon flag-icon-us"></i> English
+                        </button>
+                        <button matRipple class="dropdown-item special-font" (click)="changeLang('AR')" style="cursor: pointer;">
+                            <i class="flag-icon flag-icon-sa"></i> العربية
+                        </button>
+                    </div>
+                </li>
 
-    <!-- ============================================================== -->
-    <!-- User profile and search -->
-    <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
 
-    <!-- ============================================================== -->
-    <!-- User profile and search -->
-    <!-- ============================================================== -->
-</ul>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+            </ul>
+        </div>
+    </div>
+</div>

@@ -3,8 +3,6 @@ import { DatabindingService } from 'src/services/databinding.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import * as lang from './../../../../settings/lang';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import * as $ from 'jquery';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -14,8 +12,10 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
   @Input('userRights') userRights;
+  @Input('isAvailableReport') isAvailableReport = true;
   lang;
   isDisabled = true;
+  isNewRecord = true;
   isDelete = false;
   isEditOrAdd = false;
   isReport = false;
@@ -28,11 +28,8 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
 
   addOrEdit = 'Add';
 
-  subscription: Subscription;
-
   isNewTLoad = true;
 
-  destroyed = new Subject();
 
   constructor(
     private binding: DatabindingService, 
@@ -89,7 +86,7 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
         // display messages
         // Mohammed Hamouda - 3/1/2021
 
-        this.binding.checkMessage.pipe(takeUntil(this.destroyed)).subscribe(
+        this.binding.checkMessage.subscribe(
           res => {
             if(res != null) {
               this.arabicOrEnglishMessageForCompleatedAction(localStorage.getItem("lang"), res);
@@ -233,16 +230,56 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
             notification = 'success';
             this.isEditOrAdd = false;
             break;
+          case "deleteTransType" :
+            title = this.lang.deleteMsgTitle;
+            message = this.lang.deleteTransTypeMsgDetails;
+            notification = 'warning';
+            this.isDelete = false;
+            break;
+          case "validValue" :
+              title = this.lang.validValueMsgTitle;
+              message = this.lang.validValueMsgDetails;
+              notification = 'warning';
+              this.isDelete = false;
+              break; 
+          case "canNotDelete" :
+              title = this.lang.deleteMsgTitle;
+              message = this.lang.canNotDeleteMsgDetails;
+              notification = 'warning';
+              this.isDelete = false;
+              break;                         
           case "invalid" :
             title = this.lang.warningMsgTitle;
             message = this.lang.warningMsgDetails;
             notification = 'warning';
             this.isEditOrAdd = false;  
+            break; 
+          case "reportValidation" :
+              title = this.lang.reportValidationMsgTitle;
+              message = this.lang.reportValidationMsgDetails;
+              notification = 'warning';
+              break;
+          case "noCustomer" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.noCustMsgDetails;
+              notification = 'warning';
+              break; 
+          case "quntity" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.quantityMsgDetails;
+              notification = 'warning';
+              break; 
+          case "missingItemCode" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.missingItemCodeMsgDetails;
+              notification = 'warning';
+              break;                                                          
         }
 
         this.notification.create(notification, title, message, options);
       } else {
         this.isDelete = false;
+        this.isEditOrAdd = false;
       }      
     } 
 
@@ -254,13 +291,29 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
     this.binding.deleteRecord(false);
     this.binding.getReport(false);
     this.binding.showMessage(null);
-    this.binding.saveOrUpdate(null);   
-    this.destroyed.next(true);
-    this.destroyed.complete();  
+    this.binding.saveOrUpdate(null);     
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    // check new user rights
+    const isUserRightsChanged = setInterval(() => {
+      if (typeof (changes.userRights) == 'undefined') {
+        null;
+      } else {
+        this.userRights = changes.userRights.currentValue;
+        clearInterval(isUserRightsChanged);
+      }
+    }, 100);
 
+    // check new data
+    const isPrintChanged = setInterval(() => {
+      if (typeof (changes.isAvailableReport) == 'undefined') {
+        null;
+      } else {
+        this.isAvailableReport = changes.isAvailableReport.currentValue;
+        clearInterval(isPrintChanged);
+      }
+    }, 100);    
   }
 
 }

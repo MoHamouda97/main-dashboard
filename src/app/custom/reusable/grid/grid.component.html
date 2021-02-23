@@ -1,0 +1,42 @@
+<section class="grid-table">
+  <div class="table-responsive" style="margin-top: 5px;">
+    <nz-table 
+      #headerTable  
+      [nzData]="data" 
+      [nzScroll]="{ x: '240px' }"
+      class="table w-300  forms-table table-striped"
+      *ngIf="data.length >= 1">
+      <thead>
+        <tr> 
+          <th width="70px">#</th>
+          <th width="70px">{{(getLang() == 'EN' ? ('Delete' | translateEn) : ('Delete' | translateAr))}}</th>
+          <ng-container *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))">
+            <th  
+              [class.d-none]="head === 'id'"           
+              [style.width]="head == 'Description' && '250px'"
+              [style.width]="head == 'اسم الصنف' && '250px'"
+              class="field-width">
+              <ng-container *ngIf="head != 'id'">
+                {{head}}
+              </ng-container>
+            </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let allData of data; let i = index">
+          <td>{{i + 1}}</td>
+          <td>
+            <button class="btn reset-btn" matRipple (click)="removeRow(allData.id)" *ngIf="i > 0">
+              <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+            </button>
+          </td>
+            <td *ngFor="let d of allData | render;" class="grid-row" [class.d-none]="d === 'id'"  >
+              {{allData[d]}}
+            </td>
+        </tr>
+      </tbody>   
+    </nz-table>
+  </div>
+</section>
+
