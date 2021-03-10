@@ -30,6 +30,7 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
 
   isNewTLoad = true;
 
+  isCompletedOrder = false;
 
   constructor(
     private binding: DatabindingService, 
@@ -109,6 +110,21 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
         )
 
     //#endregion
+
+    //#region 
+
+        // check completed order 
+        // Mohammed Hamouda - 04/03/2021
+
+        this.binding.completedOrder.subscribe(
+          res => {
+            if (res != null) {
+              this.isCompletedOrder = res;
+            }                            
+          }
+        )
+
+    //#endregion    
   
   }
 
@@ -118,6 +134,7 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
 
     resetData() {
       this.isDisabled = true;
+      this.isCompletedOrder = false;
       this.addOrEdit = 'Add';
       this.binding.resetData(true);
     }
@@ -273,10 +290,38 @@ export class TaskBarComponent implements OnInit, OnDestroy, OnChanges {
               title = this.lang.warningGenericMsgTitle;
               message = this.lang.missingItemCodeMsgDetails;
               notification = 'warning';
-              break;                                                          
+              break;
+          case "missingCustomer" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.missingCustomerMsgDetails;
+              notification = 'warning';
+              break;
+          case "noGrid" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.missingGridrMsgDetails;
+              this.isEditOrAdd = false;
+              notification = 'warning';
+              break; 
+          case "noChanges" :
+              title = '';
+              this.isEditOrAdd = false;
+              break;                
+          case "cancelled" :
+              title = this.lang.warningGenericMsgTitle;
+              message = this.lang.cancelledMsgDetails;
+              notification = 'warning';
+              break; 
+          case "inValidDate" :
+              title = this.lang.warningInValidDateTitle;
+              message = this.lang.inValidDateMsgDetails;
+              this.isEditOrAdd = false;
+              notification = 'warning';
+              break;                                                                                                                               
         }
 
-        this.notification.create(notification, title, message, options);
+        if (title != '') {
+          this.notification.create(notification, title, message, options);
+        }        
       } else {
         this.isDelete = false;
         this.isEditOrAdd = false;

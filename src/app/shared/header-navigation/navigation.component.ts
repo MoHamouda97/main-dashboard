@@ -103,7 +103,8 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   ngOnInit() {
-    this.menueItems = JSON.parse(localStorage.getItem('menuForSearch'));
+    setTimeout(() => {this.menueItems = JSON.parse(localStorage.getItem('menuForSearch'));}, 10)    
+    console.log(this.menueItems)
   }
 
 //#region 
@@ -128,6 +129,7 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   // Mohammed Hamouda - 14/01/2021
 
   searchMenu(value) {
+    this.menueItems = JSON.parse(localStorage.getItem('menuForSearch'));
     (value == '') 
       ? this.items = [] 
       : this.items = this.menueItems.filter(i => i.name.toLocaleLowerCase().trim().includes(value.toLocaleLowerCase().trim()));

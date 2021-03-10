@@ -103,8 +103,26 @@ export const ar = {
     inActivePaymentTermMsgDetails: "طريقة الدفع غير مفعلة , بالرجاء اختيار طريقة دفع اخرى",
     warningGenericMsgTitle: "معلومات مفقودة",
     noCustMsgDetails: "بالرجاء اختيار العميل",
-    quantityMsgDetails: "ََلا يمكن للكمية ان تكون اقل من 1",
-    missingItemCodeMsgDetails: "بالرجاء اختيار صنف"
+    quantityMsgDetails: "ََلا يمكن للكمية ان تكون اقل من 0",
+    missingItemCodeMsgDetails: "بالرجاء اختيار صنف",
+    missingCustomerMsgDetails: "بالرجاء اختيار عميل",
+    missingGridrMsgDetails: "بالرجاء اختيار صنف واحد على الاقل قبل عملية الحفظ",
+    cannotEditInvoiced: "عنصر مفوتر",
+    cannotEditInvoicedDetails: "لا يمكن التعديل او حذف هذا الصنف, تم اصدار فاتورة لهذا الصنف",
+    changeInvoicConfirmTitle: "هل تود الاستمرار؟",
+    confirm: "تأكيد",
+    cannotEditQuantity: "تعديل الكمية",
+    cannotEditQuantityDetails: "لا يمكن للكمية ان تكون اقل من عدد الفواتير لهذا الصنف",
+    cancelledMsgDetails: "لا يمكن للكمية الملغاة ان تكون اقل من 0",
+    warningInValidDateTitle: "التاريخ",
+    inValidDateMsgDetails: "تاريخ التوصيل غير صالح",
+    missingAmountDetails: "لا يمكن للمبلغ ان يوكن صفر",
+    custMsgTitle: "كود العميل",
+    custMsgDetails: "لا يمكن تغير كود العميل لهذا الطلب بسبب وجود فاتورة او اكثر",
+    purOrderMsgTitle: "رقم شراء",
+    purOrderMsgDetails: "لا يمكن تكرار رقم الشراء",
+    creditForMsgTitle: "تاريخ الاستحقاق",
+    creditForDetails: "ليس لديك صلاحية تعديل تاريخ الاستحقاق"
 }
 
 export const en = {
@@ -211,8 +229,26 @@ export const en = {
     inActivePaymentTermMsgDetails: "This is an inactive term, pls. choose another payment term",
     warningGenericMsgTitle: "Missing Information",
     noCustMsgDetails: "Please select customer first",
-    quantityMsgDetails: "ََQuantity cannot be less than 1",
-    missingItemCodeMsgDetails: "Please select an item"
+    quantityMsgDetails: "ََQuantity cannot be less than 0",
+    missingItemCodeMsgDetails: "Please select an item",
+    missingCustomerMsgDetails: "Please select customer",
+    missingGridrMsgDetails: "Please select at least one item before saving",
+    cannotEditInvoiced: "Invoiced Item",
+    cannotEditInvoicedDetails: "You cannot modify or delete this item, total Qty is already invoiced!",
+    changeInvoicConfirmTitle: "Do you want to continue?",
+    confirm: "Confirm",
+    cannotEditQuantity: "Modify Quantity",
+    cannotEditQuantityDetails: "Quantity cannot be less than number of invoices",
+    cancelledMsgDetails: "Cancelled quantity cannot be less than 0",
+    warningInValidDateTitle: "Date",
+    inValidDateMsgDetails: "Invalid delivery date",
+    missingAmountDetails: "Amount cannot be zero",
+    custMsgTitle: "Customer Code",
+    custMsgDetails: "You can not change customer code because there is one or more invoice on this order",
+    purOrderMsgTitle: "Purchase Order",
+    purOrderMsgDetails: "Purchase Order cannot be duplicated.",
+    creditForMsgTitle: "Due Date",
+    creditForDetails: "You don't have the rights to increase the terms due date"
 }
 
 export const lang = localStorage.getItem("dictionary");

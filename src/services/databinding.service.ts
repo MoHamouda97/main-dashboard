@@ -105,7 +105,61 @@ export class DatabindingService {
       this.isSaveOrUpdate.next(type);
     }
 
-  //#endregion  
+  //#endregion 
+  
+  //#region 
+
+    // get item removed from grid
+    // Mohammed Hamouda - 23/02/2021
+
+    public isItemRemoved = new BehaviorSubject<any> (null);
+    checkItemRemoved = this.isItemRemoved.asObservable();
+
+    itemRemoved(id) {
+      this.isItemRemoved.next(id);
+    }
+    
+    // get item to be updated from grid
+    // Mohammed Hamouda - 24/02/2021
+
+    public isItemUpdate = new BehaviorSubject<any> (null);
+    checkItemUpdate = this.isItemUpdate.asObservable();
+
+    itemUpdate(index) {
+      this.isItemUpdate.next(index);
+    }
+    
+    // updated item from grid
+    // Mohammed Hamouda - 24/02/2021
+
+    public updatedItem = new BehaviorSubject<any> (null);
+    updatedItemValue = this.updatedItem.asObservable();
+
+    sendUpdatedItem(item) {
+      this.updatedItem.next(item);
+    }
+    
+    // is auto tax
+    // Mohammed Hamouda - 24/02/2021
+
+    public isAutoTax = new BehaviorSubject<any> (null);
+    autoTax = this.isAutoTax.asObservable();
+
+    sendTax(tax) {
+      this.isAutoTax.next(tax);
+    }
+
+    // is order completed
+    // Mohammed Hamouda - 04/03/2021
+
+    public isCompletedOredr = new BehaviorSubject<boolean> (null);
+    completedOrder = this.isCompletedOredr.asObservable();
+
+    checkCompletedOreder(isCompleted) {
+      this.isCompletedOredr.next(isCompleted);
+    }  
+    
+  //#endregion
 
   constructor() { }
 

@@ -7,7 +7,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import * as $ from 'jquery';
 import * as lang from './../../../settings/lang';
 import { takeUntil } from 'rxjs/operators';
-import {Sort} from '@angular/material/sort';
+import { isArray } from 'rxjs/internal/util/isArray';
 
 @Component({
   selector: 'app-system',
@@ -92,6 +92,19 @@ export class SystemComponent implements OnInit {
   // sort
   isAsc: boolean = true;
 
+  // header
+  header: any = {
+    gridIndex : "",
+    childs: "",
+    masters: "",
+    keycols: "",
+    gridcolnum: "",
+    gridrowlnum: "",
+    m_IDCol: "",
+    gridTableName: "",
+    beforeCommitObject: ""
+  }
+
   constructor(
     private router: ActivatedRoute, 
     private cdRef: ChangeDetectorRef,
@@ -137,8 +150,6 @@ export class SystemComponent implements OnInit {
           this.frmType = res.get('frmType');
           this.objID = res.get('id');
           this.wordToBeTranslated = res.get('frmName');
-
-          console.log(this.frmType)
 
           localStorage.setItem('frmName', this.frmType);
           localStorage.setItem('objID', this.objID);  
@@ -733,7 +744,12 @@ export class SystemComponent implements OnInit {
       
       const deleteing = setInterval(() => {
         if (typeof(this.dataRecived) != 'undefined') {
-          this.dataRecived = this.extractDataAsArray(this.dataRecived);          
+          if (isArray(this.dataRecived)) {
+            this.header = this.dataRecived[0];
+            this.dataRecived = this.extractDataAsArray(this.dataRecived[1], true);
+          } else {
+            this.dataRecived = this.extractDataAsArray(this.dataRecived);          
+          }        
 
           if (this.frmType == 'FrmManufacturers') {
             this.service.checkIfUsed("ItemsDirectory",  "ManufacturerCode",  `ManufacturerCode='${this.dataRecived[0][1]}'`).subscribe(
@@ -768,7 +784,7 @@ export class SystemComponent implements OnInit {
     }
 
     deleteRecord() {
-      this.service.DeleteRecord(this.dbTableName, "", "", "", "", "", "", this.dataRecived).subscribe(
+      this.service.DeleteRecord(this.dbTableName, this.header.masters, this.header.childs, this.header.gridIndex, this.header.gridrowlnum, this.header.gridcolnum, this.header.gridTableName, this.dataRecived).subscribe(
         res => {
           this.binding.resetData(true);
           this.binding.showMessage("delete");
@@ -779,6 +795,20 @@ export class SystemComponent implements OnInit {
           this.isLoading = false;
 
           this.whatMode = "Add";
+
+          this.header = {
+            gridIndex : "",
+            childs: "",
+            masters: "",
+            keycols: "",
+            gridcolnum: "",
+            gridrowlnum: "",
+            m_IDCol: "",
+            gridTableName: "",
+            beforeCommitObject: ""
+          };
+
+          (typeof(this.emailRecived) != 'undefined') && this.mailSetup();                  
         },
         err => {
           let title = 'Delete Result';
@@ -798,6 +828,18 @@ export class SystemComponent implements OnInit {
           this.isDelete = false;
 
           this.isLoading = false;
+
+          this.header = {
+            gridIndex : "",
+            childs: "",
+            masters: "",
+            keycols: "",
+            gridcolnum: "",
+            gridrowlnum: "",
+            m_IDCol: "",
+            gridTableName: "",
+            beforeCommitObject: ""
+          }
         }
       )
     }
@@ -813,11 +855,37 @@ export class SystemComponent implements OnInit {
       this.isLoading = true;
 
       const saveingOrUpdating = setInterval(() => {
-        if (typeof(this.dataRecived) != 'undefined') {   
-          this.dataRecived = this.extractDataAsArray(this.dataRecived);
-          this.dataRecived.push(["IssuedBy", localStorage.getItem('username')]);
-          this.dataRecived.push(["DateCreate", ""]);
-          this.dataRecived.push(["DateModified", ""]);          
+        if (typeof(this.dataRecived) != 'undefined') { 
+          if (isArray(this.dataRecived)) {
+
+            if (this.dataRecived.length == 0) {
+              this.binding.showMessage('noChanges');
+              this.isSaveOrUpdate = false;
+              this.dataRecived = undefined;
+              this.isLoading = false;
+
+              return;
+            }
+
+            this.header = this.dataRecived[0];
+
+            if (this.header.gridrowlnum == 0) {
+              this.binding.showMessage('noGrid');
+
+              this.isSaveOrUpdate = false;
+              this.dataRecived = undefined;
+              this.isLoading = false;
+
+              return;
+            }
+
+            this.dataRecived = this.extractDataAsArray(this.dataRecived[1], true);
+          } else {
+            this.dataRecived = this.extractDataAsArray(this.dataRecived);
+            this.dataRecived.push(["IssuedBy", localStorage.getItem('username')]);
+            this.dataRecived.push(["DateCreate", ""]);
+            this.dataRecived.push(["DateModified", ""]);  
+          }         
 
           if (type == "Add" && this.dbTableName == 'AccTransTypes') {
             this.dataRecived.push(["System", 0]);
@@ -832,7 +900,7 @@ export class SystemComponent implements OnInit {
       // call backend to save or update
 
       callBackEndToSaveOrUpdate(data, type) {
-        this.service.saveRecord(data, this.dbTableName, type, localStorage.getItem("username"), "", "", "", "", "", "", "", "", "").subscribe(
+        this.service.saveRecord(data, this.dbTableName, type, localStorage.getItem("username"), this.header.gridIndex, this.header.childs, this.header.masters, this.header.keycols, this.header.gridcolnum, this.header.gridrowlnum, this.header.m_IDCol, this.header.gridTableName, this.header.beforeCommitObject).subscribe(
           res => {
             (type == "Edit") ? this.binding.showMessage("edit2") : this.binding.showMessage("add");
             (type == "Add") ? this.binding.resetData(true) : null;
@@ -841,11 +909,19 @@ export class SystemComponent implements OnInit {
             this.dataRecived = undefined;
             this.isLoading = false;
 
-            if (this.objID == 339 || this.objID == 340) {
-              let event = (this.objID == 339) ? 24 : 25;
-              this.sendMail(event);
-            }
-
+            this.header = {
+              gridIndex : "",
+              childs: "",
+              masters: "",
+              keycols: "",
+              gridcolnum: "",
+              gridrowlnum: "",
+              m_IDCol: "",
+              gridTableName: "",
+              beforeCommitObject: ""
+            };
+            
+            (type == "Edit" && typeof(this.emailRecived) != 'undefined') && this.mailSetup();
           },
           err => {
             let title = 'Somthing Wrong';
@@ -865,31 +941,82 @@ export class SystemComponent implements OnInit {
             this.isSaveOrUpdate = false;
             this.dataRecived = undefined;
             this.isLoading = false;
+
+            this.header = {
+              gridIndex : "",
+              childs: "",
+              masters: "",
+              keycols: "",
+              gridcolnum: "",
+              gridrowlnum: "",
+              m_IDCol: "",
+              gridTableName: "",
+              beforeCommitObject: ""
+            }
           }
         )
       }
 
       // send mail
 
-      sendMail(event) {
+      mailSetup() {
+        let event;
+        let mailType;
+  
+        (this.objID == 339 || this.objID == 340) ? mailType = 'customer' : mailType = 'other';
+        
+        switch(this.objID) {
+          case '339':
+            event = 24;
+            break;
+          case '340':
+            event = 25;
+            break; 
+          default  :
+            event = this.emailRecived[1]
+            break;                                  
+        }
+
+  
+        this.sendMail(event, mailType)
+      }
+
+      sendMail(event, type) {
         let options = (localStorage.getItem('lang') == 'EN') ? {nzClass: 'lang-en'} : {nzClass: 'lang-ar'};
         let system = JSON.parse(localStorage.getItem('systemVariables'));
 
         const email = setInterval (() => {
           if (typeof(this.emailRecived) != 'undefined') {
-            this.service.customersRequestsNotify(
-              this.emailRecived, 
-              system[1].Glb_Branch_Name, 
-              localStorage.getItem('username'), 
-              event).subscribe(
-              res => {
-                this.notification.success(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgDetails}`, options);
-                this.emailRecived = undefined;
-              },
-              err => {
-                this.notification.warning(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgErrDetails}`, options);
-              }
-            )
+            if (type == 'customer') {
+              this.service.customersRequestsNotify(
+                this.emailRecived, 
+                system[1].Glb_Branch_Name, 
+                localStorage.getItem('username'), 
+                event).subscribe(
+                res => {
+                  this.notification.success(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgDetails}`, options);
+                  this.emailRecived = undefined;
+                },
+                err => {
+                  this.notification.warning(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgErrDetails}`, options);
+                  this.emailRecived = undefined;
+                }
+              )
+            } else {
+              let event = this.emailRecived[0];
+              let mail = this.emailRecived[1];
+
+              this.service.Notify(event, mail, system[1].Glb_Branch_Name, localStorage.getItem('username')).subscribe(
+                res => {
+                  this.notification.success(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgDetails}`, options);
+                  this.emailRecived = undefined;
+                },
+                err => {
+                  this.notification.warning(`${this.lang.genericMailMsgTitle}`, `${this.lang.genericMailMsgErrDetails}`, options);
+                  this.emailRecived = undefined;
+                }
+              )
+            }
             clearInterval(email);
           }
         }, 100) 
@@ -918,6 +1045,8 @@ export class SystemComponent implements OnInit {
 
           this.isRepVisible = true;
           this.binding.getReport(false);
+          this.dataRecived = undefined;
+          this.isReporting = false;
 
           clearInterval(reporting);
         }
@@ -953,6 +1082,7 @@ export class SystemComponent implements OnInit {
       this.service.downloadReport(
         type, 
         this.selectedRep.RepID, 
+        localStorage.getItem('username'),
         this.selectedRep.RepCri , 
         this.selectedRep.RepTitle,
         localStorage.getItem("lang"),
@@ -1001,7 +1131,26 @@ export class SystemComponent implements OnInit {
 
     // this function is used to recive email from child component
     reciveEmailHandler(data) {
+      let event;
+      let type;
+
       this.emailRecived = data;
+
+      /*(this.objID == 339 || this.objID == 340) ? type = 'customer' : type = 'other';
+      
+      switch(this.objID) {
+        case '339':
+          event = 24;
+          break;
+        case '340':
+          event = 25;
+          break; 
+        default  :
+          event = this.emailRecived[1]
+          break;                                  
+      }
+
+      this.sendMail(event, 'other')*/
     } 
 
   //#endregion
@@ -1010,14 +1159,44 @@ export class SystemComponent implements OnInit {
 
   // generic cpllection data
   // Mohammed Hamouda - 13/01/2021
-  extractDataAsArray(data) {
+  extractDataAsArray(data, isArr = false) {
     let arrOfKeys = Object.keys(data);
     let arrOfData = [];
 
-    for (let i = 0; i <= arrOfKeys.length - 1; i ++) {
-      arrOfData.push([arrOfKeys[i], (data[arrOfKeys[i]] == null ? "" : data[arrOfKeys[i]])])
-      if(arrOfKeys[i] == "CenterIsFinal") {
-        arrOfData[i] = [arrOfKeys[i], (data[arrOfKeys[i]] == true ? 1 : 0)]
+    if (isArr) {
+      let arr = data;
+      for (let i = 0; i <= arr.length - 1; i++) {
+        let data = arr[i];
+        arrOfKeys = Object.keys(data);
+  
+        for (let k = 0; k <= arrOfKeys.length - 1; k ++) {
+          arrOfData.push([arrOfKeys[k], (data[arrOfKeys[k]] == null ? "" : data[arrOfKeys[k]])])
+        }
+      }
+
+    } else {
+      for (let i = 0; i <= arrOfKeys.length - 1; i ++) {
+        arrOfData.push([arrOfKeys[i], (data[arrOfKeys[i]] == null ? "" : data[arrOfKeys[i]])])
+        if(arrOfKeys[i] == "CenterIsFinal") {
+          arrOfData[i] = [arrOfKeys[i], (data[arrOfKeys[i]] == true ? 1 : 0)]
+        }
+      }
+    }
+
+
+    return arrOfData;
+  }
+
+  extractDataFromArray(arr: any[]) {
+    let arrOfKeys;
+    let arrOfData = [];
+
+    for (let i = 0; i <= arr.length - 1; i++) {
+      let data = arr[i];
+      arrOfKeys = Object.keys(data);
+
+      for (let k = 0; k <= arrOfKeys.length - 1; k ++) {
+        arrOfData.push([arrOfKeys[k], (data[arrOfKeys[k]] == null ? "" : data[arrOfKeys[k]])])
       }
     }
 
@@ -1031,8 +1210,25 @@ export class SystemComponent implements OnInit {
   // Mohammed Hamouda - 13/01/2021
 
   filterData(searchKey, val) {
+    
+    let innerQuery = this.sqlStm;
+    let query = `Select Top 100 * From (${innerQuery}) as tblResult Where tblResult.${searchKey} like '**${val}**'`;
+    let top100Index = this.sqlStm.toUpperCase().indexOf('TOP 100');
+    
+    // remove top 100 from inner query
+    if (top100Index != -1) {
+      innerQuery = innerQuery.replace('TOP 100' , '');
+      query = `Select Top 100 * From (${innerQuery}) as tblResult Where tblResult.${searchKey} like '**${val}**'`    
+    }
 
-    let query = `Select Top 100 * From (${this.sqlStm}) as tblResult Where tblResult.${searchKey} like '**${val}**'`;
+    // remove order by from inner query
+    let orderByindex = innerQuery.toUpperCase().indexOf('ORDER BY');
+
+    if (orderByindex != -1) {
+      innerQuery = innerQuery.substring(0, orderByindex)
+      query = `Select Top 100 * From (${innerQuery}) as tblResult Where tblResult.${searchKey} like '**${val}**'`
+    }
+
     this.original = this.data;
     this.isTableSearch = true;
 
@@ -1100,8 +1296,6 @@ export class SystemComponent implements OnInit {
     this.data = data.sort((a, b) => {      
       return this.compare(a[field[index]], b[field[index]], isAsc);
     });
-
-    console.log(this.data);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

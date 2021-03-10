@@ -70,6 +70,7 @@
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "^2.0.6",
     "@types/jquery": "^3.3.30",
+    "@types/lodash": "^4.14.168",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.1",
     "jasmine-core": "~2.99.1",

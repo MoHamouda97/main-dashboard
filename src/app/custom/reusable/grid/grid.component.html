@@ -4,19 +4,21 @@
       #headerTable  
       [nzData]="data" 
       [nzScroll]="{ x: '240px' }"
-      class="table w-300  forms-table table-striped"
+      [nzFooter]="taxFooter"
+      class="table w-200 w-500-sm forms-table table-striped"
       *ngIf="data.length >= 1">
       <thead>
         <tr> 
-          <th width="70px">#</th>
-          <th width="70px">{{(getLang() == 'EN' ? ('Delete' | translateEn) : ('Delete' | translateAr))}}</th>
+          <th width="30px">#</th>
+          <th width="30px">{{(getLang() == 'EN' ? ('Delete' | translateEn) : ('Delete' | translateAr))}}</th>
+          <th width="30px">{{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}</th>
           <ng-container *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))">
             <th  
-              [class.d-none]="head === 'id'"           
-              [style.width]="head == 'Description' && '250px'"
-              [style.width]="head == 'اسم الصنف' && '250px'"
+              *ngIf="(head != 'id' && head != 'isTax')"    
+              [style.width]="head == 'Description' && '100px'"
+              [style.width]="head == 'اسم الصنف' && '100px'"
               class="field-width">
-              <ng-container *ngIf="head != 'id'">
+              <ng-container>
                 {{head}}
               </ng-container>
             </th>
@@ -24,19 +26,139 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let allData of data; let i = index">
-          <td>{{i + 1}}</td>
-          <td>
-            <button class="btn reset-btn" matRipple (click)="removeRow(allData.id)" *ngIf="i > 0">
-              <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
-            </button>
-          </td>
-            <td *ngFor="let d of allData | render;" class="grid-row" [class.d-none]="d === 'id'"  >
-              {{allData[d]}}
+        <ng-container *ngFor="let allData of data; let i = index">            
+          <tr *ngIf="!allData.isTax">
+            <td>{{i + 1}}</td>
+            <td>
+              <button class="btn reset-btn" matRipple (click)="removeRow(allData.id)" [disabled]="(isDisabled || ((allData.OrderedQty - allData.CanceledQty) == allData.Invoiced))">
+                <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+              </button>
             </td>
-        </tr>
+            <td>
+              <button 
+                class="btn reset-btn btn-success" 
+                matRipple 
+                (click)="updateRow(i)" 
+                [disabled]="(isDisabled || ((allData.OrderedQty - allData.CanceledQty) == allData.Invoiced))">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+            </td>  
+            <ng-container *ngFor="let d of allData | render;"  >
+              <td 
+                *ngIf="(d != 'id' && d != 'isTax')"
+                class="grid-row"
+                [class.hide-long-text]="d == 'ItemName'"
+                [class.hide-long-text-adjust]="d == 'ItemName'">
+                {{allData[d]}}
+              </td>
+            </ng-container>        
+          </tr>
+        </ng-container>
       </tbody>   
     </nz-table>
   </div>
 </section>
+
+<ng-template #taxFooter>
+  <ng-container *ngIf="(isTax && isAutoTax)">
+    <div class="row">
+      <div class="col-md-3">
+        <nz-form-label>
+          <label for="ItemCode">
+              {{(getLang() == 'EN' ? ('ItemCode' | translateEn) : ('ItemCode' | translateAr))}}
+          </label>
+        </nz-form-label>
+      </div>
+      <div class="col-md-7">
+        <nz-form-label>
+          <label for="ItemName">
+              {{(getLang() == 'EN' ? ('ItemName' | translateEn) : ('ItemName' | translateAr))}}
+          </label>
+        </nz-form-label>      
+      </div>
+      <div class="col-md-2">
+        <nz-form-label>
+          <label for="Tax">
+              {{(getLang() == 'EN' ? ('Tax' | translateEn) : ('Tax' | translateAr))}}
+          </label>
+        </nz-form-label>       
+      </div>    
+    </div>
+    <ng-container *ngFor="let t of taxArr; let i = index">
+      <div class="row" style="align-items: center; margin-top: 10px;">
+        <div class="col-md-3">
+          <span class="d-block">
+            {{t.ItemCode}}
+          </span>
+        </div>
+        <div class="col-md-7">     
+          <span class="d-block">
+            {{t.ItemName}}
+          </span>
+        </div>
+        <div class="col-md-2">     
+          <label class="label label-danger d-block text-center">
+            {{t.SubTotal}} {{currency}}
+          </label>
+        </div> 
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- if auto tax -->
+  <ng-container *ngIf="(isTax && !isAutoTax)">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">
+        <nz-form-label>
+          <label for="ItemCode">
+              {{(getLang() == 'EN' ? ('ItemCode' | translateEn) : ('ItemCode' | translateAr))}}
+          </label>
+        </nz-form-label>
+      </div>
+      <div class="col-md-7">
+        <nz-form-label>
+          <label for="ItemName">
+              {{(getLang() == 'EN' ? ('ItemName' | translateEn) : ('ItemName' | translateAr))}}
+          </label>
+        </nz-form-label>      
+      </div>
+      <div class="col-md-2">
+        <nz-form-label>
+          <label for="Tax">
+              {{(getLang() == 'EN' ? ('Tax' | translateEn) : ('Tax' | translateAr))}}
+          </label>
+        </nz-form-label>       
+      </div>    
+    </div>
+    <ng-container *ngFor="let t of data; let i = index">
+      <div 
+        class="row tax-row" 
+        style="align-items: center; margin-top: 10px;"         
+        *ngIf="t.isTax"
+        (click)="updateRow(i)">
+        <div class="col-md-1" *ngIf="!isAutoTax">
+          <button class="btn reset-btn" matRipple (click)="removeRow(t.id)" [disabled]="(isDisabled || ((t.OrderedQty - t.CanceledQty) == t.Invoiced))">
+            <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+          </button>
+        </div>
+        <div class="col-md-2">
+          <span class="d-block">
+            {{t.ItemCode}}
+          </span>
+        </div>
+        <div class="col-md-7">     
+          <span class="d-block">
+            {{t.ItemName}}
+          </span>
+        </div>
+        <div class="col-md-2">     
+          <label class="label label-danger d-block text-center">
+            {{t.SubTotal}} {{currency}}
+          </label>
+        </div> 
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>
 

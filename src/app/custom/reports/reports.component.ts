@@ -372,7 +372,7 @@ export class ReportsComponent implements OnInit, OnChanges {
     getRep(type, repid, repcrit, reptitle, replanguage, companyName, branchName) {
       if (type == 11 || type == 0) {
     
-        this.service.getReport(type, repid, repcrit, reptitle, replanguage, companyName, branchName).subscribe(
+        this.service.getReport(type, repid, localStorage.getItem('username'), repcrit, reptitle, replanguage, companyName, branchName).subscribe(
           res => {
             let url = window.URL.createObjectURL(res);
 
@@ -397,7 +397,7 @@ export class ReportsComponent implements OnInit, OnChanges {
   
       } else {
         this.isLoading = false;
-        window.open(this.service.setDownloadedRepPath(type, repid, repcrit, reptitle, replanguage, companyName, branchName));
+        window.open(this.service.setDownloadedRepPath(type, repid, localStorage.getItem('username'), repcrit, reptitle, replanguage, companyName, branchName));
       }
     }
 

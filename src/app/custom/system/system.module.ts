@@ -25,7 +25,7 @@ import { NzTransferModule } from 'ng-zorro-antd/transfer';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTabsModule} from '@angular/material/tabs';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+//import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 // reusable
 import { SearchComponent } from 'src/app/custom/reusable/search/search.component';
@@ -92,7 +92,7 @@ const routes: Routes = [
   }
 ];
 
-export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+//export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   imports: [
@@ -122,7 +122,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     NzTransferModule,
     MatSortModule,
     MatTabsModule,
-    NgxMaskModule.forRoot()
+    //NgxMaskModule.forRoot()
 ],
   declarations: [
       // pipes

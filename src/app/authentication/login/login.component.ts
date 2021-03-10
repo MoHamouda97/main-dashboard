@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
                 this.notification.create(notification, title, message, options);
 
                 // redirect user to home page
-                setTimeout(() => {this.router.navigate(['/']);}, 100);
+                setTimeout(() => {/*this.router.navigate(['/']);*/ location.href = '/'}, 100);
 
                 // stop button loading
                 this.isSignIn = false;

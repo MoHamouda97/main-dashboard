@@ -87,8 +87,8 @@ export class FrmService {
     // download report
     // Mohammed Hamouda 4/1/2021
 
-    downloadReport(type, repid, repcrit, reptitle, lang, compName, branchName) {
-      return this.http.get(`${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${lang}&CompanyName=${compName}&BranchName=${branchName}`, { responseType: "blob" })
+    downloadReport(type, repid, UserName, repcrit, reptitle, lang, compName, branchName) {
+      return this.http.get(`${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&UserName=${UserName}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${lang}&CompanyName=${compName}&BranchName=${branchName}`, { responseType: "blob" })
     }
 
   //#endregion 
@@ -98,8 +98,8 @@ export class FrmService {
     // save & update record
     // Mohammed Hamouda 4/1/2021
 
-    saveRecord(object, SourceTable, Mode, UserName,gridindex,masters,childs,keycols,gridcolnum ,gridrowlnum,m_IDCol,gridTableName,BeforeCommitObject) {     
-      return this.http.post(`${environment.endPoint}Generic/SaveRecord?SourceTable=${SourceTable}&Mode=${Mode}&UserName=${UserName}&gridindex=${gridindex}&masters=${masters}&childs=${childs}&keycols=${keycols}&gridcolnum=${gridcolnum}&gridrowlnum=${gridrowlnum}&m_IDCol=${m_IDCol}&gridTableName=${gridTableName}&BeforeCommitObject=${BeforeCommitObject}`, object, {headers: headers.utfHeader})
+    saveRecord(object, SourceTable, Mode, UserName,gridindex,childs, masters,keycols,gridcolnum ,gridrowlnum,m_IDCol,gridTableName,BeforeCommitObject) {     
+      return this.http.post(`${environment.endPoint}Generic/SaveRecord?SourceTable=${SourceTable}&Mode=${Mode}&UserName=${UserName}&gridindex=${gridindex}&childs=${childs}&masters=${masters}&keycols=${keycols}&gridcolnum=${gridcolnum}&gridrowlnum=${gridrowlnum}&m_IDCol=${m_IDCol}&gridTableName=${gridTableName}&BeforeCommitObject=${BeforeCommitObject}`, object, {headers: headers.utfHeader})
     }
 
   //#endregion 
@@ -190,8 +190,8 @@ export class FrmService {
   // notify
   // Mohammed Hamouda - 18/01/2021
 
-  Notify(EventID, Msg) {
-    return this.http.get(`${environment.endPoint}FrmPmtApprove/Notify?EventID=${EventID}&Msg=${Msg}`, {headers: headers.noAuthHeader});
+  Notify(EventID, Msg, branchName, Glb_User_Name) {
+    return this.http.get(`${environment.endPoint}FrmPmtApprove/Notify?EventID=${EventID}&Msg=${Msg}&BranchName=${branchName}&UserName=${Glb_User_Name}`, {headers: headers.noAuthHeader});
   }
 
   //#endregion
@@ -236,12 +236,12 @@ export class FrmService {
     return this.http.get(`${environment.endPoint}Report/getcriteriasss?sql=${sql}`, {headers: headers.noAuthHeader});
   }
 
-  getReport(type, repid, repcrit, reptitle, replanguage, companyName, branchName) {  
-    return this.http.get(`${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${replanguage}&CompanyName=${companyName}&BranchName=${branchName}`, { responseType: "blob" });
+  getReport(type, repid, UserName, repcrit, reptitle, replanguage, companyName, branchName) {  
+    return this.http.get(`${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&UserName=${UserName}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${replanguage}&CompanyName=${companyName}&BranchName=${branchName}`, { responseType: "blob" });
   }
 
-  setDownloadedRepPath(type, repid, repcrit, reptitle, replanguage, companyName, branchName) {
-    return `${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${replanguage}&CompanyName=${companyName}&BranchName=${branchName}`;
+  setDownloadedRepPath(type, repid, UserName, repcrit, reptitle, replanguage, companyName, branchName) {
+    return `${environment.endPoint}Report/ViewReport?type=${type}&repid=${repid}&{UserName}=${UserName}&repcrit=${repcrit}&reptitle=${reptitle}&replanguage=${replanguage}&CompanyName=${companyName}&BranchName=${branchName}`;
   }
 
   //#endregion
@@ -371,6 +371,61 @@ export class FrmService {
 
   frmSalesOrderLoad(BranchCode, UserName) {
     return this.http.get(`${environment.endPoint}FrmSalesOrders/frmSalesOrderLoad?BranchCode=${BranchCode}&UserName=${UserName}`, {headers: headers.noAuthHeader})
+  }
+
+  // order items
+  // Mohammed Hamouda - 28/02/2021
+
+  gridData(SQL, criteria) {
+    return this.http.get(`${environment.endPoint}Generic/GetGridData?SqlStatment=${SQL}&criteria=${criteria}`, {headers: headers.noAuthHeader}).toPromise();
+  }
+
+  //#endregion
+
+  //#region 
+
+  // get vat
+  // Mohammed Hamouda - 24/02/2021
+
+  getDlk(custCode) {
+    return this.http.get(`${environment.endPoint}FrmSalesOrders/getDlk?CustCode=${custCode}`, {headers: headers.noAuthHeader}).toPromise();
+  }
+
+  getVATRatio(vatDate, glbVATITemCode) {
+    return this.http.get(`${environment.endPoint}FrmSalesOrders/GetVAT_Ratio?EffectiveDate=${vatDate}&Glb_VAT_ItemCode=${glbVATITemCode}`, {headers: headers.noAuthHeader}).toPromise();
+  }
+
+  //#endregion
+
+  //#region 
+
+  // get info about table
+  // Mohammed Haouda - 03/03/2021
+
+  tblInfo(TableName,  Columns,  Criteria,  GroupBy,  Having,  OrderBy,  TopRecords,   Distinct) {
+    return this.http.get(`${environment.endPoint}Generic/DLookUphttp?TableName=${TableName}&Columns=${Columns}&Criteria=${Criteria}&GroupBy=${GroupBy}&Having=${Having}&OrderBy=${OrderBy}&TopRecords=${TopRecords}&Distinct=${Distinct}`, {headers: headers.noAuthHeader}).toPromise();
+  }
+
+  //#endregion
+
+  //#region 
+
+  // check posting
+  // Mohammed Hamouda => 08/03/2021
+
+  checkPosting(TKey, TNum, TCode, TDate, TTable, Glb_Branch_Code) {
+    return this.http.get(`${environment.endPoint}Generic/CheckPosting?TKey=${TKey}&TNum=${TNum}&TCode=${TCode}&TDate=${TDate}&TTable=${TTable}&Glb_Branch_Code=${Glb_Branch_Code}`, {headers: headers.noAuthHeader}).toPromise();
+  }
+
+  //#endregion
+
+  //#region 
+
+  // check number of usage
+  // Mohammed Hamouda => 08/03/2021
+
+  async numberOfUsage(TableName,  Column,  Criteria) {
+    return this.http.get(`${environment.endPoint}Generic/DCounthttp?TableName=${TableName}&Column=${Column}&Criteria=${Criteria}`, {headers: headers.noAuthHeader}).toPromise();
   }
 
   //#endregion

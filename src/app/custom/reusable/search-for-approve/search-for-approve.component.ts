@@ -416,7 +416,7 @@ export class SearchForApproveComponent implements OnInit, OnChanges {
     this.service.execQuery(sql).subscribe(
       res => {
 
-        this.service.Notify(this.EventID, this.renderHTMLTable(this.selectedItemIndedx)).subscribe(
+        this.service.Notify(this.EventID, this.renderHTMLTable(this.selectedItemIndedx), localStorage.getItem('branchName'), localStorage.getItem('username')).subscribe(
           res => {
             this.notification.success(`${this.lang.approveTitle}`, `${this.lang.approveSuccess}`, options);
             this.isNewData = false;

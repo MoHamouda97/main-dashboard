@@ -38,6 +38,9 @@ export class PreferencesComponent implements OnInit {
   data: any = [];
   VATType: any = '';
 
+  // cuurent system variables
+  system: any = JSON.parse(localStorage.getItem('systemVariables'));
+
   constructor (
     private fb: FormBuilder, 
     private service: FrmService, 
@@ -305,6 +308,8 @@ export class PreferencesComponent implements OnInit {
         this.notification.create(notification, title, message, options);
 
         this.isUpdating = false;
+
+        this.updateLocalSystemVariables();
       },
       err => {
         title = this.lang.systemPreferencesMsgTitle;
@@ -315,6 +320,27 @@ export class PreferencesComponent implements OnInit {
         this.isUpdating = false;
       }
     )
+  }
+
+  // update preferences at local storage
+  // Mohammed Hamouda - 25/02/2021
+
+  updateLocalSystemVariables() {
+    this.system[0].AutoCalcVAT = this.systemPreferencesForm.get('AutoCalcVAT').value;
+    this.system[0].BeginYear = this.systemPreferencesForm.get('BeginYear').value;
+    this.system[0].GLEntriesForMTN = this.systemPreferencesForm.get('GLEntriesForMTN').value;
+    this.system[0].PreventInvWithoutIssue = this.systemPreferencesForm.get('PreventInvWithoutIssue').value;
+    this.system[0].TransCount = this.systemPreferencesForm.get('TransCount').value;
+    this.system[0].UseAccounts = this.systemPreferencesForm.get('UseAccounts').value;
+    this.system[0].UseBanks = this.systemPreferencesForm.get('UseBanks').value;
+    this.system[0].UseManufacturing = this.systemPreferencesForm.get('UseManufacturing').value;
+    this.system[0].UseNotifications = this.systemPreferencesForm.get('UseNotifications').value;
+    this.system[0].UsePurchs = this.systemPreferencesForm.get('UsePurchs').value;
+    this.system[0].UseSales = this.systemPreferencesForm.get('UseSales').value;
+    this.system[0].UseStocks = this.systemPreferencesForm.get('UseStocks').value;
+    this.system[0].VerifyItemAccounts = this.systemPreferencesForm.get('VerifyItemAccounts').value;
+
+    localStorage.setItem('systemVariables', JSON.stringify(this.system));
   }
 
   // get VAT  

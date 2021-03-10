@@ -157,7 +157,8 @@
                                         [isSaveOrUpdate]="isSaveOrUpdate"
                                         [isReporting]="isReporting"
                                         (returnData)="reciveDataHandler($event)"
-                                        (returnID)="reciveIdHandler($event)"></app-sales-order>
+                                        (returnID)="reciveIdHandler($event)"
+                                        (returnEmail)="reciveEmailHandler($event)"></app-sales-order>
                                 <!-- Service components -->
                                 <app-service-types
                                     *ngSwitchCase="'FrmServiceTypes'"
@@ -237,7 +238,13 @@
                             </section>
                         </div>
     
-                        <div class="col-md-2" style="position: fixed; right: 0;">
+                        <div 
+                            id="js_task_bar"
+                            class="col-md-2 fixed-bar top-index" 
+                            [ngStyle]="{
+                                'right': (getLang() == 'EN' ? '0' : 'auto'),
+                                'left': (getLang() == 'EN' ? 'auto' : '0')
+                            }">
                             <!-- task bar here -->
                             <app-task-bar [userRights]="userRights" [isAvailableReport]="isAvailableReport"></app-task-bar>
                         </div>  

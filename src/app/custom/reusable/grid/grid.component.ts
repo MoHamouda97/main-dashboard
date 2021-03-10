@@ -10,7 +10,8 @@ import { FrmService } from 'src/services/frm/frm.service';
 export class GridComponent implements OnInit, OnChanges {
   i = 0;
   // grid type
-  @Input('gridType') gridType;
+  @Input('gridData') gridDataGrid;
+  @Input('isDisabled') isDisabled = false;
 
   // grid data
   data: any[] = [];
@@ -21,9 +22,43 @@ export class GridComponent implements OnInit, OnChanges {
   quotNumQuery: string = '';
   isQuotNum: boolean = false;
 
+  // tax
+  isTax: boolean = false;
+  taxObj: any[] = [];
+  taxArr: any[] = [];
+
+  // get currency & is auto calc vat
+  system = JSON.parse(localStorage.getItem('systemVariables'));
+  currency = this.system[0]["LocalCurrencyName"];
+  isAutoTax = this.system[0]["AutoCalcVAT"];
+
   constructor(private binding: DatabindingService, private service: FrmService) { }
 
   ngOnInit() {
+    this.binding.updatedItemValue.subscribe(
+      res => {
+        if (res != null) {
+          const index = res[0];
+          const item = res[1];
+
+        (item["ItemCode"].slice(0, 8) != this.system[0].Glb_VAT_ItemCode.slice(0, 8))
+          ? item.isTax = false
+          : item.isTax = true;          
+
+          this.data[index] = item;
+        }
+      }
+    )
+
+    this.binding.autoTax.subscribe(
+      res => {
+        if (res != null) {
+          this.taxArr = [];
+          this.taxArr.push(res);
+          (this.taxArr.length == 0) ? this.isTax = false : this.isTax = true;
+        }
+      }
+    )
   }
 
   //#region 
@@ -40,24 +75,25 @@ export class GridComponent implements OnInit, OnChanges {
     // Mohammed Hamouda - 18/02/2021
 
     addRow() { // add grid row according to grid type
-      switch (this.gridType) {
-        case 'sales' :
-          this.data = [
-            ...this.data,
-            {id: this.i, QuotNum: "", ItemCode: "", ItemName: "", OrderedQty: "", Price: "", SubTotal: "", CanceledQty: "", Qty: "", Issued: "", Invoiced: "", Quot_ID: "", ID: "", ListPrice: "", Percentage: ""}
-          ]
-          break;
-      }
-      this.i++;
+      this.data = [
+        ...this.data,
+        this.gridDataGrid
+      ]
+    }
+
+    updateRow(index) { // item to be updated
+      this.binding.itemUpdate(index);
     }
 
     removeRow(index) { // remove row from grid
-      this.data = this.data.filter(d => d.id !== index);
+      this.data = this.data.filter(d => d.id !== index)    
+      this.binding.itemRemoved(index);
     } 
 
     setValue(index, key, val) { // set value when user start typing => 21/02/2021
       this.data[index][key] = val;
-    }   
+    } 
+    
   //#endregion
   
   //#region 
@@ -78,35 +114,73 @@ export class GridComponent implements OnInit, OnChanges {
         return;
       }
 
-      this.binding.showMessage('noCustomer')
+      this.binding.showMessage('noCustomer');
 
     }
 
   //#endregion
 
   ngOnChanges(changes: SimpleChanges) {
-    // check grid type
-    const whatType = setInterval(() => {
-      if (typeof (changes.gridType) == 'undefined') {
+    // check grid data
+    const gridData = setInterval(() => {
+      if (typeof (changes.gridDataGrid) == 'undefined') {
         null;
       } else {
-        this.i = 0;
-        this.data = [];
+        if (!changes.gridDataGrid.isFirstChange()) {
+          let newVal: any = changes.gridDataGrid.currentValue;
 
-        this.gridType = changes.gridType.currentValue;
-        this.addRow();
-        clearInterval(whatType);
+          if (Array.isArray(newVal)) {
+            if (newVal.length > 0) {
+              for (let i = 0; i <= newVal.length - 1; i++) {
+                this.i++
+
+                this.gridDataGrid = newVal[i];
+                this.gridDataGrid.id = this.i;
+
+                (newVal[i]["ItemCode"].slice(0, 8) != this.system[0].Glb_VAT_ItemCode.slice(0, 8))
+                  ? this.gridDataGrid.isTax = false
+                  : this.gridDataGrid.isTax = true;
+
+                (newVal[i]["ItemCode"].slice(0, 8) == this.system[0].Glb_VAT_ItemCode.slice(0, 8))                   
+                  ? this.isTax = true
+                  : null;
+
+                this.addRow();
+              }
+            } else {
+              this.i = 0;
+              this.data = [];
+              this.taxArr = [];
+              this.isTax = false;
+            }
+          } else {
+            this.i++;
+            this.gridDataGrid = changes.gridDataGrid.currentValue;         
+            this.gridDataGrid.id = this.i;
+
+            (changes.gridDataGrid.currentValue["ItemCode"].slice(0, 8) != this.system[0].Glb_VAT_ItemCode.slice(0, 8))
+              ? this.gridDataGrid.isTax = false
+              : this.gridDataGrid.isTax = true;
+
+            (changes.gridDataGrid.currentValue["ItemCode"].slice(0, 8) == this.system[0].Glb_VAT_ItemCode.slice(0, 8))                   
+              ? this.isTax = true
+              : null;              
+
+            this.addRow();         
+          }
+
+        }
+        clearInterval(gridData);
       }
     }, 100); 
     
     // check customer code custCode
-    const custCode = setInterval(() => {
-      if (typeof (changes.custCode) == 'undefined') {
+    const isDisabled = setInterval(() => {
+      if (typeof (changes.isDisabled) == 'undefined') {
         null;
       } else {
-        this.custCode = changes.custCode.currentValue;
-        this.quotNumQuery = `SELECT  QuotNum, QuotDate, ExpDate, Canceled, Approved FROM SalQuotationsHdr WHERE (CustCode='${this.custCode}') AND Canceled = 0 ORDER BY QuotNum`
-        clearInterval(custCode);
+        this.isDisabled = changes.isDisabled.currentValue;
+        clearInterval(isDisabled);
       }
     }, 100);     
   }

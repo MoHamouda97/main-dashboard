@@ -464,6 +464,8 @@ label{margin-bottom: 2px;}
 
 .ant-table-thead > tr > th .ant-table-header-column{display: block !important;}
 
+.mat-tab-label-active{background-color: #dedede;}
+
 // bootstrap
 
 .card{border: 1px solid rgba(62, 85, 105, .4);}
@@ -500,7 +502,9 @@ textarea{
 // responsive
 
 @media only screen and (max-width: 768px) {
-    .sm-table{
-        min-width: 200%;
-    }
+    .w-500-sm .ant-table-fixed{width: 300% !important;}
+}
+
+@media only screen and (max-width: 767px) {
+    .w-500-sm .ant-table-fixed{width: 500% !important;}
 }
