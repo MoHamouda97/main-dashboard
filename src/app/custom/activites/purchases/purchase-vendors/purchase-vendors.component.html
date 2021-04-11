@@ -1,0 +1,55 @@
+<section class="purchase-vendors">
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Vendor Code' | translateEn) : ('Vendor Code' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+        
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                              
+                    </nz-form-item>                                                                              
+                </div>            
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Name' | translateEn) : ('Name' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+        
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                              
+                    </nz-form-item>                                                                              
+                </div>   
+            </div>        
+        </div>
+    </form>
+
+    <mat-tab-group class="w-100">
+        <mat-tab label="{{(getLang() == 'EN' ? ('Basic Data' | translateEn) : ('Basic Data' | translateAr))}}">
+            <!-- start basic data -->
+            <vendors-basic-data></vendors-basic-data>
+            <!-- end basic data -->
+        </mat-tab>
+        <mat-tab label="{{(getLang() == 'EN' ? ('Contacts' | translateEn) : ('Contacts' | translateAr))}}">
+            <!-- start contact -->
+            <vendors-contact></vendors-contact>
+            <!-- end contact -->
+        </mat-tab>            
+    </mat-tab-group>
+</section>

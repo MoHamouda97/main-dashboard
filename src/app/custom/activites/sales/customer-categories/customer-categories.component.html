@@ -1,0 +1,73 @@
+<form class="form" [formGroup]="customerCategoryForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="CategoryCode">
+                        {{(getLang() == 'EN' ? ('CategoryCode' | translateEn) : ('CategoryCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="CategoryCode" 
+                            id="CategoryCode" 
+                            name="CategoryCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="Description">
+                        {{(getLang() == 'EN' ? ('Description' | translateEn) : ('Description' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="Description" 
+                                id="Description" 
+                                name="Description" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="DiscountRatio">
+                            {{(getLang() == 'EN' ? ('DiscountRatio' | translateEn) : ('DiscountRatio' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <input  
+                            class="form-control d-inline" 
+                            nz-input 
+                            type="text"
+                            formControlName="DiscountRatio" 
+                            id="DiscountRatio" 
+                            name="DiscountRatio" 
+                            ngModel/>
+                        <i class="fas fa-percent"></i>                                            
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>                                         
+               
+    </div>
+</form>  

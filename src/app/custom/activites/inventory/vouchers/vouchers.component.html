@@ -1,0 +1,903 @@
+<section class="voucher" style="position: relative;">
+    <form class="form" [formGroup]="voucherForm" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row" style="align-items: baseline;">
+            <div class="col-md-6">
+                <!-- start trans type -->
+                <nz-form-label>
+                    <label for="TransCode">
+                        {{(getLang() == 'EN' ? ('Trans. Type' | translateEn) : ('Trans. Type' | translateAr))}}
+                    </label>
+                </nz-form-label>                  
+                <div class="row">
+                    <div class="col-md-5">                      
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="TransCode"
+                                        name="TransCode"
+                                        #TransCode
+                                        (blur)="checkIsHaveVal('TransCode')"
+                                        formControlName="TransCode"/>
+                                </nz-input-group> 
+                                <ng-template #suffixIconButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="fillPopUp(5, 'TransCode')"                                        
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="TransName" 
+                                    name="TransName"                                         
+                                    formControlName="TransName"
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end trans type -->
+                <ng-container *ngIf="isShowForm">
+                    <!-- start source doc -->
+                    <div class="input-group-lg">
+                        <nz-form-label>
+                            <label for="TransNum">
+                                {{(getLang() == 'EN' ? ('Source Doc. #' | translateEn) : ('Source Doc. #' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <nz-form-item>
+                            <nz-input-group nzSearch [nzAddOnAfter]="TransNumButton">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="TransNum"
+                                    name="TransNum"
+                                    (blur)="setLinesData()"
+                                    formControlName="TransNum"/>
+                            </nz-input-group> 
+                            <ng-template #TransNumButton>
+                                <button 
+                                    nz-button 
+                                    nzType="primary" 
+                                    nzSearch
+                                    class="search-btn btn-info"
+                                    matRipple
+                                    (click)="fillPopUp(-2, 'source_doc')">
+                                    <i nz-icon nzType="search"></i>
+                                </button>
+                            </ng-template>                                                                               
+                        </nz-form-item>
+                    </div>             
+                    <!-- end source doc -->
+                    <!-- start customer / vendor -->
+                    <nz-form-label>
+                        <label for="PersonCode">
+                            {{(getLang() == 'EN' ? ('Customer/Vendor' | translateEn) : ('Customer/Vendor' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <nz-input-group nzSearch [nzAddOnAfter]="PersonCodeButton">
+                                        <input  
+                                            class="form-control" 
+                                            nz-input 
+                                            type="text"
+                                            id="PersonCode"
+                                            name="PersonCode"
+                                            #customers_vendors
+                                            (blur)="checkIsHaveVal('customers_vendors')"
+                                            formControlName="PersonCode"/>
+                                    </nz-input-group> 
+                                    <ng-template #PersonCodeButton>
+                                        <button 
+                                            nz-button 
+                                            nzType="primary" 
+                                            nzSearch
+                                            class="search-btn btn-info"
+                                            (click)="fillPopUp(0, 'customer/Vendor')"
+                                            matRipple>
+                                            <i nz-icon nzType="search"></i>
+                                        </button>
+                                    </ng-template>                                                                               
+                                </nz-form-item>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="input-group-lg">
+                                <nz-input-group>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="PersonName" 
+                                        name="PersonName"                                         
+                                        formControlName="PersonName"
+                                        disabled/>
+                                </nz-input-group>                            
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end customer / vendor -->                
+                </ng-container>
+            </div>            
+            <div class="col-md-6">
+                <!-- start voucher number -->
+                <div class="table-responsive" style="padding-bottom: 1rem;">
+                    <table class="w-100 table sm-table table-striped sm-table adjust-padding">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;" colspan="4">{{(getLang() == 'EN' ? ('Voucher #' | translateEn) : ('Voucher #' | translateAr))}}</th>                                
+                                <th>{{(getLang() == 'EN' ? ('Date' | translateEn) : ('Date' | translateAr))}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- start No.-->
+                                <td style="width: 80px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input
+                                        id="BranchCode"                              
+                                        formControlName="BranchCode"
+                                        disabled/>
+                                </td>
+                                <td style="width: 80px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text" 
+                                        id="ServerCode"                                
+                                        formControlName="ServerCode"
+                                        disabled/>                            
+                                </td>
+                                <td style="width: 80px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="frmType"
+                                        formControlName="frmType"
+                                        disabled/>                             
+                                </td>
+                                <td>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="DocNum"
+                                        formControlName="DocNum"
+                                        disabled/>                             
+                                </td>                                
+                                <!-- end No. -->
+                                <!-- start date -->
+                                <td>
+                                    <nz-date-picker  
+                                        [nzPlaceHolder]="''"
+                                        ngMode
+                                        [nzFormat]="'dd/MM/yyyy'"
+                                        formControlName="TransDate"></nz-date-picker>  
+                                </td>
+                                <!-- end date-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <!-- end voucher number --> 
+                <ng-container *ngIf="isShowForm">
+                    <!-- start branch name -->
+                    <ng-container>
+                        <div class="input-group-lg" [class.hide-control]="!isMTN" [class.hide-control]="!isMRN">
+                            <nz-form-label>
+                                <label for="BranchName">
+                                    <span *ngIf="objID == 9">                                
+                                        {{(getLang() == 'EN' ? ('Dest. Branch' | translateEn) : ('Dest. Branch' | translateAr))}}
+                                    </span>
+                                    <span *ngIf="objID == 14">                                
+                                        {{(getLang() == 'EN' ? ('Src. Branch' | translateEn) : ('Src. Branch' | translateAr))}}
+                                    </span>
+                                </label>
+                            </nz-form-label>                        
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="BranchNameButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="BranchName"
+                                        name="BranchName"
+                                        #branches
+                                        (blur)="checkIsHaveVal('branch')"
+                                        formControlName="BranchName"/>
+                                </nz-input-group> 
+                                <ng-template #BranchNameButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple
+                                        (click)="fillPopUp(3, 'branch')">
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>                 
+                    </ng-container>
+                    <!-- end branch name -->
+                    <!-- start Delivered By -->
+                    <ng-container *ngIf="objID == 9">
+                        <div class="input-group-lg">
+                            <nz-form-label>
+                                <label for="DeliveredBy">
+                                    {{(getLang() == 'EN' ? ('Delivered By' | translateEn) : ('Delivered By' | translateAr))}}
+                                </label>
+                            </nz-form-label>                        
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="DeliveredByButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="DeliveredBy"
+                                        name="DeliveredBy"
+                                        #delivery
+                                        (blur)="checkIsHaveVal('delivery')"
+                                        formControlName="DeliveredBy"/>
+                                </nz-input-group> 
+                                <ng-template #DeliveredByButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple
+                                        (click)="fillPopUp(2, 'delivery')">
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>               
+                    </ng-container>
+                    <!-- end Delivered By --> 
+                    <!-- start MRN no -->
+                    <ng-container *ngIf="objID == 9">
+                        <div [class.hide-control]="!isMTN">
+                            <nz-form-label>
+                                <label style="color: red !important;">
+                                    {{(getLang() == 'EN' ? ('M.R.N #' | translateEn) : ('M.R.N #' | translateAr))}}
+                                </label>
+                            </nz-form-label>
+                            <div class="mrns">
+                                {{mrns}}
+                            </div>                
+                        </div>
+                    </ng-container>
+                    <!-- end MRN no -->
+                    <!-- start MTN -->
+                    <ng-container *ngIf="objID == 14">
+                        <div class="input-group-lg" [class.hide-control]="isMRN">
+                            <nz-form-label>
+                                <label for="MTN">
+                                    {{(getLang() == 'EN' ? ('M.T.N #' | translateEn) : ('M.T.N #' | translateAr))}}
+                                </label>
+                            </nz-form-label>                        
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="MTNButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id="MTN"
+                                        name="MTN"
+                                        #MTN_control
+                                        (blur)="checkIsHaveVal('MTN')"
+                                        formControlName="MTN"/>
+                                </nz-input-group> 
+                                <ng-template #MTNButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple
+                                        (click)="fillPopUp(-3, 'MTN')">
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </ng-container>
+                    <!-- end MTN -->
+                </ng-container>
+            </div>  
+        </div>
+
+        <ng-container *ngIf="isShowForm">
+            <div class="row" style="align-items: center;">
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <table class="w-100 table table-striped adjust-padding sm-width">
+                            <thead>
+                                <tr>
+                                    <th>{{(getLang() == 'EN' ? ('Store' | translateEn) : ('Store' | translateAr))}}</th>
+                                    <th>{{(getLang() == 'EN' ? ('Cost Center' | translateEn) : ('Cost Center' | translateAr))}}</th>
+                                    <th>{{(getLang() == 'EN' ? ('Received by' | translateEn) : ('Received by' | translateAr))}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <!-- start store-->
+                                    <td>
+                                        <nz-input-group nzSearch [nzAddOnAfter]="StoreIcon">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input
+                                                #store
+                                                (blur)="checkIsHaveVal('store')"
+                                                formControlName="StoreName"/>
+                                        </nz-input-group>
+                                        <ng-template #StoreIcon>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple
+                                                (click)="fillPopUp(1, 'store')">
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                 
+                                    </td>
+                                    <!-- end store -->
+                                    <!-- start cost center -->
+                                    <td>
+                                        <nz-input-group nzSearch [nzAddOnAfter]="CenterNameIcon">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                #costCenter
+                                                (blur)="checkIsHaveVal('costCenter')"
+                                                formControlName="CenterName"/>                            
+                                        </nz-input-group>
+                                        <ng-template #CenterNameIcon>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple
+                                                (click)="fillPopUp(4, 'costCenter')">
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                    
+                                    </td>
+                                    <!-- end cost center -->
+                                    <!-- start Received By -->
+                                    <td>
+                                        <nz-input-group>
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                formControlName="ReceivedBy"/>                             
+                                        </nz-input-group>                              
+                                    </td>
+                                    <!-- end ReceivedBy -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>                 
+                </div>
+                <div class="col-md-6">                
+                    <button 
+                        *ngIf="isCreateMRN"
+                        class="btn btn-block"
+                        style="border-radius: 0 !important; box-shadow: none !important;" 
+                        (click)="isCareteMRNVisible = true"
+                        matRipple>
+                        {{(getLang() == 'EN' ? ('Create MRN' | translateEn) : ('Create MRN' | translateAr))}}
+                    </button>
+                    <button 
+                        *ngIf="isOnLoan"
+                        class="btn btn-block"
+                        style="border-radius: 0 !important; box-shadow: none !important;" 
+                        (click)="isOnLoanItem = true"
+                        matRipple>
+                        {{(getLang() == 'EN' ? ('On Loan Items' | translateEn) : ('On Loan Items' | translateAr))}}
+                    </button>                                                   
+                </div>           
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group-lg">
+                        <nz-form-label>
+                            <label for="Notes">
+                                {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <nz-form-item>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id="Notes"
+                                name="Notes"
+                                formControlName="Notes"/>                                                                            
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="system[0].UseManufacturing">
+                    <div class="input-group-lg">
+                        <nz-form-label>
+                            <label for="BatchNo">
+                                {{(getLang() == 'EN' ? ('Batch #' | translateEn) : ('Batch #' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <nz-form-item>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id="BatchNo"
+                                name="BatchNo"
+                                formControlName="BatchNo"/>                                                                            
+                        </nz-form-item>
+                    </div>
+                </div>            
+            </div>            
+        </ng-container>
+    </form>
+
+    <!-- start grid -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- hide grid -->
+            <button 
+                class="btn action-btn" 
+                matRipple 
+                (click)="hideGrid()" 
+                style="box-shadow: none !important;" >
+                <i 
+                    nz-icon 
+                    nzType="plus-circle" 
+                    nzTheme="outline" 
+                    style="position: relative; top: -3px;"></i>
+            </button>               
+            <!-- hide grid -->
+            <!-- grid form -->
+            <form 
+                class="form add-overlay" 
+                [formGroup]="gridVoucherForm"
+                autocomplete="off" 
+                nz-form style="margin-top: 5px;"
+                [class.d-none]="isShowGrid"
+                [class.d-block]="!isShowGrid">
+                <div class="row">
+                    <!-- item & description -->
+                    <div class="col-md-3 12">
+                        <nz-form-label>
+                            <label for="ItemCode">
+                                {{(getLang() == 'EN' ? ('ItemCode' | translateEn) : ('ItemCode' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <nz-input-group nzSearch [nzAddOnAfter]="suffixItemCode">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="ItemCode"
+                                    name="ItemCode"
+                                    #items
+                                    (blur)="checkIsHaveVal('items')"
+                                    formControlName="ItemCode"/>
+                            </nz-input-group> 
+                            <ng-template #suffixItemCode>
+                                <button 
+                                    nz-button 
+                                    nzType="primary" 
+                                    nzSearch
+                                    class="search-btn btn-info"
+                                    matRipple
+                                    (click)="fillPopUp(-1, 'items')">
+                                    <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                    <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                                </button>
+                            </ng-template>                                                                                                                     
+                        </nz-form-item>
+                    </div> 
+                    <div class="col-md-6 col-12">
+                        <nz-form-label>
+                            <label for="ItemName">
+                                {{(getLang() == 'EN' ? ('ItemName' | translateEn) : ('ItemName' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id="ItemName"
+                                name="ItemName"
+                                formControlName="ItemName"
+                                disabled/>                                                                                                                    
+                        </nz-form-item>
+                    </div> 
+                    <!-- item & description -->  
+                    
+                    <!-- item quantity -->
+                    <div class="col-md-3 col-12">
+                        <nz-form-label>
+                            <label for="Qty">
+                                {{(getLang() == 'EN' ? ('Qty' | translateEn) : ('Qty' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control ordered-check" 
+                                nz-input 
+                                type="text"
+                                id="Qty"
+                                name="Qty"
+                                formControlName="Qty"
+                                mask="0*.00"
+                                #quantity
+                                (keyup)="checkQuantity(quantity.value)"
+                                (keyup.enter)="addRowByEnter()"/>                                                                                                                    
+                        </nz-form-item>
+                    </div>
+                    <!-- item quantity -->
+
+                    <!-- submit -->
+                    <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                        <button 
+                            class="btn btn-primary btn-block" 
+                            matRipple 
+                            style="box-shadow: none !important;"
+                            [disabled]="(!isValidItemCode || !isValidQuantity)"
+                            (click)="validateGridBeforeAddOrUpdate('new')">
+                            {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- submit -->
+
+                    <!-- Edit -->
+                    <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                        <button 
+                            class="btn btn-success btn-block" 
+                            matRipple 
+                            style="box-shadow: none !important;"
+                            [disabled]="!gridVoucherForm.valid"
+                            (click)="validateGridBeforeAddOrUpdate('edit')">
+                            {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- Edit -->                        
+
+                    <!-- show grid -->
+                    <div class="col-md-3">
+                        <button 
+                            class="btn btn-block" 
+                            [class.btn-outline-primary]="isAdd"
+                            [class.btn-outline-success]="!isAdd"
+                            matRipple 
+                            style="box-shadow: none !important;"
+                            (click)="showGrid()">
+                            {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- show grid -->                        
+                </div>
+            </form>
+            <!-- grid form -->  
+            <!-- grid -->
+            <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+                <app-grid [gridData]="gridData"></app-grid>
+            </div>
+            <!-- grid -->                  
+        </div>
+    </div>
+    <!-- end grid -->
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>
+
+<!-- show / hide form -->
+<button 
+    class="btn show-hide-btn" 
+    matRipple 
+    (click)="isShowForm = !isShowForm"
+    [class.show-hide-btn-right]="getLang() == 'EN'"
+    [class.show-hide-btn-left]="getLang() == 'AR'">
+    <i *ngIf="isShowForm" class="fas fa-eye"></i>
+    <i *ngIf="!isShowForm" class="fas fa-eye-slash"></i>
+</button>
+
+<!-- create MRN -->
+
+<nz-modal 
+    [(nzVisible)]="isCareteMRNVisible" 
+    [nzTitle]="(getLang() == 'EN' ? ('Creating MRN From MTN' | translateEn) : ('Creating MRN From MTN' | translateAr))" 
+    (nzOnCancel)="closeMRN()"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}"
+    nzWidth="30%"
+    nzZIndex="900">
+    
+    <form class="form container" [formGroup]="creatingMRNForm" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row">            
+            <!-- store -->
+            <div class="col-md-12">
+                <nz-form-label>
+                    <label for="storeCode">
+                        {{(getLang() == 'EN' ? ('Target Store' | translateEn) : ('Target Store' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="targetButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        #target_store
+                                        (blur)="checkIsHaveVal('target_store')"
+                                        formControlName="storeCode"/>
+                                </nz-input-group> 
+                                <ng-template #targetButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="fillPopUp(7, 'Target Store')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"                                       
+                                    formControlName="storeName"
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <!-- store -->  
+            <!-- note -->
+            <div class="col-md-12">
+                <fieldset>
+                    <legend>
+                        {{(getLang() == 'EN' ? ('Note' | translateEn) : ('Note' | translateAr))}}
+                    </legend>
+                    <p class="text-justify"> 
+                        {{lang.createMRNNote}}
+                    </p>
+                </fieldset>
+            </div>
+            <!-- note -->
+        </div>        
+    </form>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <div class="container">
+            <button 
+                class="btn btn-info" 
+                matRipple 
+                style="box-shadow: none !important; width: 90px"
+                (click)="createMRN()"
+                [disabled]="!isValidStroe">
+                OK
+                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isCreatingMRN"></i>
+            </button>
+            <button class="btn" matRipple (click)="closeMRN()" style="box-shadow: none !important; width: 90px">
+                Cancel 
+            </button>
+        </div>
+    </div>
+</nz-modal>
+
+<!-- create MRN -->
+
+<nz-modal 
+    [(nzVisible)]="isOnLoanItem" 
+    [nzTitle]="(getLang() == 'EN' ? ('Items' | translateEn) : ('Items' | translateAr))" 
+    (nzOnCancel)="closeOnLoan()"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}"
+    nzWidth="30%"
+    nzZIndex="900">
+    
+    <form class="form container" [formGroup]="onLoanForm" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row">            
+            <!-- item -->
+            <div class="col-md-6 col-6">
+                <nz-form-label>
+                    <label for="ItemCode">
+                        {{(getLang() == 'EN' ? ('ItemCode' | translateEn) : ('ItemCode' | translateAr))}}
+                    </label>
+                </nz-form-label>                            
+                <nz-form-item>
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixItemCodeOnLoan">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id="ItemCode"
+                            name="ItemCode"
+                            #items
+                            (blur)="checkIsHaveVal('items')"
+                            formControlName="ItemCode"/>
+                    </nz-input-group> 
+                    <ng-template #suffixItemCodeOnLoan>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            matRipple
+                            (click)="fillPopUp(-4, 'onLoan')">
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                                                                                                                     
+                </nz-form-item>
+            </div> 
+            <div class="col-md-6 col-6">
+                <nz-form-label>
+                    <label for="ItemName">
+                        {{(getLang() == 'EN' ? ('ItemName' | translateEn) : ('ItemName' | translateAr))}}
+                    </label>
+                </nz-form-label>                            
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id="ItemName"
+                        name="ItemName"
+                        formControlName="ItemName"
+                        disabled/>                                                                                                                    
+                </nz-form-item>
+            </div> 
+            <!-- item -->  
+            <!-- item -->
+            <div class="col-md-12">
+                <nz-form-label>
+                    <label for="qty">
+                        {{(getLang() == 'EN' ? ('Qty' | translateEn) : ('Qty' | translateAr))}}
+                    </label>
+                </nz-form-label>                            
+                <nz-form-item>
+                    <nz-input-group>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id="qty"
+                            name="qty"
+                            formControlName="Qty"
+                            #onLoanQuantity
+                            (keyup)="checkQuantity(onLoanQuantity.value, 'onLoan')"/>
+                    </nz-input-group>                                                                                                                     
+                </nz-form-item>
+            </div> 
+            <!-- item -->             
+        </div>        
+    </form>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <div class="container">
+            <button 
+                class="btn btn-info" 
+                matRipple 
+                style="box-shadow: none !important; width: 90px"
+                (click)="addToGridFromManu()"
+                [disabled]="(!isValidQuantity && !isValidItemCode)">
+                OK
+                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isRowLoader"></i>
+            </button>
+            <button class="btn" matRipple (click)="closeOnLoan()" style="box-shadow: none !important; width: 90px">
+                Cancel 
+            </button>
+        </div>
+    </div>
+</nz-modal>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (pouppTitle | translateEn) : (pouppTitle | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            nzShowPagination
+            [nzData]="data" 
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '240px' }"
+            class="table table-striped"
+            [class.w-300]="pouppTitle == 'Delivered By'"
+            [class.ultra-wide]="pouppTitle == 'Source Doc. #'"
+            [class.forms-table]="pouppTitle == 'Items'"
+            (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <ng-container *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                    <th *ngIf="(head != 'Line' || head != 'خط')">
+                        <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                    </th>                        
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let allData of headerTable.data; let i = index" >
+                    <tr
+                        *ngIf="(d != 'Line' || d != 'خط')"                  
+                        (click)="onItemClicked(i)" 
+                        style="cursor: pointer;">
+                        <td 
+                            *ngFor="let d of allData | render" 
+                            class="hide-long-text"
+                            [class.text-center]="allData[d] | canBeCenter">{{allData[d] | replaceEmpty}}</td>                        
+                    </tr>
+                </ng-container>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                        <input 
+                            nz-input
+                            class="form-control" 
+                            type="text" 
+                            #value 
+                            (keyup.enter)="filterData(key, value.value)" />
+                    </th>
+                </tr>
+            </tfoot>
+        </nz-table>
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>              
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+            {{lang.taskBarRefresh}}
+        </button>
+    </div>
+</nz-modal>

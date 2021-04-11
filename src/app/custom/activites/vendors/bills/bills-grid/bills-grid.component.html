@@ -1,0 +1,287 @@
+<div class="row adjust-position">
+    <div class="col-md-12">
+        <!-- hide grid -->
+        <button 
+            class="btn action-btn" 
+            matRipple 
+            (click)="hideGrid()" 
+            [disabled]="!isActiveGrid"
+            style="box-shadow: none !important;" >
+            <i 
+                nz-icon 
+                nzType="plus-circle" 
+                nzTheme="outline" 
+                style="position: relative; top: -3px;"></i>
+        </button>               
+        <!-- hide grid -->
+        <!-- grid form -->
+        <form 
+            class="form add-overlay" 
+            [formGroup]="gridForm"
+            autocomplete="off" 
+            nz-form style="margin-top: 5px;"
+            [class.d-none]="isShowGrid"
+            [class.d-block]="!isShowGrid">
+            <div class="row">
+                <!-- AccID --> 
+                <div class="col-md-4 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('AccID' | translateEn) : ('AccID' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="accButton">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""
+                                formControlName="AccID"
+                                #account
+                                (blur)="checkIsHaveVal()"
+                                (keyup)="isEmpty()"/>
+                        </nz-input-group> 
+                        <ng-template #accButton>
+                            <button 
+                                nz-button 
+                                nzType="primary" 
+                                nzSearch
+                                class="search-btn btn-info"
+                                matRipple
+                                (click)="isVisible = !isVisible">
+                                <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                            </button>
+                        </ng-template>                                                                                                                     
+                    </nz-form-item>
+                </div>                             
+                <!-- AccID --> 
+
+                <!-- Acount -->
+                <div class="col-md-4 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Acount' | translateEn) : ('Acount' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""
+                                disabled
+                                formControlName="AccName"/>
+                        </nz-input-group>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- Acount -->   
+
+                <!-- Value -->                 
+                <div class="col-md-4 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Value' | translateEn) : ('Value' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="number"
+                            id=""
+                            name=""
+                            formControlName="Value"/>                                                                                                                    
+                    </nz-form-item>
+                </div> 
+                <!-- Value -->                   
+                
+                <!-- SubAcc. -->
+                <div class="col-md-4 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Sub Acc.' | translateEn) : ('Sub Acc.' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""
+                            formControlName="PersonCode"/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- SubAcc. --> 
+                
+                <!-- Sub Account -->
+                <div class="col-md-4 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Sub Account' | translateEn) : ('Sub Account' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""
+                            formControlName="PersonName"/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Sub Account --> 
+                
+                <!-- Cost Centers -->
+                <div class="col-md-4 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Cost Centers' | translateEn) : ('Cost Centers' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""
+                            formControlName="CostCenters"/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Cost Centers -->                            
+
+                <!-- Memo -->
+                <div class="col-md-12 col-12">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Memo' | translateEn) : ('Memo' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <textarea class="form-control" nz-input nzAutosize formControlName="Memo"></textarea>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- Memo -->                     
+
+                <!-- submit -->
+                <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-primary btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="addToGrid()"
+                        [disabled]="!gridForm.valid">
+                        {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                    </button>
+                </div>
+                <!-- submit -->
+
+                <!-- Edit -->
+                <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-success btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="editGrid()">
+                        {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                    </button>
+                </div>
+                <!-- Edit -->                        
+
+                <!-- show grid -->
+                <div class="col-md-3">
+                    <button 
+                        class="btn btn-block" 
+                        [class.btn-outline-primary]="isAdd"
+                        [class.btn-outline-success]="!isAdd"
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="showGrid()">
+                        {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                    </button>
+                </div>
+                <!-- show grid -->                        
+            </div>
+        </form>
+        <!-- grid form -->  
+        <!-- grid -->
+        <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+            <app-grid [gridData]="gridData"></app-grid>
+        </div>
+        <!-- grid -->                  
+    </div>
+</div>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (pouppTitle | translateEn) : (pouppTitle | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            nzShowPagination
+            [nzData]="data" 
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '240px' }"
+            class="table table-striped"
+            [class.w-300]="pouppTitle == 'Delivered By'"
+            [class.ultra-wide]="pouppTitle == 'Source Doc. #'"
+            [class.forms-table]="pouppTitle == 'Items'"
+            (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <ng-container *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                    <th *ngIf="(head != 'Line' || head != 'خط')">
+                        <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                    </th>                        
+                </ng-container>
+              </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let allData of headerTable.data; let i = index" >
+                    <tr
+                        *ngIf="(d != 'Line' || d != 'خط')"                  
+                        (click)="onItemClicked(i)" 
+                        style="cursor: pointer;">
+                        <td 
+                            *ngFor="let d of allData | render" 
+                            class="hide-long-text"
+                            [class.text-center]="allData[d] | canBeCenter">{{allData[d] | replaceEmpty}}</td>                        
+                    </tr>
+                </ng-container>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                        <input 
+                            nz-input
+                            class="form-control" 
+                            type="text" 
+                            #value 
+                            (keyup.enter)="filterData(key, value.value)" />
+                    </th>
+                </tr>
+            </tfoot>
+        </nz-table>
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>              
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+            {{lang.taskBarRefresh}}
+        </button>
+    </div>
+</nz-modal>

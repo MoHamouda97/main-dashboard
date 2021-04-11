@@ -1,0 +1,18 @@
+<div class="group-wrapper text-center">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-secondary" matRipple>
+            {{(getLang() == 'EN' ? ('Save' | translateEn) : ('Save' | translateAr))}}
+        </button>
+        <button type="button" class="btn btn-secondary" matRipple>
+            {{(getLang() == 'EN' ? ('Export' | translateEn) : ('Export' | translateAr))}}
+            <i class="far fa-file-excel m-2"></i>
+        </button>
+        <button type="button" class="btn btn-secondary" matRipple>
+            {{(getLang() == 'EN' ? ('Import' | translateEn) : ('Import' | translateAr))}}
+            <i class="far fa-file-excel m-2"></i>
+        </button>
+        <button type="button" class="btn btn-secondary" matRipple>
+            {{(getLang() == 'EN' ? ('Preview' | translateEn) : ('Preview' | translateAr))}}
+        </button>        
+    </div>
+</div>

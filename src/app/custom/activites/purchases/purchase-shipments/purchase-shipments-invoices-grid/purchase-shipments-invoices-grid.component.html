@@ -1,0 +1,252 @@
+<div class="row adjust-position">
+    <div class="col-md-12">
+        <!-- hide grid -->
+        <button 
+            class="btn action-btn" 
+            matRipple 
+            (click)="hideGrid()" 
+            style="box-shadow: none !important;" >
+            <i 
+                nz-icon 
+                nzType="plus-circle" 
+                nzTheme="outline" 
+                style="position: relative; top: -3px;"></i>
+        </button>               
+        <!-- hide grid -->
+        <!-- grid form -->
+        <form 
+            class="form add-overlay" 
+            autocomplete="off" 
+            nz-form style="margin-top: 5px;"
+            [class.d-none]="isShowGrid"
+            [class.d-block]="!isShowGrid">
+            <div class="row">
+                <!-- pur --> 
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Pur #' | translateEn) : ('Pur #' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="purButton">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group> 
+                        <ng-template #purButton>
+                            <button 
+                                nz-button 
+                                nzType="primary" 
+                                nzSearch
+                                class="search-btn btn-info"
+                                matRipple>
+                                <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                            </button>
+                        </ng-template>                                                                                                                     
+                    </nz-form-item>
+                </div>                             
+                <!-- pur --> 
+                <!-- invoice -->
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Invoice #' | translateEn) : ('Invoice #' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- invoice -->    
+                <!-- dispatch -->                 
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Dispatch #' | translateEn) : ('Dispatch #' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div> 
+                <!-- dispatch --> 
+
+                <!-- dispatch date --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Dispatch Date' | translateEn) : ('Dispatch Date' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-date-picker  
+                            [nzPlaceHolder]="''"
+                            ngMode
+                            [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                                                                     
+                    </nz-form-item>
+                </div> 
+                <!-- dispatch date -->  
+                
+                <!-- pur date --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Pur Date' | translateEn) : ('Pur Date' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-date-picker  
+                            [nzPlaceHolder]="''"
+                            ngMode
+                            [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                                                                     
+                    </nz-form-item>
+                </div> 
+                <!-- pur date -->                
+                
+                <!-- Order -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Order No.' | translateEn) : ('Order No.' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Order --> 
+                
+                <!-- Amount -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Amount' | translateEn) : ('Amount' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Amount --> 
+                
+                <!-- Currancy -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Currancy' | translateEn) : ('Currancy' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Currancy --> 
+
+                <!-- Vendor Name -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Vendor Name' | translateEn) : ('Vendor Name' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Vendor Name -->                             
+
+                <!-- Memo -->
+                <div class="col-md-6 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Memo' | translateEn) : ('Memo' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <textarea class="form-control" nz-input nzAutosize></textarea>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- Memo -->                     
+
+                <!-- submit -->
+                <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-primary btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                    </button>
+                </div>
+                <!-- submit -->
+
+                <!-- Edit -->
+                <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-success btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                    </button>
+                </div>
+                <!-- Edit -->                        
+
+                <!-- show grid -->
+                <div class="col-md-3">
+                    <button 
+                        class="btn btn-block" 
+                        [class.btn-outline-primary]="isAdd"
+                        [class.btn-outline-success]="!isAdd"
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="showGrid()">
+                        {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                    </button>
+                </div>
+                <!-- show grid -->                        
+            </div>
+        </form>
+        <!-- grid form -->  
+        <!-- grid -->
+        <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+            <app-grid [gridData]="gridData"></app-grid>
+        </div>
+        <!-- grid -->                  
+    </div>
+</div>

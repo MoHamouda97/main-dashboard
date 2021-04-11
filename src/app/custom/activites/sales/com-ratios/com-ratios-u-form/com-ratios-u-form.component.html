@@ -1,0 +1,163 @@
+<form class="form" autocomplete="off" nz-form  #f="ngForm">
+    <ng-container *ngIf="isShowForm">
+        <div class="row" style="align-items: baseline;">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Sales Man' | translateEn) : ('Sales Man' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group-lg">
+                                    <nz-form-item>
+                                        <nz-input-group nzSearch [nzAddOnAfter]="salManButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #salManButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                               
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group-lg">
+                                    <nz-input-group>
+                                        <input  
+                                            class="form-control" 
+                                            nz-input 
+                                            type="text"
+                                            id="" 
+                                            name=""                                         
+                                            disabled/>
+                                    </nz-input-group>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-6">
+                <div class="table-responsive" style="padding-bottom: 1rem;">
+                    <table class="w-100 table sm-table table-striped sm-table adjust-padding">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="width: 50%;">{{(getLang() == 'EN' ? ('Rate Num' | translateEn) : ('Rate Num' | translateAr))}}</th>                                                                                           
+                                <th>{{(getLang() == 'EN' ? ('Date' | translateEn) : ('Date' | translateAr))}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- start No.-->
+                                <td style="width: 133px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input
+                                        id=""                              
+                                        disabled/>
+                                </td>
+                                <td style="width: 133px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text" 
+                                        id=""                                
+                                        disabled/>                            
+                                </td>
+                                <td>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        disabled/>                             
+                                </td>
+                                <!-- end No. -->                               
+                                <!-- start date -->
+                                <td>
+                                    <nz-date-picker  
+                                        [nzPlaceHolder]="''"
+                                        ngMode
+                                        [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>  
+                                </td>
+                                <!-- end date-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                  
+            </div>                        
+        </div>
+    
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Starting Date' | translateEn) : ('Starting Date' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-date-picker  
+                            [nzPlaceHolder]="''"
+                            ngMode
+                            [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                              
+                    </nz-form-item>
+                </div>                
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Ending Date' | translateEn) : ('Ending Date' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-date-picker  
+                            [nzPlaceHolder]="''"
+                            ngMode
+                            [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                              
+                    </nz-form-item>
+                </div>                
+            </div>                      
+        </div>
+    
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea class="form-control" nz-input nzAutosize></textarea>                                                                          
+                    </nz-form-item>
+                </div> 
+            </div>
+        </div>
+    </ng-container>
+</form>
+
+<button 
+    class="btn show-hide-btn" 
+    matRipple 
+    (click)="isShowForm = !isShowForm"
+    [class.show-hide-btn-right]="getLang() == 'EN'"
+    [class.show-hide-btn-left]="getLang() == 'AR'">
+    <i *ngIf="isShowForm" class="fas fa-eye"></i>
+    <i *ngIf="!isShowForm" class="fas fa-eye-slash"></i>
+</button>

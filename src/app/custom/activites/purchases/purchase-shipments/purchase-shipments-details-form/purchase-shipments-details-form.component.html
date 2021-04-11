@@ -1,0 +1,177 @@
+<div class="row" style="margin-top: 15px;">
+    
+    <div class="col-md-6">
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Expected Time of Sealing' | translateEn) : ('Expected Time of Sealing' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <nz-date-picker  
+                    [nzPlaceHolder]="''"
+                    ngMode
+                    [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                            
+            </nz-form-item>
+        </div>
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Expected Time of Arival' | translateEn) : ('Expected Time of Arival' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <nz-date-picker  
+                    [nzPlaceHolder]="''"
+                    ngMode
+                    [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                              
+            </nz-form-item>            
+        </div>
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Actual Time of Sealing' | translateEn) : ('Actual Time of Sealing' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <nz-date-picker  
+                    [nzPlaceHolder]="''"
+                    ngMode
+                    [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                              
+            </nz-form-item>            
+        </div>        
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Actual Time of Arival' | translateEn) : ('Actual Time of Arival' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <nz-date-picker  
+                    [nzPlaceHolder]="''"
+                    ngMode
+                    [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                              
+            </nz-form-item>            
+        </div> 
+        
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Master AWB/BL' | translateEn) : ('Master AWB/BL' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div> 
+        
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('House AWB/BL' | translateEn) : ('House AWB/BL' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>        
+                                                                                                                                                                             
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Weight' | translateEn) : ('Weight' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>  
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Volume' | translateEn) : ('Volume' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>
+                
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('No. Pieces' | translateEn) : ('No. Pieces' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>        
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Palette' | translateEn) : ('Palette' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>  
+
+        <div class="input-group-lg">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('No. Containers' | translateEn) : ('No. Containers' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <nz-form-item>
+                <input  
+                    class="form-control" 
+                    nz-input 
+                    type="text"
+                    id="Telx"
+                    name="Telx"/>                                                                              
+            </nz-form-item>            
+        </div>                                                                                                         
+    </div>
+                        
+</div>

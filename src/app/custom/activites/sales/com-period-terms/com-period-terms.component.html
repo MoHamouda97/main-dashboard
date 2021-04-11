@@ -1,0 +1,18 @@
+<section class="com-period-terms">
+    <!-- start upper form -->
+    <com-period-u-form></com-period-u-form>
+    <!-- end upper form -->
+
+    <mat-tab-group class="w-100">
+        <mat-tab label="{{(getLang() == 'EN' ? ('Salesman Quota' | translateEn) : ('Salesman Quota' | translateAr))}}"> 
+            <!-- start salesman grid -->
+            <com-period-grid></com-period-grid>
+            <!-- end salesman grid -->
+        </mat-tab> 
+        <mat-tab label="{{(getLang() == 'EN' ? ('Payement Terms' | translateEn) : ('Payement Terms' | translateAr))}}"> 
+            <!-- start payement terms form -->
+            <com-period-payment-form></com-period-payment-form>
+            <!-- end payement terms form -->
+        </mat-tab>                                                 
+    </mat-tab-group>
+</section>

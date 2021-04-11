@@ -1,0 +1,190 @@
+<form class="form" [formGroup]="contactForm" autocomplete="off" nz-form  #f="ngForm">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Contact">
+                        {{(getLang() == 'EN' ? ('Contact' | translateEn) : ('Contact' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id="Contact"
+                        name="Contact"
+                        formControlName="Contact"/>                                                                              
+                </nz-form-item>                                                                              
+            </div>        
+        </div> 
+        
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="OthContact">
+                        {{(getLang() == 'EN' ? ('Altr. Contact' | translateEn) : ('Altr. Contact' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id="OthContact"
+                        name="OthContact"
+                        formControlName="OthContact" />                                                                              
+                </nz-form-item>                                                                              
+            </div>        
+        </div> 
+        
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="E_Mail">
+                        {{(getLang() == 'EN' ? ('E-Mail' | translateEn) : ('E-Mail' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id="E_Mail"
+                        name="E_Mail"
+                        formControlName="E_Mail" />                                                                              
+                </nz-form-item>                                                                              
+            </div>        
+        </div>        
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Address">
+                        {{(getLang() == 'EN' ? ('Address' | translateEn) : ('Address' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <textarea 
+                        formControlName="Address"
+                        class="form-control" 
+                        nz-input 
+                        nzAutosize></textarea>                                                                               
+                </nz-form-item>                                                                              
+            </div> 
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="PoBox">
+                        {{(getLang() == 'EN' ? ('P.O. Box' | translateEn) : ('P.O. Box' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id="PoBox"
+                        name="PoBox"
+                        formControlName="PoBox" />                                                                              
+                </nz-form-item>                                                                              
+            </div>
+        </div>  
+        
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Phone">
+                        {{(getLang() == 'EN' ? ('Phone' | translateEn) : ('Phone' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <nz-input-group nzCompact>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width: 50%;"
+                            id="Phone"
+                            name="Phone"
+                            formControlName=Phone />
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width:50%;"
+                            formControlName="AltrPhone" />
+                    </nz-input-group>                                                                              
+                </nz-form-item>
+            </div>
+        </div>         
+
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Fax">
+                        {{(getLang() == 'EN' ? ('Fax' | translateEn) : ('Fax' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <nz-input-group nzCompact>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width: 50%;"
+                            id="Fax"
+                            name="Fax"
+                            formControlName="Fax" />
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width:50%;" 
+                            formControlName="AltrFax" />
+                    </nz-input-group>                                                                              
+                </nz-form-item>                                                                            
+            </div>
+        </div>         
+        
+        <div class="col-md-4">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Telx">
+                        {{(getLang() == 'EN' ? ('Telex' | translateEn) : ('Telex' | translateAr))}}
+                    </label>
+                </nz-form-label>
+    
+                <nz-form-item>
+                    <nz-input-group nzCompact>
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width: 50%;"
+                            id="Telx"
+                            name="Telx"
+                            formControlName="Telx" />
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            nz-input 
+                            style="width:50%;"
+                            formControlName="AltrTelx" />
+                    </nz-input-group>                                                                              
+                </nz-form-item>                                                                              
+            </div>        
+        </div>         
+    </div>
+</form>

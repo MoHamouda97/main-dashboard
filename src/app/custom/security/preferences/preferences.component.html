@@ -1,0 +1,442 @@
+<section class="system-preferences">
+    <form nz-form autocomplete="off" [formGroup]="systemPreferencesForm">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="compName">
+                                    {{(getLang() == 'EN' ? ('Company Name' | translateEn) : ('Company Name' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="CompanyName" 
+                                        id="compName" 
+                                        name="compName"/>   
+                                        <!-- save branch code -->
+                                        <input type="hidden" formControlName="BranchCode" />                                          
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="compArName">
+                                    {{(getLang() == 'EN' ? ('Comapny Arabic Name' | translateEn) : ('Comapny Arabic Name' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="CompanyArabicName" 
+                                        id="compArName" 
+                                        name="compArName"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>        
+            
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="HOAdress">
+                                    {{(getLang() == 'EN' ? ('H.O.Adress' | translateEn) : ('H.O.Adress' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="HeadOffice" 
+                                        id="HOAdress" 
+                                        name="HOAdress"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="HOArabicAdress">
+                                    {{(getLang() == 'EN' ? ('H.O.Arabic.Adress' | translateEn) : ('H.O.Arabic.Adress' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="ArabicHeadOffice" 
+                                        id="HOArabicAdress" 
+                                        name="HOArabicAdress"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="NOOfTransactions">
+                                    {{(getLang() == 'EN' ? ('NO. Of Transactions' | translateEn) : ('NO. Of Transactions' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="TransCount" 
+                                        id="NOOfTransactions" 
+                                        name="NOOfTransactions"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="YearFirstMonth">
+                                    {{(getLang() == 'EN' ? ('Year First Months' | translateEn) : ('Year First Month' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="BeginYear" 
+                                        id="YearFirstMonth" 
+                                        name="YearFirstMonth"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="VATNumber">
+                                    {{(getLang() == 'EN' ? ('VAT Number' | translateEn) : ('VAT Numberh' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-form-item>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="VAT_No" 
+                                        id="VATNumber" 
+                                        name="VATNumber"/>                                             
+                                </nz-form-item>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="VatItemCode">
+                                    {{(getLang() == 'EN' ? ('Vat Item Code(INPUT)' | translateEn) : ('Vat Item Code(INPUT)' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-input-group nzSearch [nzAddOnAfter]="vatInputSearch">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="VAT_IN_ItemCode" 
+                                        id="VatItemCode" 
+                                        name="VatItemCode"/>                                             
+                                </nz-input-group>
+                                <ng-template #vatInputSearch>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="showPopUp('vatInput')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template> 
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <nz-form-label>
+                                <label for="VatItemCodeOutput">
+                                    {{(getLang() == 'EN' ? ('Vat Item Code(OUTPUT)' | translateEn) : ('Vat Item Code(OUTPUT)' | translateAr))}}
+                                </label>
+                            </nz-form-label>                                                                                                
+                            <div class="input-group-lg">
+                                <nz-input-group nzSearch [nzAddOnAfter]="vatOutputSearch">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        formControlName="VAT_ItemCode" 
+                                        id="VatItemCodeOutput" 
+                                        name="VatItemCodeOutput"/>                                             
+                                </nz-input-group>
+                                <ng-template #vatOutputSearch>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        (click)="showPopUp('vatOutput')"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseManufacturing">
+                                <span>{{(getLang() == 'EN' ? ('UseManufacturing' | translateEn) : ('UseManufacturing' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="LockCompletedSOF">
+                                <span>{{(getLang() == 'EN' ? ('LockCompletedSOF' | translateEn) : ('LockCompletedSOF' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="GLEntriesForMTN">
+                                <span>{{(getLang() == 'EN' ? ('Create GL Entries For MTN' | translateEn) : ('Create GL Entries For MTN' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseSales">
+                                <span>{{(getLang() == 'EN' ? ('Use Sales' | translateEn) : ('Use Sales' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UsePurchs">
+                                <span>{{(getLang() == 'EN' ? ('Use Purchace' | translateEn) : ('Use Purchace' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseStocks">
+                                <span>{{(getLang() == 'EN' ? ('Use Inventory' | translateEn) : ('Use Inventory' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div>  
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="AutoCalcVAT">
+                                <span>{{(getLang() == 'EN' ? ('Auto Calc VAT' | translateEn) : ('Auto Calc VAT' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div>  
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="PreventInvWithoutIssue">
+                                <span>{{(getLang() == 'EN' ? ('Prevent Invoice Without Issue' | translateEn) : ('Prevent Invoice Without Issue' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseAccounts">
+                                <span>{{(getLang() == 'EN' ? ('Use General Ledger' | translateEn) : ('Use General Ledger' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseBanks">
+                                <span>{{(getLang() == 'EN' ? ('Use Banks' | translateEn) : ('Use Banks' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="UseNotifications">
+                                <span>{{(getLang() == 'EN' ? ('Use Notification' | translateEn) : ('Use Notification' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div> 
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label nz-checkbox formControlName="VerifyItemAccounts">
+                                <span>{{(getLang() == 'EN' ? ('Verify Item Accounts' | translateEn) : ('Verify Item Accounts' | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div>                     
+                          
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group-lg">
+                                <button 
+                                    class="btn btn-block btn-lg btn-success reset-btn" 
+                                    type="submit" 
+                                    matRipple
+                                    (click)="updatePreferences()"
+                                    style="margin-top: 15px;">
+                                    {{lang.btnUpdate}}
+                                    <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isUpdating"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <label 
+                            nz-button 
+                            for="logo_uploader" 
+                            class="btn btn-block btn-outline-secondary reset-btn" 
+                            matRipple>
+                            <i nz-icon nzType="upload"></i>
+                            {{lang.uploadLogo}}
+                        </label>
+                        <input 
+                            type="file" 
+                            (change)="imageChangeLogo(newLogo)" 
+                            #newLogo 
+                            id="logo_uploader"
+                            class="d-none"/>
+                        <img 
+                            [src]="getImageUrlForLogo(uploadedLogo)" 
+                            alt=""
+                            class="img-fluid"
+                            id="js_logo"/>
+                    </div>
+                    <div class="col-md-12">
+                        <label 
+                            nz-button for="sm_logo_uploader" 
+                            class="btn btn-block btn-outline-secondary reset-btn add-space" 
+                            matRipple>
+                            <i nz-icon nzType="upload"></i>
+                            {{lang.uploadSmLogo}}
+                        </label>
+                        <input 
+                            type="file" 
+                            (change)="imageChangeSmLogo(newSmLogo)" 
+                            #newSmLogo 
+                            id="sm_logo_uploader"
+                            class="d-none"/>                       
+                        <img 
+                            [src]="getImageUrlForSmLogo(uploadedSmLogo)" 
+                            alt="" 
+                            style="width: 50px !important;" 
+                            class="img-fluid"
+                            id="js_small_logo"/>
+                    </div>
+                    <div class="col-md-12">
+                        <label 
+                            nz-button 
+                            for="watermark_uploader" 
+                            class="btn btn-block btn-outline-secondary reset-btn add-space" 
+                            matRipple>
+                            <i nz-icon nzType="upload"></i>
+                            {{lang.uploadWatermark}}
+                        </label>
+                        <input 
+                            type="file" 
+                            (change)="imageChangeWatermark(newWatermark)" 
+                            #newWatermark
+                            id="watermark_uploader"
+                            class="d-none"/>                      
+                        <img 
+                            [src]="getImageUrlForWatermark(uploadedWatermark)" 
+                            alt="" 
+                            class="img-fluid"
+                            id="js_watermark"/>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (VATType | translateEn) : (VATType | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    nzWidth="75%"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            [nzData]="data" 
+            [nzScroll]="{ x: '240px' }"
+            class="table table-striped"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <th 
+                    *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))">{{head}}</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let allData of headerTable.data; let i = index" 
+                    (click)="onItemClicked(i)" 
+                    style="cursor: pointer;">
+                    <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>
+    </div>
+
+    <div *nzModalFooter></div>
+</nz-modal>

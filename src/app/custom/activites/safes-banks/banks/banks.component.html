@@ -1,0 +1,117 @@
+<form class="form" [formGroup]="banksForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="BankNum">
+                        {{(getLang() == 'EN' ? ('BankNum' | translateEn) : ('BankNum' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="BankNum" 
+                            id="BankNum" 
+                            name="BankNum" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="BankName">
+                        {{(getLang() == 'EN' ? ('BankName' | translateEn) : ('BankName' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="BankName" 
+                                id="BankName" 
+                                name="BankName" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="OurBankAccount">
+                        {{(getLang() == 'EN' ? ('OurBankAccount' | translateEn) : ('OurBankAccount' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="OurBankAccount" 
+                            id="OurBankAccount" 
+                            name="OurBankAccount" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="BankAddress">
+                        {{(getLang() == 'EN' ? ('BankAddress' | translateEn) : ('BankAddress' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="BankAddress" 
+                                id="BankAddress" 
+                                name="BankAddress" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>         
+        
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="Notes">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea
+                            nz-input
+                            [nzAutosize]="{ minRows: 2, maxRows: 20 }"
+                            formControlName="Notes" 
+                            id="Notes" 
+                            name="Notes" 
+                        ></textarea>                                             
+                    </nz-form-item>
+                </div>                                        
+            </div>
+        </div>                                         
+               
+    </div>
+</form>  

@@ -1,0 +1,62 @@
+<section class="cost-add-ons">
+    <div class="row">
+        <div class="col-md-12">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Vendor' | translateEn) : ('Vendor' | translateAr))}}
+                </label>
+            </nz-form-label>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group-lg">
+                        <nz-form-item>
+                            <nz-input-group nzSearch [nzAddOnAfter]="vendorButton">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id=""
+                                    name=""/>
+                            </nz-input-group> 
+                            <ng-template #vendorButton>
+                                <button 
+                                    nz-button 
+                                    nzType="primary" 
+                                    nzSearch
+                                    class="search-btn btn-info"
+                                    matRipple>
+                                    <i nz-icon nzType="search"></i>
+                                </button>
+                            </ng-template>                                                                               
+                        </nz-form-item>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="input-group-lg">
+                        <nz-input-group>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id="" 
+                                name=""                                         
+                                disabled/>
+                        </nz-input-group>                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- start grid -->
+    <add-ons-grid></add-ons-grid>
+    <!-- end grid -->
+
+    <!-- start bottom bar -->
+    <div class="row">
+        <div class="col-md-12">
+            <app-bottom-bar></app-bottom-bar>
+        </div>
+    </div>
+    <!-- end bottom bar -->     
+</section>

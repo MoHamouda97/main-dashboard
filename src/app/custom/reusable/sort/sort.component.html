@@ -1,0 +1,5 @@
+<button class="btn btn-block" (click)="sortBy()" matRipple>
+    {{title}}
+    <i class="fas fa-sort-up" *ngIf="isSortAsc"></i>
+    <i class="fas fa-sort-down" *ngIf="!isSortAsc"></i>
+</button>

@@ -1,0 +1,9 @@
+label.reset-btn,
+button.reset-btn{
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+label.add-space{
+    margin-top: 10px;
+}

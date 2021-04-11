@@ -1,0 +1,54 @@
+<!-- toggle search bar -->
+<button 
+    class="btn btn-default search-toggle-btn action-btn" 
+    (click)="changeSearchStatus()"
+    style="box-shadow: none !important;">
+    <i class="fas fa-angle-double-up" *ngIf="isShowSearch"></i>
+    <i class="fas fa-angle-double-down" *ngIf="!isShowSearch"></i>
+</button>
+<!-- toggle search bar -->
+
+
+<div class="search-wrapper" *ngIf="isShowSearch">
+    <div class="row">
+        <div class="col-md-3">
+            <nz-select
+                [(ngModel)]="searchOption" 
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                [nzLoading]="isDbLoading">
+                <nz-option 
+                    *ngFor="let field of fields; let i = index" 
+                    [nzValue]="field" 
+                    [nzLabel]="(getLang() == 'EN' ? (field | translateEn) : (field | translateAr))"></nz-option>
+            </nz-select>
+        </div>
+        <div class="col-md-3">
+            <nz-select searchOperator
+                [(ngModel)]="searchOperator"
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'">
+                <nz-option 
+                    *ngFor="let operator of operators" 
+                    [nzValue]="operator" 
+                    [nzLabel]="operator"></nz-option>
+            </nz-select>            
+        </div>
+        <div class="col-md-3">
+            <input 
+                nz-input 
+                [placeholder]="lang.searchValue" 
+                [(ngModel)]="searchValue" 
+                (keyup.enter)="searchByEnter()"/>
+        </div>
+        <div class="col-md-3">
+            <button 
+                class="btn btn-info d-block w-100" 
+                matRipple 
+                (click)="searchByClick()">
+                <span *ngIf="!isSearching">{{lang.searchButton}}</span>
+                <span *ngIf="isSearching">
+                    <i nz-icon nzType="loading" nzTheme="outline"></i>
+                </span>                
+            </button>
+        </div>                        
+    </div>
+</div>

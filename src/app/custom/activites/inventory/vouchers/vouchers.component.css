@@ -1,0 +1,22 @@
+.sales-order .ant-form-item{margin-bottom: 10px !important;}
+
+.sales-order .vocher-row{align-items: flex-end;}
+
+.table th{padding: 5px !important;}
+
+.mrns{
+    color: red;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.hide-control{
+    position: relative;
+    z-index: -1;
+}
+
+@media only screen and (max-width: 767px) {
+    .sm-width{width: 385px !important;}
+
+    .sm-table{margin-top: 15px;}
+}

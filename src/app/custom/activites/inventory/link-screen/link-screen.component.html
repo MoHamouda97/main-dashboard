@@ -1,0 +1,156 @@
+<section class="link-inv">
+    <!-- start from tbl -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Starting Date' | translateEn) : ('Starting Date' | translateAr))}}
+                    </label>
+                </nz-form-label> 
+                <nz-form-item>
+                    <nz-date-picker  
+                        [nzPlaceHolder]="''"
+                        ngMode
+                        [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                             
+                </nz-form-item>
+            </div>                         
+        </div>
+        <div class="col-md-1">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for=""></label>
+                </nz-form-label> 
+                <nz-form-item>
+                    <button 
+                        class="btn btn-block"
+                        style="border-radius: 0 !important; box-shadow: none !important;" 
+                        matRipple>
+                        <i class="fas fa-sync"></i>
+                    </button>                                                                           
+                </nz-form-item>
+            </div>                         
+        </div>      
+    </div>
+    <!-- end from tbl -->
+    <!-- start to tbl -->
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="item-cat-text">
+                {{(getLang() == 'EN' ? (linkFrom | translateEn) : (linkFrom | translateAr))}}
+            </h5> 
+            <div class="table-responsive">
+                <nz-table 
+                    #headerTable  
+                    nzShowPagination
+                    [nzPageSize]="10"
+                    [nzData]="data"  
+                    [nzScroll]="{ x: '800px' }"
+                    class="table super-ultra-wide table-striped"
+                    (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+                    [nzLoading]="isTableSearch"
+                    *ngIf="data.length > 0">
+                    <thead>
+                        <tr> 
+                            <th 
+                                *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                                <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 100px;">
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index"
+                            (click)="onItemClicked(i)" 
+                            style="cursor: pointer;">
+                            <td 
+                                *ngFor="let d of allData | render" 
+                                class="hide-long-text"
+                                [class.text-center]="allData[d] | canBeCenter">{{allData[d] | replaceEmpty}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th *ngFor="let key of headerTable.data[0]" >
+                                <input 
+                                    nz-input
+                                    class="form-control" 
+                                    type="text" 
+                                    #value 
+                                    (keyup)="filterData(key, value.value)" />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </nz-table>
+
+                <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>      
+            </div>            
+        </div>
+        <div class="col-md-12">
+            <h5 class="item-cat-text">
+                {{(getLang() == 'EN' ? (linkTo | translateEn) : (linkTo | translateAr))}}
+                <button 
+                    class="btn btn-info"
+                    nzType="primary"
+                    style="border-radius: 0 !important; box-shadow: none !important;" 
+                    matRipple>
+                    {{(getLang() == 'EN' ? ('Link Voucher' | translateEn) : ('Link Voucher' | translateAr))}}
+                </button> 
+            </h5> 
+            <div class="table-responsive">
+                <nz-table 
+                    #headerTable  
+                    nzShowPagination
+                    [nzPageSize]="10"
+                    [nzData]="data"  
+                    [nzScroll]="{ x: '800px' }"
+                    class="table super-ultra-wide table-striped"
+                    (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+                    [nzLoading]="isTableSearch"
+                    *ngIf="data.length > 0">
+                    <thead>
+                        <tr> 
+                            <th 
+                                *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                                <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 100px;">
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index"
+                            (click)="onItemClicked(i)" 
+                            style="cursor: pointer;">
+                            <td 
+                                *ngFor="let d of allData | render" 
+                                class="hide-long-text"
+                                [class.text-center]="allData[d] | canBeCenter">{{allData[d] | replaceEmpty}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th *ngFor="let key of headerTable.data[0]" >
+                                <input 
+                                    nz-input
+                                    class="form-control" 
+                                    type="text" 
+                                    #value 
+                                    (keyup)="filterData(key, value.value)" />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </nz-table>
+
+                <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>      
+            </div>            
+        </div>        
+    </div>
+    <!-- end to tbl -->
+    <!-- start bottom bar -->
+    <div class="row">
+        <div class="col-md-12">
+            <app-bottom-bar></app-bottom-bar>
+        </div>
+    </div>
+    <!-- end bottom bar -->    
+</section>

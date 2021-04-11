@@ -1,0 +1,132 @@
+<div 
+    class="auth-wrapper d-flex no-block justify-content-center align-items-center" 
+    [class.lang-en]="getLang() == 'EN'"
+    [class.lang-ar]="getLang() == 'AR'"
+    style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(assets/images/accounting.jpg);">
+    <div class="auth-box">
+        <div id="loginform" [ngClass]="{'d-none': recoverform}">
+            <div class="logo">
+                <span class="db"><img src="assets/images/logo.png" alt="logo" width="30px" /></span>
+                <span><img src="assets/images/logo-text.png" class="saudi-logo" alt="homepage" style="margin: 0 5px;" width="105px" /></span>
+                <h5 class="font-medium m-b-20">
+                    {{lang.loginHeadText}}
+                </h5>
+            </div>
+            <!-- Form -->
+            <div class="row">
+                <div class="col-12">
+                    <form nz-form autocomplete="off" [formGroup]="loginForm" id="loginform" class="login-form">
+                        <div class="row" style="align-items: center;">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <nz-form-label>
+                                        <label for="userName" style="color: #fff !important">
+                                            {{(getLang() == 'EN' ? ('UserName' | translateEn) : ('UserName' | translateAr))}}
+                                        </label>
+                                    </nz-form-label>                                                                                                
+                                    <div class="input-group-lg">
+                                        <nz-form-item>
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                formControlName="username" 
+                                                id="userName" 
+                                                name="userName"/>                                             
+                                        </nz-form-item>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <nz-form-label>
+                                        <label for="branchCode" style="color: #fff !important">
+                                            {{(getLang() == 'EN' ? ('Branch Name' | translateEn) : ('Branch Name' | translateAr))}}
+                                        </label>
+                                    </nz-form-label>                                                                                                
+                                    <div class="input-group-lg">
+                                        <nz-form-item>
+                                            <nz-select
+                                                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                                                formControlName="branchCode">
+                                                <nz-option
+                                                    *ngFor="let branch of branches"
+                                                    [nzValue]="branch.code" 
+                                                    [nzLabel]="(getLang() == 'EN' ? (branch.name | translateEn) : (branch.name | translateAr))"></nz-option>
+                                            </nz-select>                                            
+                                        </nz-form-item>
+                                    </div>
+                                </div>                                 
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <nz-form-label>
+                                        <label for="pwp" style="color: #fff !important">
+                                            {{(getLang() == 'EN' ? ('Password' | translateEn) : ('Password' | translateAr))}}
+                                        </label>
+                                    </nz-form-label>                                                                                                
+                                    <div class="input-group-lg">
+                                        <nz-form-item>
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="password"
+                                                formControlName="pwp" 
+                                                id="pwp" 
+                                                name="pwp"/>                                             
+                                        </nz-form-item>
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group-lg">
+                                        <button 
+                                            class="btn btn-block btn-lg btn-info reset-btn" 
+                                            type="submit" 
+                                            matRipple
+                                            [disabled]="!loginForm.valid"
+                                            (click)="login()">
+                                            {{lang.loginBtnText}}
+                                            <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isSignIn"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>                      
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="recoverform" [ngClass]="{'d-block': recoverform}">
+            <div class="logo">
+                <span class="db"><img src="assets/images/logo-icon.png" alt="logo" /></span>
+                <h5 class="font-medium m-b-20">Recover Password</h5>
+                <span>Enter your Email and instructions will be sent to you!</span>
+            </div>
+            <div class="row m-t-20">
+                <!-- Form -->
+                <form class="col-12">
+                    <!-- email -->
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="form-control form-control-lg" type="email" required="" placeholder="Username">
+                        </div>
+                    </div>
+                    <!-- pwd -->
+                    <div class="row m-t-20">
+                        <div class="col-12">
+                            <button class="btn btn-block btn-lg btn-danger" type="submit" name="action">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <app-loader [loader]="isLoading"></app-loader>
+    </div>
+</div>

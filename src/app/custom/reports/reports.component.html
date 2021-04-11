@@ -1,0 +1,168 @@
+<section class="report">
+    <div class="row">
+        <div class="col-md-3">
+            <nz-select 
+                [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                [(ngModel)]="selectedRepOption">
+                <nz-option 
+                    *ngFor="let option of repOptions"  
+                    [nzValue]="option.value" 
+                    [nzLabel]="(getLang() == 'EN' ? option.enWord : option.arWord)"></nz-option>
+            </nz-select>
+        </div>    
+        <div class="col-md-2">
+            <button class="btn btn-success btn-block" matRipple (click)="runRep()">
+                {{(getLang() == 'EN' ? ('Run' | translateEn) : ('Run' | translateAr))}}
+            </button>
+        </div>
+    </div>
+    
+    <form nz-form [formGroup]="reportForm">
+        <div 
+            class="search-wrapper" 
+            *ngFor="let control of listOfCriteriaControls; let i = index"
+            style="margin: 15px 0;">
+            <div class="row" style="align-items: center;">
+                <div class="col-md-3">
+                    <nz-select 
+                        [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                        [nzLoading]="isDbLoading"
+                        [formControlName]="control.criteriaFieldsControlInstance"
+                        [nzLoading]="isDbLoading"
+                        [ngModel]="criteria[0].criteria.original"                        
+                        (ngModelChange)="getSelectedCriteria($event, i)">
+                        <nz-option 
+                            *ngFor="let c of criteria; let i = index"  
+                            [nzValue]="c.criteria.original" 
+                            [nzLabel]="(getLang() == 'EN' ? c.criteria.EnglishCriteria : c.criteria.ArabicCriteria)"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-md-2">
+                    <nz-select
+                        [ngModel]="operators[0]"
+                        [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'"
+                        [formControlName]="control.criteriaOperatorControlInstance">
+                    <nz-option 
+                        *ngFor="let operator of operators" 
+                        [nzValue]="operator" 
+                        [nzLabel]="operator"></nz-option>
+                    </nz-select> 
+                </div>
+                <div class="col-md-4">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton"  id="js_{{i}}">
+                        <input 
+                            nz-input 
+                            [placeholder]="lang.searchValue" 
+                            [formControlName]="control.criteriaValueControlInstance"
+                            style="border-right: 1px solid #d9d9d9 !important;"
+                            disabled/>
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            (click)="fillPopUp(control.id)"
+                            matRipple>
+                            <i nz-icon nzType="search" *ngIf="!isLoadDataForPoUp"></i>
+                            <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isLoadDataForPoUp"></i>
+                        </button>
+                    </ng-template>   
+                    <nz-date-picker  
+                        id="js_date_{{i}}" 
+                        [nzPlaceHolder]="''"                        
+                        class="d-none"
+                        [formControlName]="control.criteriaDateControlInstance"
+                        [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>
+                        <nz-input-group id="js_memo_{{i}}" class="d-none">
+                            <input 
+                                nz-input 
+                                [placeholder]="(getLang() == 'EN') ? ('Memo' | translateEn) : ('Memo' | translateAr)" 
+                                [formControlName]="control.criteriaMemoControlInstance"
+                                style="border-right: 1px solid #d9d9d9 !important;"/>
+                        </nz-input-group>                          
+                </div>  
+                <div class="col-md-2">
+                    <nz-select 
+                        [nzDropdownClassName]="(getLang() == 'AR') ? 'lang-ar' : 'lang-en'" 
+                        (nzBlur)="renderItem(i)"
+                        [formControlName]="control.criteriaOptionControlInstance">
+                        <nz-option nzValue="AND" [nzLabel]="(getLang() == 'AR') ? 'و' : 'And'"></nz-option>
+                        <nz-option nzValue="OR" [nzLabel]="(getLang() == 'AR') ? 'أو' : 'Or'"></nz-option>
+                    </nz-select>
+                </div>
+                <div class="col-md-1">
+                    <i 
+                        nz-icon 
+                        nzType="close-circle" 
+                        nzTheme="outline" 
+                        class="remove-control" 
+                        (click)="removeField(control, $event)" 
+                        *ngIf="i > 0" matRipple></i>
+                </div>                        
+            </div>
+        </div>
+    </form>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>
+
+<!-- modal -->
+
+<nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="(getLang() == 'EN' ? (repName | translateEn) : (repName | translateAr))" 
+    (nzOnCancel)="handleCancel()"
+    [nzStyle]="{ top: '20px' }"
+    nzClassName="{{(getLang() == 'AR') ? 'lang-ar' : 'lang-en'}}">
+    <div class="table-responsive">
+        <nz-table 
+            #headerTable  
+            nzShowPagination
+            [nzData]="data" 
+            [nzPageSize]="10" 
+            [nzScroll]="{ x: '240px' }"
+            class="table table-striped"
+            (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+            [nzLoading]="isTableSearch"
+            *ngIf="data.length >= 1">
+            <thead>
+              <tr> 
+                <th 
+                    *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                    <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                </th>                    
+              </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let allData of headerTable.data; let i = index" 
+                    (click)="onItemClicked(i)" 
+                    style="cursor: pointer;">
+                    <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th *ngFor="let key of headerTable.data[0] | createSearch" >
+                        <input 
+                            nz-input
+                            class="form-control" 
+                            type="text" 
+                            #value 
+                            (keyup.enter)="filterData(key, value.value)" />
+                    </th>
+                </tr>
+            </tfoot>
+        </nz-table>
+
+        <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>
+    </div>
+
+    <div *nzModalFooter [class.text-right]="getLang() == 'AR'" [class.text-left]="getLang() == 'EN'">
+        <button class="btn btn-info" matRipple (click)="reset()" *ngIf="data.length == 0">
+            {{lang.taskBarRefresh}}
+        </button>
+    </div>
+</nz-modal>

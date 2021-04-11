@@ -1,0 +1,63 @@
+.task-bar-wrapper{
+    padding: 5px 5px;
+    margin: 0;
+}
+
+.task-bar-wrapper .lock-record{
+    background-color: transparent;
+    box-shadow: none;
+    color: #dfa100;
+}
+
+.task-bar-wrapper ul {
+    border-radius: 5px;
+    margin: auto;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
+    padding: 5px 0;
+    width: 80%;
+}
+
+.task-bar-wrapper ul li{
+    text-align: center;
+    padding-bottom: 10px;
+    margin: auto;        
+}
+
+.task-bar-wrapper ul li button{
+    background-color: transparent;
+    border: none;
+    background-color: #333d54;
+    color: #fff; 
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    text-align: center;
+    padding: 0;
+    font-size: 15px;
+    box-shadow: none !important;
+}
+
+.task-bar-wrapper ul li .lock-btn{
+    background: #333d54;
+    color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    .task-bar-wrapper ul{width: 100%;}
+
+    .task-bar-wrapper ul li button{
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .task-bar-wrapper ul{width: 100%;}
+
+    .task-bar-wrapper ul li{
+        display: inline-block;
+        width: 45px;
+        padding-bottom: 0;
+    }
+}

@@ -1,0 +1,353 @@
+<section class="credit-notes">
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row" style="align-items: baseline;">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Vendor' | translateEn) : ('Vendor' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="input-group-lg">
+                                    <nz-form-item>
+                                        <nz-input-group nzSearch [nzAddOnAfter]="vendorButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #vendorButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                               
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group-lg">
+                                    <nz-input-group>
+                                        <input  
+                                            class="form-control" 
+                                            nz-input 
+                                            type="text"
+                                            id="" 
+                                            name=""                                         
+                                            disabled/>
+                                    </nz-input-group>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="col-md-6">
+                <div class="table-responsive" style="padding-bottom: 1rem;">
+                    <table class="w-100 table sm-table table-striped sm-table adjust-padding">
+                        <thead>
+                            <tr>
+                                <th 
+                                    colspan="3"
+                                    style="width: 33%;">{{(getLang() == 'EN' ? ('Credit Note #' | translateEn) : ('Credit Note #' | translateAr))}}</th>                                                               
+                                <th>{{(getLang() == 'EN' ? ('V.Ref #' | translateEn) : ('V.Ref #' | translateAr))}}</th>
+                                <th>{{(getLang() == 'EN' ? ('Date' | translateEn) : ('Date' | translateAr))}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- start No.-->
+                                <td style="width: 133px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input
+                                        id=""                              
+                                        disabled/>
+                                </td>
+                                <td style="width: 133px;">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text" 
+                                        id=""                                
+                                        disabled/>                            
+                                </td>
+                                <td>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        disabled/>                             
+                                </td>
+                                <!-- end No. -->
+                                <!-- start invoice -->
+                                <td>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input
+                                        id="" />
+                                </td>
+                                <!-- end invoice -->
+                                <!-- start date -->
+                                <td>
+                                    <nz-date-picker  
+                                        [nzPlaceHolder]="''"
+                                        ngMode
+                                        [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>  
+                                </td>
+                                <!-- end date-->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                  
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Is Credit?' | translateEn) : ('Is Credit?' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <label nz-checkbox></label>                                                                              
+                    </nz-form-item>
+                </div>                                
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-4">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Net Amount' | translateEn) : ('Net Amount' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""
+                                        disabled/>
+                                </nz-input-group>                                                                               
+                            </nz-form-item>
+                        </div>                        
+                    </div>
+                    <div class="col-md-4">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Currancy' | translateEn) : ('Currancy' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id=""
+                                    name=""
+                                    disabled/>                                                                               
+                            </nz-form-item>
+                        </div>                        
+                    </div>
+                    <div class="col-md-4">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Exchange Rate' | translateEn) : ('Exchange Rate' | translateAr))}}
+                            </label>
+                        </nz-form-label>
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group>
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""
+                                        disabled/>
+                                </nz-input-group>                                                                               
+                            </nz-form-item>
+                        </div>  
+                    </div>                                                            
+                </div>                
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive" style="padding-bottom: 1rem;">
+                    <table class="w-100 table sm-table table-striped sm-table adjust-padding">
+                        <thead>
+                            <tr>
+                                <th >{{(getLang() == 'EN' ? ('Purchase Order' | translateEn) : ('Purchase Order' | translateAr))}}</th>                                                               
+                                <th>{{(getLang() == 'EN' ? ('Buyer' | translateEn) : ('Buyer' | translateAr))}}</th>
+                                <th>{{(getLang() == 'EN' ? ('Invoice #' | translateEn) : ('Invoice #' | translateAr))}}</th>
+                                <th>{{(getLang() == 'EN' ? ('Cost Center' | translateEn) : ('Cost Center' | translateAr))}}</th>
+                                <th>{{(getLang() == 'EN' ? ('Vouchers' | translateEn) : ('Vouchers' | translateAr))}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- Purchase Order -->
+                                <td>
+                                    <div class="input-group-lg">
+                                        <nz-input-group nzSearch [nzAddOnAfter]="purchaseOrderButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #purchaseOrderButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                                                          
+                                    </div>
+                                </td>
+                                <!-- Purchase Order -->
+                                <!-- Buyer -->
+                                <td>
+                                    <div class="input-group-lg">
+                                        <nz-input-group nzSearch [nzAddOnAfter]="buyerButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #buyerButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                                 
+                                    </div>                                    
+                                </td>
+                                <!-- Buyer-->
+                                <!-- Invoice -->
+                                <td>
+                                    <div class="input-group-lg">
+                                        <nz-input-group nzSearch [nzAddOnAfter]="invoiceButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #invoiceButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                                
+                                    </div>                                    
+                                </td>
+                                <!-- Invoice --> 
+                                <!-- Cost Center -->
+                                <td>
+                                    <div class="input-group-lg">
+                                        <nz-input-group nzSearch [nzAddOnAfter]="costButton">
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group> 
+                                        <ng-template #costButton>
+                                            <button 
+                                                nz-button 
+                                                nzType="primary" 
+                                                nzSearch
+                                                class="search-btn btn-info"
+                                                matRipple>
+                                                <i nz-icon nzType="search"></i>
+                                            </button>
+                                        </ng-template>                                                                                
+                                    </div>                                    
+                                </td>
+                                <!-- Cost Center -->  
+                                <!-- Vouchers -->
+                                <td>
+                                    <div class="input-group-lg">
+                                        <nz-input-group>
+                                            <input  
+                                                class="form-control" 
+                                                nz-input 
+                                                type="text"
+                                                id=""
+                                                name=""/>
+                                        </nz-input-group>                                                                              
+                                    </div>                                    
+                                </td>
+                                <!-- Vouchers -->                                                                                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                  
+            </div>           
+        </div>
+    </form>
+
+    <mat-tab-group class="w-100">
+        <mat-tab label="{{(getLang() == 'EN' ? ('Items' | translateEn) : ('Items' | translateAr))}}">
+            <app-vendor-items-grid></app-vendor-items-grid>            
+        </mat-tab>
+        <mat-tab label="{{(getLang() == 'EN' ? ('Discounts' | translateEn) : ('Discounts' | translateAr))}}">
+            <app-vendor-discounts-grid></app-vendor-discounts-grid>
+        </mat-tab>                     
+    </mat-tab-group>    
+    
+    <!-- start missed controles -->
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row" style="align-items: center;">  
+            <div class="col-md-12">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="Notes">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea class="form-control" nz-input nzAutosize></textarea>                                                                           
+                    </nz-form-item>
+                </div>
+            </div>                               
+        </div>
+    </form>
+    <!-- end missed controles -->      
+</section>

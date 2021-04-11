@@ -1,0 +1,247 @@
+<section class="mpg">
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('MPG Category Code' | translateEn) : ('MPG Category Code' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                            
+                    </nz-form-item>
+                </div>  
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('MPG Category Name' | translateEn) : ('MPG Category Name' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                            
+                    </nz-form-item>
+                </div>  
+            </div>            
+        </div>
+    </form>
+
+    <!-- start grid -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- hide grid -->
+            <button 
+                class="btn action-btn" 
+                matRipple 
+                (click)="hideGrid()" 
+                style="box-shadow: none !important;" >
+                <i 
+                    nz-icon 
+                    nzType="plus-circle" 
+                    nzTheme="outline" 
+                    style="position: relative; top: -3px;"></i>
+            </button>               
+            <!-- hide grid -->
+            <!-- grid form -->
+            <form 
+                class="form add-overlay" 
+                autocomplete="off" 
+                nz-form style="margin-top: 5px;"
+                [class.d-none]="isShowGrid"
+                [class.d-block]="!isShowGrid">
+                <div class="row">                    
+                    <!-- MPG Code -->
+                    <div class="col-md-2">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('MPG Code' | translateEn) : ('MPG Code' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control ordered-check" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>                                                                                                                    
+                        </nz-form-item>
+                    </div>
+                    <!-- MPG Code -->
+
+                    <!-- MPG Name -->
+                    <div class="col-md-4">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('MPG Name' | translateEn) : ('MPG Name' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control ordered-check" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>                                                                                                                    
+                        </nz-form-item>
+                    </div>
+                    <!-- MPG Name -->  
+                    
+                    <!-- MPG Long Name -->
+                    <div class="col-md-4">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('MPG Long Name' | translateEn) : ('MPG Long Name' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control ordered-check" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>                                                                                                                    
+                        </nz-form-item>
+                    </div>
+                    <!-- MPG Long Name --> 
+                    
+                    <!-- Standard Discount -->
+                    <div class="col-md-2">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Standard Discount' | translateEn) : ('Standard Discount' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <input  
+                                class="form-control ordered-check" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>                                                                                                                    
+                        </nz-form-item>
+                    </div>
+                    <!-- Standard Discount -->                    
+
+                    <!-- vendor -->
+                    <div class="col-md-6">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Vendor' | translateEn) : ('Vendor' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <nz-input-group nzSearch [nzAddOnAfter]="vendorButton">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id=""
+                                    name=""/>
+                            </nz-input-group> 
+                            <ng-template #vendorButton>
+                                <button 
+                                    nz-button 
+                                    nzType="primary" 
+                                    nzSearch
+                                    class="search-btn btn-info"
+                                    matRipple
+                                    (click)="fillPopUp(-1, 'items')">
+                                    <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                    <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                                </button>
+                            </ng-template>                                                                                                                     
+                        </nz-form-item>
+                    </div> 
+                    <!-- vendor --> 
+                    
+                    <!-- Manufacture -->
+                    <div class="col-md-6">
+                        <nz-form-label>
+                            <label for="">
+                                {{(getLang() == 'EN' ? ('Manufacture' | translateEn) : ('Manufacture' | translateAr))}}
+                            </label>
+                        </nz-form-label>                            
+                        <nz-form-item>
+                            <nz-input-group nzSearch [nzAddOnAfter]="manufactureButton">
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id=""
+                                    name=""/>
+                            </nz-input-group> 
+                            <ng-template #manufactureButton>
+                                <button 
+                                    nz-button 
+                                    nzType="primary" 
+                                    nzSearch
+                                    class="search-btn btn-info"
+                                    matRipple
+                                    (click)="fillPopUp(-1, 'items')">
+                                    <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                    <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                                </button>
+                            </ng-template>                                                                                                                     
+                        </nz-form-item>
+                    </div> 
+                    <!-- Manufacture -->                    
+
+                    <!-- submit -->
+                    <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                        <button 
+                            class="btn btn-primary btn-block" 
+                            matRipple 
+                            style="box-shadow: none !important;">
+                            {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- submit -->
+
+                    <!-- Edit -->
+                    <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                        <button 
+                            class="btn btn-success btn-block" 
+                            matRipple 
+                            style="box-shadow: none !important;">
+                            {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- Edit -->                        
+
+                    <!-- show grid -->
+                    <div class="col-md-3">
+                        <button 
+                            class="btn btn-block" 
+                            [class.btn-outline-primary]="isAdd"
+                            [class.btn-outline-success]="!isAdd"
+                            matRipple 
+                            style="box-shadow: none !important;"
+                            (click)="showGrid()">
+                            {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                        </button>
+                    </div>
+                    <!-- show grid -->                        
+                </div>
+            </form>
+            <!-- grid form -->  
+            <!-- grid -->
+            <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+                <app-grid [gridData]="gridData"></app-grid>
+            </div>
+            <!-- grid -->                  
+        </div>
+    </div>
+    <!-- end grid -->     
+</section>

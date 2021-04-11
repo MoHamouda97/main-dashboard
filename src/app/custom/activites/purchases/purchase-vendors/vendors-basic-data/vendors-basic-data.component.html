@@ -1,0 +1,434 @@
+<form class="form" autocomplete="off" nz-form  #f="ngForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Altr. Name' | translateEn) : ('Altr. Name' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-input-group>
+                        <input type="text" class="form-control" />                                                                           
+                    </nz-input-group>
+                </nz-form-item>
+            </div>             
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Category Code' | translateEn) : ('Category Code' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="catButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #catButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>                
+            </div> 
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Group' | translateEn) : ('Group' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-input-group nzSearch [nzAddOnAfter]="groupButton">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>
+                    </nz-input-group> 
+                    <ng-template #groupButton>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                                                                               
+                </nz-form-item>                
+            </div>  
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Sub Group' | translateEn) : ('Sub Group' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-input-group nzSearch [nzAddOnAfter]="subGroupButton">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>
+                    </nz-input-group> 
+                    <ng-template #subGroupButton>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                                                                               
+                </nz-form-item>                
+            </div>              
+        </div> 
+        
+        <div class="col-md-6">            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Buyer' | translateEn) : ('Buyer' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-input-group nzSearch [nzAddOnAfter]="buyerButton">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>
+                    </nz-input-group> 
+                    <ng-template #buyerButton>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                                                                               
+                </nz-form-item>                
+            </div>  
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Our Account #' | translateEn) : ('Our Account #' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id=""
+                        name=""/>                                                                              
+                </nz-form-item>                
+            </div> 
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Is Active?' | translateEn) : ('Is Active?' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-radio-group>
+                        <label nz-radio nzValue="0">{{(getLang() == 'EN' ? ('Yes' | translateEn) : ('Yes' | translateAr))}}</label>
+                        <label nz-radio nzValue="1">{{(getLang() == 'EN' ? ('No' | translateEn) : ('No' | translateAr))}}</label>
+                    </nz-radio-group>                                                                           
+                </nz-form-item>                
+            </div>              
+        </div>         
+    </div>
+    <div class="row" style="align-items: center;">
+        <div class="col-md-6">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Currancy' | translateEn) : ('Currancy' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="currancyButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #currancyButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>                
+            </div> 
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Account Code' | translateEn) : ('Account Code' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="accButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #accButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>                
+            </div> 
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Cost Center' | translateEn) : ('Cost Center' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="costButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #costButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>                
+            </div> 
+            
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Country' | translateEn) : ('Country' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="countryButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #countryButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>                
+            </div>            
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Pmt Terms' | translateEn) : ('Pmt Terms' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <nz-input-group nzSearch [nzAddOnAfter]="pmtButton">
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>
+                    </nz-input-group> 
+                    <ng-template #pmtButton>
+                        <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSearch
+                            class="search-btn btn-info"
+                            matRipple>
+                            <i nz-icon nzType="search"></i>
+                        </button>
+                    </ng-template>                                                                               
+                </nz-form-item>                
+            </div> 
+
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Credit Limit' | translateEn) : ('Credit Limit' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <input  
+                        class="form-control" 
+                        nz-input 
+                        type="text"
+                        id=""
+                        name=""/>                                                                              
+                </nz-form-item>                
+            </div>             
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <textarea class="form-control" nz-input nzAutosize></textarea>                                                                              
+                </nz-form-item>                
+            </div>
+        </div>
+    </div>
+</form>

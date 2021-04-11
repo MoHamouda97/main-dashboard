@@ -1,0 +1,30 @@
+.auth-wrapper{
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.auth-wrapper .auth-box{
+    background: #333d54 !important;
+    border-radius: 15px !important;
+    box-shadow:  1px 0px 20px rgba(0, 0, 0, 0.5) !important;
+    position: relative;
+}
+
+.auth-wrapper .auth-box h5{
+    color: #fff !important;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.auth-wrapper .auth-box .custom-control a{
+    color: #fff !important;
+    opacity: .8;
+    transition: all .3s ease-in-out;
+}
+
+.auth-wrapper .auth-box .custom-control a:hover{opacity: 1;}
+
+.auth-wrapper .auth-box .reset-btn{
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}

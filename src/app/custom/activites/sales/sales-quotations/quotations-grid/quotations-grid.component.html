@@ -1,0 +1,228 @@
+<div class="row adjust-position">
+    <div class="col-md-12">
+        <!-- hide grid -->
+        <button 
+            class="btn action-btn" 
+            matRipple 
+            (click)="hideGrid()" 
+            style="box-shadow: none !important;" >
+            <i 
+                nz-icon 
+                nzType="plus-circle" 
+                nzTheme="outline" 
+                style="position: relative; top: -3px;"></i>
+        </button>               
+        <!-- hide grid -->
+        <!-- grid form -->
+        <form 
+            class="form add-overlay" 
+            autocomplete="off" 
+            nz-form style="margin-top: 5px;"
+            [class.d-none]="isShowGrid"
+            [class.d-block]="!isShowGrid">
+            <div class="row">
+                <!-- Item Code --> 
+                <div class="col-md-6 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Item Code' | translateEn) : ('Item Code' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="itemButton">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group> 
+                        <ng-template #itemButton>
+                            <button 
+                                nz-button 
+                                nzType="primary" 
+                                nzSearch
+                                class="search-btn btn-info"
+                                matRipple>
+                                <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                            </button>
+                        </ng-template>                                                                                                                     
+                    </nz-form-item>
+                </div>                             
+                <!-- Item Code --> 
+
+                <!-- ItemName -->
+                <div class="col-md-6 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('ItemName' | translateEn) : ('ItemName' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""
+                                disabled/>
+                        </nz-input-group>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- ItemName -->   
+
+                <!-- Qty. -->                 
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Qty.' | translateEn) : ('Qty.' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div> 
+                <!-- Qty. -->                   
+                
+                <!-- Unit Price -->
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Unit Price' | translateEn) : ('Unit Price' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Unit Price --> 
+                
+                <!-- Disc. -->
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Disc.' | translateEn) : ('Disc.' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Disc. --> 
+                
+                <!-- Price -->
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Price' | translateEn) : ('Price' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Price -->                            
+
+                <!-- Sub Total -->
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Sub Total' | translateEn) : ('Sub Total' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Sub Total --> 
+                
+                <!-- Ordered -->
+                <div class="col-md-2 col-2">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Ordered' | translateEn) : ('Ordered' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Ordered -->                 
+
+                <!-- submit -->
+                <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-primary btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                    </button>
+                </div>
+                <!-- submit -->
+
+                <!-- Edit -->
+                <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-success btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                    </button>
+                </div>
+                <!-- Edit -->                        
+
+                <!-- show grid -->
+                <div class="col-md-3">
+                    <button 
+                        class="btn btn-block" 
+                        [class.btn-outline-primary]="isAdd"
+                        [class.btn-outline-success]="!isAdd"
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="showGrid()">
+                        {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                    </button>
+                </div>
+                <!-- show grid -->                        
+            </div>
+        </form>
+        <!-- grid form -->  
+        <!-- grid -->
+        <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+            <app-grid [gridData]="gridData"></app-grid>
+        </div>
+        <!-- grid -->                  
+    </div>
+</div>

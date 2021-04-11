@@ -1,0 +1,6 @@
+.group-wrapper{margin-top: 15px;}
+
+.btn-group .btn{
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}

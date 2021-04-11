@@ -1,0 +1,50 @@
+<form class="form" [formGroup]="customerCategoryForm" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="DeliveryMethodCode">
+                        {{(getLang() == 'EN' ? ('DeliveryMethodCode' | translateEn) : ('DeliveryMethodCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="DeliveryMethodCode" 
+                            id="DeliveryMethodCode" 
+                            name="DeliveryMethodCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="DeliveryMethod">
+                        {{(getLang() == 'EN' ? ('DeliveryMethod' | translateEn) : ('DeliveryMethod' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="DeliveryMethod" 
+                                id="DeliveryMethod" 
+                                name="DeliveryMethod" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>                                               
+               
+    </div>
+</form>  

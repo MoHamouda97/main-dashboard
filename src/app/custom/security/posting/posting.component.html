@@ -1,0 +1,69 @@
+<section class="posting">
+    <div class="row" style="align-items: center;">
+        <div class="col-md-8">
+            <div class="accounts-wrapper">
+                <form class="posting" nz-form autocomplete="off" [formGroup]="postingForm">
+                    <div class="row">
+                        <div class="col-md-4" *ngFor="let account of accounts">
+                            <label nz-checkbox [formControlName]="account.controlName">
+                                <span>{{(getLang() == 'EN' ? (account.name | translateEn) : (account.name | translateAr))}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <nz-form-label>
+                <label for="js_post_date">
+                    {{lang.postDate}}
+                </label>
+            </nz-form-label> 
+            <nz-date-picker  
+                [nzPlaceHolder]="''"
+                ngMode
+                [(ngModel)]="date"
+                id="js_post_date"
+                [nzFormat]="'dd/MM/yyyy'"></nz-date-picker> 
+        </div>
+        <div class="col-md-12">
+            <div class="table-responsive" style="margin-top: 15px;">
+                <nz-table 
+                    #headerTable  
+                    [nzData]="data" 
+                    class="table table-striped"
+                    *ngIf="data.length >= 1">
+                    <thead>
+                      <tr> 
+                        <th 
+                            *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr))">{{head}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index" 
+                            (click)="onItemClicked(i)" 
+                            style="cursor: pointer;">
+                            <td *ngFor="let d of allData | render">{{allData[d]}}</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+        
+                <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>
+            </div>
+        </div>  
+        <div class="col-md-3">
+            <button 
+                class="btn btn-block btn-success" 
+                matRipple 
+                (click)="doPostingOrUnposting()"
+                [disabled]="isDesabled">
+                <span *ngIf="isPosting">{{(getLang() == 'EN' ? ('Posting' | translateEn) : ('Posting' | translateAr))}}</span>
+                <span *ngIf="!isPosting">{{(getLang() == 'EN' ? ('UnPosting' | translateEn) : ('UnPosting' | translateAr))}}</span>
+                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isPostingOrUnPosting"></i>                              
+            </button>
+        </div>      
+    </div>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>

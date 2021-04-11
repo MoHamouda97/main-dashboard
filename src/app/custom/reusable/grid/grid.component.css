@@ -1,0 +1,14 @@
+.field-width{width: 100px;}
+
+.tax-row{
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.tax-row:hover{background-color: rgba(0, 0, 0, 0.05);}
+
+.hide-long-text-adjust{max-width: 175px !important;}
+
+@media only screen and (max-width: 767px) {
+    .w-500-sm .ant-table-body{width: 500% !important;}
+}

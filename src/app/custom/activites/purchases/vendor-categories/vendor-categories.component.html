@@ -1,0 +1,40 @@
+<section class="vendor-categories">
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row">
+            <div class="col-md-3">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Category Code' | translateEn) : ('Category Code' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                    
+                    </nz-form-item>
+                </div>                   
+            </div>
+            <div class="col-md-9">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Description' | translateEn) : ('Description' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                    
+                    </nz-form-item>
+                </div> 
+            </div>
+        </div>
+    </form>
+</section>

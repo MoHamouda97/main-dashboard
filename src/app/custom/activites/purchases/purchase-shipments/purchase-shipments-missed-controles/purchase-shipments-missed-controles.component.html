@@ -1,0 +1,27 @@
+<form class="form" autocomplete="off" nz-form  #f="ngForm">
+    <div  class="row" style="align-items: center;">
+        <div class="col-md-9">
+            <div class="input-group-lg">
+                <nz-form-label>
+                    <label for="Notes">
+                        {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <nz-form-item>
+                    <textarea class="form-control" nz-input nzAutosize></textarea>                                                                           
+                </nz-form-item>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="total">
+                <strong>{{(getLang() == 'EN' ? ('Total' | translateEn) : ('Totla' | translateAr))}}</strong>:
+                0.0
+            </div>
+            <div class="currancy">
+                <strong>{{(getLang() == 'EN' ? ('SA Rial Total' | translateEn) : ('SA Rial Totla' | translateAr))}}</strong>:
+                0.0
+            </div>            
+        </div>
+    </div>
+</form>

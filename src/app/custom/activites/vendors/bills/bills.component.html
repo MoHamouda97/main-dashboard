@@ -1,0 +1,30 @@
+<section class="bills">
+    <!-- start upper form -->
+    <bills-u-form 
+        [formData]="dataSentToForms" 
+        [vendorsData]="vendorsData"
+        [costCentersData]="costCentersData"
+        [buyerData]="buyerData"
+        [termsData]="termsData"
+        (returnFormVal)="onHeaderFormChange($event)"></bills-u-form>
+    <!-- end upper form -->
+
+    <mat-tab-group class="w-100">
+        <mat-tab label="{{(getLang() == 'EN' ? ('Bills' | translateEn) : ('Bills' | translateAr))}}"> 
+            <!-- start bills grid -->
+            <bills-grid 
+                [isActiveGrid]="isActiveGrid" 
+                [gridDataFromParent]="gridData"
+                [data]="accData"
+                (returnGrid)="onGridChange($event)"></bills-grid>
+            <!-- end bills grid -->
+        </mat-tab> 
+        <mat-tab label="{{(getLang() == 'EN' ? ('Contact' | translateEn) : ('Contact' | translateAr))}}"> 
+            <!-- start contact form -->
+            <app-contact-form [data]="dataSentToForms" (returnFormVal)="onContactFormChange($event)"></app-contact-form>
+            <!-- end contact form -->
+        </mat-tab>                                                 
+    </mat-tab-group>
+
+    <app-loader [loader]="isLoading"></app-loader>
+</section>

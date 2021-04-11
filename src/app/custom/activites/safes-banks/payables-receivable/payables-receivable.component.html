@@ -1,0 +1,18 @@
+<section class="payables-receivable">
+    <!-- start upper form -->
+    <payables-receivable-u-form></payables-receivable-u-form>
+    <!-- end upper form -->
+
+    <mat-tab-group class="w-100">
+        <mat-tab label="{{(getLang() == 'EN' ? ('Invoices' | translateEn) : ('Invoices' | translateAr))}}"> 
+            <!-- start invoices grid -->
+            <payables-receivable-invoice-grid></payables-receivable-invoice-grid>
+            <!-- end invoices grid -->
+        </mat-tab> 
+        <mat-tab label="{{(getLang() == 'EN' ? ('Expensess' | translateEn) : ('Expensess' | translateAr))}}"> 
+            <!-- start expensess form -->
+            <payables-receivable-expenses-grid></payables-receivable-expenses-grid>
+            <!-- end expensess form -->
+        </mat-tab>                                                 
+    </mat-tab-group>    
+</section>

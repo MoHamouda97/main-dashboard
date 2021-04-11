@@ -1,0 +1,317 @@
+<div class="row adjust-position">
+    <div class="col-md-12">
+        <!-- hide grid -->
+        <button 
+            class="btn action-btn" 
+            matRipple 
+            (click)="hideGrid()" 
+            style="box-shadow: none !important;" >
+            <i 
+                nz-icon 
+                nzType="plus-circle" 
+                nzTheme="outline" 
+                style="position: relative; top: -3px;"></i>
+        </button>               
+        <!-- hide grid -->
+        <!-- grid form -->
+        <form 
+            class="form add-overlay" 
+            autocomplete="off" 
+            nz-form style="margin-top: 5px;"
+            [class.d-none]="isShowGrid"
+            [class.d-block]="!isShowGrid">
+            <div class="row">
+                <!-- Class ID --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Class ID' | translateEn) : ('Class ID' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>                             
+                <!-- Class ID --> 
+
+                <!-- Class Name -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Class Name' | translateEn) : ('Class Name' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group>                                                                                                                     
+                    </nz-form-item>
+                </div>
+                <!-- Class Name -->  
+
+                <!-- Shipping Method --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Shipping Method' | translateEn) : ('Shipping Method' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="shippingButton">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group> 
+                        <ng-template #shippingButton>
+                            <button 
+                                nz-button 
+                                nzType="primary" 
+                                nzSearch
+                                class="search-btn btn-info"
+                                matRipple>
+                                <i nz-icon nzType="search" *ngIf="!isItems"></i>
+                                <i nz-icon nzType="loading" nzTheme="outline" *ngIf="isItems"></i>
+                            </button>
+                        </ng-template>                                                                                                                     
+                    </nz-form-item>
+                </div>                             
+                <!-- Shipping Method -->                 
+                 
+                <!-- Shipping Rate -->                 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Shipping Rate' | translateEn) : ('Shipping Rate' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div> 
+                <!-- Shipping Rate --> 
+
+                <!-- Customs --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Customs' | translateEn) : ('Customs' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                  
+                    </nz-form-item>
+                </div> 
+                <!-- Customs -->  
+                
+                <!-- Insurance --> 
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Insurance' | translateEn) : ('Insurance' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div> 
+                <!-- Insurance -->                
+                
+                <!-- Handling -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Handling' | translateEn) : ('Handling' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Handling --> 
+                
+                <!-- Marketing -->
+                <div class="col-md-3 col-3">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Marketing' | translateEn) : ('Marketing' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Marketing --> 
+                
+                <!-- Commissions -->
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Commissions' | translateEn) : ('Commissions' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Commissions --> 
+
+                <!-- Markup -->
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Markup' | translateEn) : ('Markup' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Markup -->                             
+
+                <!-- Dealer Rate -->
+                <div class="col-md-4 col-4">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Dealer Rate' | translateEn) : ('Dealer Rate' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Dealer Rate --> 
+                
+                <!-- Rounding (Retail) -->
+                <div class="col-md-6 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Rounding (Retail)' | translateEn) : ('Rounding (Retail)' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Rounding (Retail) --> 
+                
+                <!-- Rounding (Dealer) -->
+                <div class="col-md-6 col-6">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Rounding (Dealer)' | translateEn) : ('Rounding (Dealer)' | translateAr))}}
+                        </label>
+                    </nz-form-label>                            
+                    <nz-form-item>
+                        <input  
+                            class="form-control ordered-check" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                                                                    
+                    </nz-form-item>
+                </div>
+                <!-- Rounding (Dealer) -->                 
+
+                <!-- submit -->
+                <div class="col-md-3" *ngIf="isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-primary btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Add' | translateEn) : ('Add' | translateAr))}}
+                    </button>
+                </div>
+                <!-- submit -->
+
+                <!-- Edit -->
+                <div class="col-md-3" *ngIf="!isAdd" style="margin-bottom: 10px;">
+                    <button 
+                        class="btn btn-success btn-block" 
+                        matRipple 
+                        style="box-shadow: none !important;">
+                        {{(getLang() == 'EN' ? ('Edit' | translateEn) : ('Edit' | translateAr))}}
+                    </button>
+                </div>
+                <!-- Edit -->                        
+
+                <!-- show grid -->
+                <div class="col-md-3">
+                    <button 
+                        class="btn btn-block" 
+                        [class.btn-outline-primary]="isAdd"
+                        [class.btn-outline-success]="!isAdd"
+                        matRipple 
+                        style="box-shadow: none !important;"
+                        (click)="showGrid()">
+                        {{(getLang() == 'EN' ? ('Hide' | translateEn) : ('Hide' | translateAr))}}
+                    </button>
+                </div>
+                <!-- show grid -->                        
+            </div>
+        </form>
+        <!-- grid form -->  
+        <!-- grid -->
+        <div class="data-grid" [class.d-block]="isShowGrid" [class.d-none]="!isShowGrid">
+            <app-grid [gridData]="gridData"></app-grid>
+        </div>
+        <!-- grid -->                  
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<form class="form" [formGroup]="comissionForm" autocomplete="off" nz-form  #f="ngForm" style="padding-top: 1.25rem;">
+    <div class="row"> 
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PeriodCode">
+                        {{(getLang() == 'EN' ? ('PeriodCode' | translateEn) : ('PeriodCode' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            formControlName="PeriodCode" 
+                            id="PeriodCode" 
+                            name="PeriodCode" 
+                            ngModel/>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="PeriodDescription">
+                        {{(getLang() == 'EN' ? ('PeriodDescription' | translateEn) : ('PeriodDescription' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                formControlName="PeriodDescription" 
+                                id="PeriodDescription" 
+                                name="PeriodDescription" 
+                                ngModel/>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="StartDate">
+                        {{(getLang() == 'EN' ? ('StartDate' | translateEn) : ('StartDate' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-date-picker  
+                                formControlName="StartDate" 
+                                id="ChangeRate" 
+                                name="ChangeRate" 
+                                [nzPlaceHolder]="''"
+                                ngMode
+                                [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-6">
+            <div class="form-group">
+                <nz-form-label>
+                    <label for="EndDate">
+                        {{(getLang() == 'EN' ? ('EndDate' | translateEn) : ('EndDate' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="input-group-lg">
+                    <nz-form-item>
+                        <nz-form-control>
+                            <nz-date-picker  
+                                formControlName="EndDate" 
+                                id="ChangeRate" 
+                                name="ChangeRate" 
+                                [nzPlaceHolder]="''"
+                                ngMode
+                                [nzFormat]="'yyyy/MM/dd'"></nz-date-picker>
+                        </nz-form-control>                                                
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>                
+    </div>
+</form>  

@@ -1,0 +1,151 @@
+<section class="stores">
+    <form class="form" autocomplete="off" nz-form  #f="ngForm">
+        <div class="row" style="align-items: center;">
+            <div class="col-md-2">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Branch Code' | translateEn) : ('Branch Code' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-input-group nzSearch [nzAddOnAfter]="branchButton">
+                            <input  
+                                class="form-control" 
+                                nz-input 
+                                type="text"
+                                id=""
+                                name=""/>
+                        </nz-input-group> 
+                        <ng-template #branchButton>
+                            <button 
+                                nz-button 
+                                nzType="primary" 
+                                nzSearch
+                                class="search-btn btn-info"
+                                matRipple>
+                                <i nz-icon nzType="search"></i>
+                            </button>
+                        </ng-template>                                                                           
+                    </nz-form-item>
+                </div> 
+            </div>
+            <div class="col-md-3">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Store Code' | translateEn) : ('Store Code' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                            
+                    </nz-form-item>
+                </div> 
+            </div>            
+            <div class="col-md-4">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Store Name' | translateEn) : ('Store Name' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <input  
+                            class="form-control" 
+                            nz-input 
+                            type="text"
+                            id=""
+                            name=""/>                                                                            
+                    </nz-form-item>
+                </div>
+            </div> 
+            <div class="col-md-3">
+                <div class="input-group-lg">                   
+                    <nz-form-item class="text-center" style="margin-bottom: 0;">
+                        <label 
+                            nz-checkbox 
+                            [class.dir-rtl]="getLang() == 'EN'" 
+                            [class.dir-ltr]="getLang() == 'AR'" >
+                            {{(getLang() == 'EN' ? ('Reservable' | translateEn) : ('Reservable' | translateAr))}}
+                        </label> 
+                    </nz-form-item>
+                </div>
+            </div>                        
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Notes' | translateEn) : ('Notes' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <textarea nz-input nzAutosize></textarea>                                                                           
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <!-- tbl items -->
+    <div class="row">
+        <div class="col-md-12">
+            <nz-form-label>
+                <label for="">
+                    {{(getLang() == 'EN' ? ('Item On Hand Qtys' | translateEn) : ('Item On Hand Qtys' | translateAr))}}
+                </label>
+            </nz-form-label>
+            
+            <div class="table-responsive">
+                <nz-table 
+                    #headerTable  
+                    nzShowPagination
+                    [nzPageSize]="10"
+                    [nzData]="data"  
+                    [nzScroll]="{ x: '800px' }"
+                    class="table table-striped"
+                    (nzCurrentPageDataChange)="tblPageChangeHandler($event)"
+                    *ngIf="data.length > 0">
+                    <thead>
+                        <tr> 
+                            <th 
+                                *ngFor="let head of (getLang() == 'EN' ? (headerTable.data[0] | translateEn) : (headerTable.data[0] | translateAr)); let i = index">
+                                <app-sort [data]="data" [sortIndex]="i" [title]="head" (sortedData)="sotrHandler($event)"></app-sort>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 100px;">
+                        <tr
+                            *ngFor="let allData of headerTable.data; let i = index"
+                            style="cursor: pointer;">
+                            <td 
+                                *ngFor="let d of allData | render" 
+                                class="hide-long-text"
+                                [class.text-center]="allData[d] | canBeCenter">{{allData[d] | replaceEmpty}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th *ngFor="let key of headerTable.data[0]" >
+                                <input 
+                                    nz-input
+                                    class="form-control" 
+                                    type="text" 
+                                    #value 
+                                    (keyup)="filterData(key, value.value)" />
+                            </th>
+                        </tr>
+                    </tfoot>
+                </nz-table> 
+                <nz-table [nzData]="data" *ngIf="data.length == 0"></nz-table>        
+            </div>        
+        </div>
+    </div>
+    <!-- tbl items -->
+</section>

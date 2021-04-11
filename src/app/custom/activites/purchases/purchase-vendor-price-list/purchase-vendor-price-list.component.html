@@ -1,0 +1,165 @@
+<section class="price-list">
+    <form>
+        <div class="row">
+            <div class="col-md-6">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Vendor' | translateEn) : ('Vendor' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="vendorButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #vendorButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-6">
+                <nz-form-label>
+                    <label for="">
+                        {{(getLang() == 'EN' ? ('Currancy' | translateEn) : ('Currancy' | translateAr))}}
+                    </label>
+                </nz-form-label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group-lg">
+                            <nz-form-item>
+                                <nz-input-group nzSearch [nzAddOnAfter]="currancyButton">
+                                    <input  
+                                        class="form-control" 
+                                        nz-input 
+                                        type="text"
+                                        id=""
+                                        name=""/>
+                                </nz-input-group> 
+                                <ng-template #currancyButton>
+                                    <button 
+                                        nz-button 
+                                        nzType="primary" 
+                                        nzSearch
+                                        class="search-btn btn-info"
+                                        matRipple>
+                                        <i nz-icon nzType="search"></i>
+                                    </button>
+                                </ng-template>                                                                               
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="input-group-lg">
+                            <nz-input-group>
+                                <input  
+                                    class="form-control" 
+                                    nz-input 
+                                    type="text"
+                                    id="" 
+                                    name=""                                         
+                                    disabled/>
+                            </nz-input-group>                            
+                        </div>
+                    </div>
+                </div>
+            </div>                
+        </div>
+
+        <div class="row" style="align-items: center;">
+            <div class="col-md-3">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Update Long Description?' | translateEn) : ('Update Long Description?' | translateAr))}}
+                        </label>
+                    </nz-form-label>                       
+                    <nz-form-item>
+                        <label nz-checkbox></label>                                                                                                                    
+                    </nz-form-item>                    
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Update Current Price for the Updated Price?' | translateEn) : ('Update Current Price for the Updated Price?' | translateAr))}}
+                        </label>
+                    </nz-form-label>                      
+                    <nz-form-item>
+                        <label nz-checkbox></label>                                                                                                                    
+                    </nz-form-item>                    
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Without MPG' | translateEn) : ('Without MPG' | translateAr))}}
+                        </label>
+                    </nz-form-label>                    
+                    <nz-form-item>
+                        <label nz-checkbox></label>                                                                                                                    
+                    </nz-form-item>                    
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group-lg">
+                    <nz-form-label>
+                        <label for="">
+                            {{(getLang() == 'EN' ? ('Price Date' | translateEn) : ('Price Date' | translateAr))}}
+                        </label>
+                    </nz-form-label>
+                    <nz-form-item>
+                        <nz-date-picker  
+                            [nzPlaceHolder]="''"
+                            ngMode
+                            [nzFormat]="'dd/MM/yyyy'"></nz-date-picker>                                                                            
+                    </nz-form-item>
+                </div>
+            </div>                                    
+        </div>
+    </form>
+
+    <!-- start grid -->
+    <price-list-grid></price-list-grid>
+    <!-- end grid -->
+
+    <!-- start bottom bar -->
+    <div class="row">
+        <div class="col-md-12">
+            <app-bottom-bar></app-bottom-bar>
+        </div>
+    </div>
+    <!-- end bottom bar -->     
+</section>

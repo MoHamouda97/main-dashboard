@@ -1,0 +1,6 @@
+.table th{padding: 5px !important;}
+
+.adjust-position{
+    position: relative;
+    top: -40px;
+}
